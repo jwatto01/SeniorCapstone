@@ -191,7 +191,7 @@ void jacobian(const real_1d_array &x, real_1d_array &fi, real_2d_array &jac, voi
 	M1.updateDipoleMoment(origMagDipole);
 }
 
-int main()
+int mainfn()
 {
 	//Setup sensors and magnet parameters
 	//place magnet somewhere in xyz space to initialize
@@ -210,47 +210,8 @@ int main()
 	allSensors[7] = S8;
 
 	int testtt = 0;
-	cin >> testtt;
-	/*Vector3d curMagField(0.0,0.0,0.0);
-	Vector3d sposit(0.0,0.0,0.2);
-	S1.updatePosition(sposit);
-	
-	
-	//test mag field
-	ofstream fout;
-	fout.open("C:\\Users\\andre_000\\Desktop\\test.txt", ofstream::app);//make last argument ofstream::trunc to only keep one value in there at a time
+    //this is where we requested user input (i.e. button press)
 
-	for(int j = 0; j<80;j++)
-	{
-		sposit(1) += 0.025;
-		for(int k = 0; k<80; k++){
-			sposit(0) += 0.025;
-			S1.updatePosition(sposit);
-			curMagField = S1.calculateMagField(M1);
-			fout << sposit(0) << "," << sposit(1) << "," << sposit(2) << ","
-				 << curMagField(0) << "," << curMagField(1) << "," << curMagField(2) << endl;
-			
-		}
-		sposit(0) = -1.0;
-	}
-
-	fout.close();
-	*/
-	/*curMagField = S1.calculateMagField(M1);
-	cout << curMagField << endl;
-	
-	newMagOr << 0.0, PI, 0.0;//magnet orientation in euclidean angles (start with pointing along z axis)
-	M1.updateOrientation(newMagOr);
-	curMagField = S1.calculateMagField(M1);
-	cout << curMagField << endl;
-	newMagOr << 0.0, 0.0,0.0;//magnet orientation in euclidean angles (start with pointing along z axis)
-	M1.updateOrientation(newMagOr);
-	curMagField = S1.calculateMagField(M1);
-	cout << curMagField << endl;
-	
-	while(1);
-	
-	*/
 	const ae_int_t n = 7;
 	const ae_int_t m = 24;
 	Vector3d curMagPos = M1.posVal();
@@ -290,17 +251,12 @@ int main()
 	char dataINBuffer[169];
 	char startC[1] = {'S'}, calibChar[1] = {'C'};
 	//need to calibrate sensors first
-	bool calibrated = false;
+
+    bool calibrated = false;
 	bool foundStdDev = false;
 	bool firstMeas = false;
-	int numCountTmp = 0;
-//	Vector3d magLocation, magOrientation;
-//	magLocation << -1, -1, 0.05;
-//	magOrientation << 0.0,0.0,0.0;
-//	M1.updatePosition(magLocation);
-//	M1.updateOrientation(magOrientation);
-	//double curDipoleM = 0.9;
-	//M1.updateDipoleMoment(curDipoleM);
+    int numCountTmp = 0;
+
 	while(1){
 		//first, signal to arduino that we want new data
 		if(calibrated){
@@ -315,6 +271,7 @@ int main()
 				{
 					cout << "error, read " << nCharsRead << " bytes read from Arduino!" << endl;
 					char throwaway;
+                    //need to determine how to handle errors (popup forum?)
 					cin >> throwaway;//suspend until user tells to continue
 					continue;
 				}
@@ -327,13 +284,12 @@ int main()
 							for(int i = 0; i<8; i++)
 								cout << allSensors[i].getsampleCoVar() << endl;		
 							
-							
-	   						//for the first solution, we won't have offsets set yet, so it may be a little wonky. Might have to fix this
-							//setZeroVals();
+                            //If we reach this point, we've already acquired values of sample covariance in each sensor object
+                            //This is where we begin tracking
 							cout << "Place magnet in sensing region." << endl;
-	   						char throwaway;
-							cin >> throwaway;
-							double bestResults = 1000.0;
+                            //replace the cin command with something (perhaps split up this section of code into a new function and call this function from button press eventhandler)
+
+                            double bestResults = 1000.0;
 							VectorXd bestParams(7);
 							//get best first solution to setup minlmoptimization
 							for(int k = 0; k<7; k++) startPoint[k] = setOfStartPoints(0,k);
@@ -399,65 +355,23 @@ int main()
 								M1.updateOrientation(newMagOr);
 								M1.updateDipoleMoment(x[6]);
 								cout << x[6] << endl;
-							/**/	
-								 
-							
-							/*
-							if(numCountTmp < 100){
+
+                                //used to print resulting solution to log for analysis via matlab, but now we just want to log them locally.
+                                //Need to come up with good method of storing magnet parameters (location and orientation) for both streaming/plotting
+                                //Also need to come up with way of storing the sample covariance matricies (i.e. in text file) so we can avoid having to
+                                //calibrate each time we wish to track.
 								
-								curDipoleM += 0.005;
-																
-								double func[8];
-								Matrix3d covarMatrix, invCovarMatrix;
-								Matrix3d curCoVar, invCoVar;
-								Vector3d curDiff;
-								
-								//update magnet parameters
-								M1.updateDipoleMoment(curDipoleM);
-								
-								//calculate merit for all sensors
-								double fi = 0.0;//this is the merit parameter
-								
-								for(int i = 0; i<8; i++){
-									curCoVar = allSensors[i].getsampleCoVar();
-									invCoVar = curCoVar.inverse();
-									
-									curDiff = residual(allSensors[i]);
-									//if mean of noise is non-zero, must also subtract µi from residual vector curDiff
-									func[i] = (curDiff.transpose()*invCoVar*curDiff)(0);
-									fi += func[i];//for now, just sum these, but if we want to work with cross-covariance, it will be more involved
-								}
+                                //these two lines will open up a stream with a text file
 								ofstream fout;
 								fout.open("C:\\Users\\andre_000\\Desktop\\test.txt", ofstream::app);//make last argument ofstream::trunc to only keep one value in there at a time
-								//assume z is 0.05, plotting cost function vs x and y
-								fout << curDipoleM << "," << fi << endl;;
-								fout.close();	
-								numCountTmp++;
-							}
-							else{
-								cout << "take new sample? Update location: " << endl;
-								Vector3d thr;
-								cin >> thr(0) >> thr(1) >> thr(2);
-								curDipoleM = 0.9;
-								M1.updatePosition(thr);
-								numCountTmp = 0;
-							}*/
-							/**/ 
-							
-								//print resulting solution to log for analysis
-								
-								ofstream fout;
-								fout.open("C:\\Users\\andre_000\\Desktop\\test.txt", ofstream::app);//make last argument ofstream::trunc to only keep one value in there at a time
-							/*	
-								
-								fout.close();
-								*/
+
+                                //This will loop through each sensor object and print the magnetic measurements (x, y, and z values) to the text file
 								for(int j = 0; j<8; j++){
 									Vector3d tmpscaled = allSensors[j].getAvgScaledVal();
 									for(int i = 0; i<2; i++) fout << tmpscaled(i) << ",";
 									fout << tmpscaled(2) << endl;
 								}
-								fout.close();
+                                fout.close();//have to close the stream after writing
 								
 								//print out avg scaled measurements
 								
@@ -489,6 +403,7 @@ int main()
 			Sleep(10);
 		}
 		else{
+            //this condition will run only if we haven't calibrated the sensors yet (taken data on arduinos and uploaded truncation values to local registers)
 			for(int k = 0; k<20; k++){
 				if(writeData(calibChar)){
 					Sleep(800);//give sensors plenty of time to take measurements and do averaging

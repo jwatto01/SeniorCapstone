@@ -25,6 +25,7 @@ HEADERS  += mainwindow.h \
     ../../../../Senior Design/Senior Design Code/C++ Software/magnet.h \
     ../../../../Senior Design/Senior Design Code/C++ Software/Sensor.h \
     magnet.h \
-    Sensor.h
+    Sensor.h \
+    posCalculator.h
 
 FORMS    += mainwindow.ui

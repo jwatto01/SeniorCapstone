@@ -14,18 +14,16 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    ../../../../Senior Design/Senior Design Code/C++ Software/magnet.cpp \
-    ../../../../Senior Design/Senior Design Code/C++ Software/posCalculator.cpp \
-    ../../../../Senior Design/Senior Design Code/C++ Software/Sensor.cpp \
+    magnet.cpp \
     posCalculator.cpp \
-    Sensor.cpp \
-    magnet.cpp
-
+    Sensor.cpp
 HEADERS  += mainwindow.h \
-    ../../../../Senior Design/Senior Design Code/C++ Software/magnet.h \
-    ../../../../Senior Design/Senior Design Code/C++ Software/Sensor.h \
     magnet.h \
-    Sensor.h \
-    posCalculator.h
+    posCalculator.h \
+    Sensor.h
 
 FORMS    += mainwindow.ui
+
+INCLUDEPATH += C:\Libraries\Eigen \
+               C:\Libraries\Alglib\cpp\src
+

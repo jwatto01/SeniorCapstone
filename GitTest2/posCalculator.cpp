@@ -1,6 +1,7 @@
 //position calculator (posCalculator.cpp)
 //calculate the position and orientation of a magnet
 //
+#include "stdafx.h"
 #include <iostream>
 #include "sensor.h"
 #include "magnet.h"
@@ -8,10 +9,9 @@
 #include <windows.h>
 #include <math.h>
 #include <fstream>
-#include "optimization.h"
+#include <optimization.h>
 #include <string.h>
 #include <sstream>
-#include "stdafx.h"
 #include <stdlib.h>
 #include <Eigen/Dense>
 #include <unsupported/Eigen/MatrixFunctions>

@@ -1,6 +1,8 @@
 #ifndef POSCALCULATOR_H
 #define POSCALCULATOR_H
 
+#include <magnet.h>
+#include <Sensor.h>
 class POSCALCULATOR_H
 {
 public:
@@ -9,7 +11,7 @@ public:
     int mainfn();
 
 private:
-
+    magnet M1;
 };
 
 

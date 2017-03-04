@@ -468,11 +468,16 @@ void updateSensorReadings(char byteBuff[169]){
 		//update current sensor's measurement data
 		allSensors[i].updateSenseVal(newSenseVal);
 	}
+    storeCalibrationData(); //store initialD
 }
 
 void convertToMicroTesla(const Vector3i& rawData, Vector3d &retArr){
 	for(int i = 0; i<3; i++)
 		retArr(i) = ((double)rawData(i)+30000.0)*(2e-3) / 60000.0 - 1e-3;
+}
+
+void storeCalibrationData(){
+
 }
 
 bool connectArduino(char *portName){

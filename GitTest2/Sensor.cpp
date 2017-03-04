@@ -202,6 +202,7 @@ void sensor::updateSenseVal(const Vector3d &newVal){
 	
 	//time to compute the covariance for the sensor!
 	if(nAvgMeasCount == 100)
+        //todo Store initialDataSample in data file to be read in rather than previous calculation
 		sampleCoVar = sampleCoVariance(initialDataSample);
 }
 
@@ -242,6 +243,10 @@ Matrix3d sensor::getSQRTsampleCoVar(){
 
 Matrix3d sensor::getsampleCoVar(){
 	return sampleCoVar;
+}
+
+MatrixXd sensor::getInitialDataSample(){
+    return initialDataSample;
 }
 
 Vector3d sensor::getAvgScaledVal(){

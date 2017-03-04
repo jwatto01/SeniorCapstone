@@ -32,6 +32,7 @@ public:
 	Vector3d getAvgScaledVal();
 	Matrix3d getsampleCoVar();
 	Matrix3d getSQRTsampleCoVar();
+    MatrixXd getInitialDataSample();
 	int getNumMeasCount();
 	int getNumAvgMeasCount();
 	Vector3d getMeanNoise();
@@ -42,7 +43,7 @@ private:
 	int nSensor;//sensor number
 	int nMeasCount, nAvgMeasCount;
 	Vector3i rawData;
-	Vector3d meanNoise;
+    Vector3d meanNoise; //want to store
 	Vector3d orientation;//stored as angles with respect to coordinate z axis
 	Vector3d senseVal;
 	Vector3d scaledVal;
@@ -51,8 +52,8 @@ private:
 	Vector3d avgScaledVal;//averaged/filtered measurements
 	Vector3d position;
 	Vector3d offsets;
-	Matrix3d sampleCoVar;//sample covariance from initial 100 measurements
-	Matrix3d sqrtSampleCoVar;//matrix sqrt of covariance estimate (used for jacobian function)
+    Matrix3d sampleCoVar;//sample covariance from initial 100 measurements //want to store
+    Matrix3d sqrtSampleCoVar;//matrix sqrt of covariance estimate (used for jacobian function) //want to store
 };
 
 #endif

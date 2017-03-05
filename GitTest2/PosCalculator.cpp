@@ -17,22 +17,22 @@ using Eigen::Vector3d;
 //const double acceptedError = 1e-12;
 //const ae_int_t maxIterations = 100;
 const double PI = 3.14159265;
-string portNumber;
-HANDLE hSerial;
-bool connected;
-COMSTAT status;
+//string portNumber;
+//HANDLE hSerial;
+//bool connected;
+//COMSTAT status;
 
-void setZeroVals();
-void convertToMicroTesla(const Vector3i &rawData, Vector3d &retArr);
-void meritFunc(const real_1d_array &x, double& fi, void* obj);
-void jacobian(const real_1d_array &x, real_1d_array &fi, real_2d_array &jac, void* obj);
-bool connectArduino(char *portName);
-int readData(char buffer[169]);
-bool writeData(char buffer[1]);
-void updateSensorReadings(char byteBuff[169]);
+//void setZeroVals();
+//void convertToMicroTesla(const Vector3i &rawData, Vector3d &retArr);
+//void meritFunc(const real_1d_array &x, double& fi, void* obj);
+//void jacobian(const real_1d_array &x, real_1d_array &fi, real_2d_array &jac, void* obj);
+//bool connectArduino(char *portName);
+//int readData(char buffer[169]);
+//bool writeData(char buffer[1]);
+//void updateSensorReadings(char byteBuff[169]);
 double dipoleEstimate = 0.3;
 
-magnet M1;//create magnet with default magnetic dipole moment
+//magnet M1;//create magnet with default magnetic dipole moment
 //Now create 8 sensors and place them in 3d space with an orientation respective of test-setup (floor)
 //note that orientation is in euler angles (phi, theta, psi)!
 /*sensor S1({0.161, -0.132, 0.334},{-0.7854, -1.5708, 1.5708}, 1), S2({0.161, 0.132, 0.335},{0.7854, -1.5708, 1.5708}, 2);
@@ -41,12 +41,12 @@ sensor S5({-0.152, -0.133, 0.3385},{0.7854, -1.5708, -1.5708}, 5), S6({-0.152, 0
 sensor S7({-0.152, 0.129, 0.076},{0.7854, -1.5708, -1.5708}, 7), S8({-0.152,-0.11,0.097},{-0.7854, -1.5708, -1.5708}, 8);*/
 
 //have to validate S5,S7, and S2, S4, S6, S8 with matlab
-sensor S1({0.161, -0.132, 0.334},{-1.5708, 1.5708, 0.7854}, 1), S2({0.161, 0.132, 0.335},{-1.5708, 1.5708, -0.7854}, 2);
-sensor S3({0.161, 0.126, 0.086},{-1.5708, 1.5708, 0.7854}, 3), S4({0.161, -0.116, 0.084},{-1.5708, 1.5708, -0.7854}, 4);
-sensor S5({-0.152, -0.133, 0.3385},{1.5708, 1.5708, -0.7854}, 5), S6({-0.152, 0.132, 0.331},{1.5708, 1.5708, 0.7854}, 6);
-sensor S7({-0.152, 0.129, 0.076},{1.5708, 1.5708, -0.7854}, 7), S8({-0.152,-0.11,0.097},{1.5708, 1.5708, 0.7854}, 8);
+//sensor S1({0.161, -0.132, 0.334},{-1.5708, 1.5708, 0.7854}, 1), S2({0.161, 0.132, 0.335},{-1.5708, 1.5708, -0.7854}, 2);
+//sensor S3({0.161, 0.126, 0.086},{-1.5708, 1.5708, 0.7854}, 3), S4({0.161, -0.116, 0.084},{-1.5708, 1.5708, -0.7854}, 4);
+//sensor S5({-0.152, -0.133, 0.3385},{1.5708, 1.5708, -0.7854}, 5), S6({-0.152, 0.132, 0.331},{1.5708, 1.5708, 0.7854}, 6);
+//sensor S7({-0.152, 0.129, 0.076},{1.5708, 1.5708, -0.7854}, 7), S8({-0.152,-0.11,0.097},{1.5708, 1.5708, 0.7854}, 8);
 
-sensor allSensors[8];
+//sensor allSensors[8];
 
 Vector3d residual(sensor &curSensor){
 	Vector3d expectedMagField = curSensor.calculateMagField(M1);

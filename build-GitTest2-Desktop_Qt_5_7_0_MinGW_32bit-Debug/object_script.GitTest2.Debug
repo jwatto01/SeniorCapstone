@@ -1,8 +1,6 @@
 INPUT(
 ./debug\main.o
 ./debug\mainwindow.o
-./debug\magnet.o
-./debug\posCalculator.o
 ./debug\Sensor.o
 ./debug\alglibinternal.o
 ./debug\alglibmisc.o
@@ -17,5 +15,7 @@ INPUT(
 ./debug\solvers.o
 ./debug\specialfunctions.o
 ./debug\statistics.o
+./debug\PosCalculator.o
+./debug\Magnet.o
 ./debug\moc_mainwindow.o
 );

@@ -45,8 +45,6 @@ OBJECTS_DIR   = release
 
 SOURCES       = ..\GitTest2\main.cpp \
 		..\GitTest2\mainwindow.cpp \
-		..\GitTest2\magnet.cpp \
-		..\GitTest2\posCalculator.cpp \
 		..\GitTest2\Sensor.cpp \
 		..\GitTest2\alglibinternal.cpp \
 		..\GitTest2\alglibmisc.cpp \
@@ -60,11 +58,11 @@ SOURCES       = ..\GitTest2\main.cpp \
 		..\GitTest2\optimization.cpp \
 		..\GitTest2\solvers.cpp \
 		..\GitTest2\specialfunctions.cpp \
-		..\GitTest2\statistics.cpp release\moc_mainwindow.cpp
+		..\GitTest2\statistics.cpp \
+		..\GitTest2\PosCalculator.cpp \
+		..\GitTest2\Magnet.cpp release\moc_mainwindow.cpp
 OBJECTS       = release/main.o \
 		release/mainwindow.o \
-		release/magnet.o \
-		release/posCalculator.o \
 		release/Sensor.o \
 		release/alglibinternal.o \
 		release/alglibmisc.o \
@@ -79,11 +77,11 @@ OBJECTS       = release/main.o \
 		release/solvers.o \
 		release/specialfunctions.o \
 		release/statistics.o \
+		release/PosCalculator.o \
+		release/Magnet.o \
 		release/moc_mainwindow.o
 
 DIST          =  ..\GitTest2\mainwindow.h \
-		..\GitTest2\magnet.h \
-		..\GitTest2\posCalculator.h \
 		..\GitTest2\Sensor.h \
 		..\GitTest2\alglibinternal.h \
 		..\GitTest2\alglibmisc.h \
@@ -98,10 +96,10 @@ DIST          =  ..\GitTest2\mainwindow.h \
 		..\GitTest2\solvers.h \
 		..\GitTest2\specialfunctions.h \
 		..\GitTest2\statistics.h \
-		..\GitTest2\stdafx.h ..\GitTest2\main.cpp \
+		..\GitTest2\stdafx.h \
+		..\GitTest2\PosCalculator.h \
+		..\GitTest2\Magnet.h ..\GitTest2\main.cpp \
 		..\GitTest2\mainwindow.cpp \
-		..\GitTest2\magnet.cpp \
-		..\GitTest2\posCalculator.cpp \
 		..\GitTest2\Sensor.cpp \
 		..\GitTest2\alglibinternal.cpp \
 		..\GitTest2\alglibmisc.cpp \
@@ -115,7 +113,9 @@ DIST          =  ..\GitTest2\mainwindow.h \
 		..\GitTest2\optimization.cpp \
 		..\GitTest2\solvers.cpp \
 		..\GitTest2\specialfunctions.cpp \
-		..\GitTest2\statistics.cpp
+		..\GitTest2\statistics.cpp \
+		..\GitTest2\PosCalculator.cpp \
+		..\GitTest2\Magnet.cpp
 QMAKE_TARGET  = GitTest2
 DESTDIR        = release\ #avoid trailing-slash linebreak
 TARGET         = GitTest2.exe
@@ -138,7 +138,7 @@ dist:
 	$(ZIP) GitTest2.zip $(SOURCES) $(DIST) ..\GitTest2\GitTest2.pro A:\Qt\5.7\mingw53_32\mkspecs\features\spec_pre.prf A:\Qt\5.7\mingw53_32\mkspecs\qdevice.pri A:\Qt\5.7\mingw53_32\mkspecs\features\device_config.prf A:\Qt\5.7\mingw53_32\mkspecs\common\angle.conf A:\Qt\5.7\mingw53_32\mkspecs\qconfig.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_3dcore.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_3dcore_private.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_3dextras.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_3dextras_private.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_3dinput.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_3dinput_private.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_3dlogic.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_3dlogic_private.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_3dquick.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_3dquick_private.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_3dquickextras.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_3dquickextras_private.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_3dquickinput.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_3dquickinput_private.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_3dquickrender.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_3dquickrender_private.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_3drender.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_3drender_private.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_axbase.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_axbase_private.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_axcontainer.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_axcontainer_private.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_axserver.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_axserver_private.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_bluetooth.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_bluetooth_private.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_bootstrap_private.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_charts.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_charts_private.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_clucene_private.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_concurrent.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_concurrent_private.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_core.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_core_private.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_datavisualization.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_datavisualization_private.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_dbus.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_dbus_private.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_designer.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_designer_private.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_designercomponents_private.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_gamepad.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_gamepad_private.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_gui.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_gui_private.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_help.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_help_private.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_location.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_location_private.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_multimedia.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_multimedia_private.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_multimediawidgets.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_multimediawidgets_private.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_network.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_network_private.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_nfc.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_nfc_private.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_opengl.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_opengl_private.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_openglextensions.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_openglextensions_private.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_packetprotocol_private.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_platformsupport_private.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_positioning.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_positioning_private.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_printsupport.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_printsupport_private.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_purchasing.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_purchasing_private.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_qml.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_qml_private.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_qmldebug_private.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_qmldevtools_private.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_qmltest.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_qmltest_private.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_qtmultimediaquicktools_private.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_quick.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_quick_private.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_quickcontrols2.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_quickcontrols2_private.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_quickparticles_private.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_quicktemplates2_private.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_quickwidgets.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_quickwidgets_private.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_script.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_script_private.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_scripttools.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_scripttools_private.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_scxml.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_scxml_private.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_sensors.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_sensors_private.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_serialbus.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_serialbus_private.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_serialport.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_serialport_private.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_sql.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_sql_private.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_svg.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_svg_private.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_testlib.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_testlib_private.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_uiplugin.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_uitools.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_uitools_private.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_webchannel.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_webchannel_private.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_websockets.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_websockets_private.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_widgets.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_widgets_private.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_winextras.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_winextras_private.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_xml.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_xml_private.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_xmlpatterns.pri A:\Qt\5.7\mingw53_32\mkspecs\modules\qt_lib_xmlpatterns_private.pri A:\Qt\5.7\mingw53_32\mkspecs\features\qt_functions.prf A:\Qt\5.7\mingw53_32\mkspecs\features\qt_config.prf A:\Qt\5.7\mingw53_32\mkspecs\features\win32\qt_config.prf A:\Qt\5.7\mingw53_32\mkspecs\win32-g++\qmake.conf A:\Qt\5.7\mingw53_32\mkspecs\features\spec_post.prf .qmake.stash A:\Qt\5.7\mingw53_32\mkspecs\features\exclusive_builds.prf A:\Qt\5.7\mingw53_32\mkspecs\features\default_pre.prf A:\Qt\5.7\mingw53_32\mkspecs\features\win32\default_pre.prf A:\Qt\5.7\mingw53_32\mkspecs\features\resolve_config.prf A:\Qt\5.7\mingw53_32\mkspecs\features\exclusive_builds_post.prf A:\Qt\5.7\mingw53_32\mkspecs\features\default_post.prf A:\Qt\5.7\mingw53_32\mkspecs\features\build_pass.prf A:\Qt\5.7\mingw53_32\mkspecs\features\qml_debug.prf A:\Qt\5.7\mingw53_32\mkspecs\features\win32\rtti.prf A:\Qt\5.7\mingw53_32\mkspecs\features\precompile_header.prf A:\Qt\5.7\mingw53_32\mkspecs\features\warn_on.prf A:\Qt\5.7\mingw53_32\mkspecs\features\qt.prf A:\Qt\5.7\mingw53_32\mkspecs\features\resources.prf A:\Qt\5.7\mingw53_32\mkspecs\features\moc.prf A:\Qt\5.7\mingw53_32\mkspecs\features\win32\opengl.prf A:\Qt\5.7\mingw53_32\mkspecs\features\uic.prf A:\Qt\5.7\mingw53_32\mkspecs\features\file_copies.prf A:\Qt\5.7\mingw53_32\mkspecs\features\win32\windows.prf A:\Qt\5.7\mingw53_32\mkspecs\features\testcase_targets.prf A:\Qt\5.7\mingw53_32\mkspecs\features\exceptions.prf A:\Qt\5.7\mingw53_32\mkspecs\features\yacc.prf A:\Qt\5.7\mingw53_32\mkspecs\features\lex.prf ..\GitTest2\GitTest2.pro A:\Qt\5.7\mingw53_32\lib\qtmain.prl A:\Qt\5.7\mingw53_32\lib\Qt5Widgets.prl A:\Qt\5.7\mingw53_32\lib\Qt5Gui.prl A:\Qt\5.7\mingw53_32\lib\Qt5Core.prl  NO_PCH_SOURCES RESOURCES HEADERS SOURCES OBJECTIVE_SOURCES FORMS YACCSOURCES YACCSOURCES LEXSOURCES 
 
 clean: compiler_clean 
-	-$(DEL_FILE) release\main.o release\mainwindow.o release\magnet.o release\posCalculator.o release\Sensor.o release\alglibinternal.o release\alglibmisc.o release\ap.o release\dataanalysis.o release\diffequations.o release\fasttransforms.o release\integration.o release\interpolation.o release\linalg.o release\optimization.o release\solvers.o release\specialfunctions.o release\statistics.o release\moc_mainwindow.o
+	-$(DEL_FILE) release\main.o release\mainwindow.o release\Sensor.o release\alglibinternal.o release\alglibmisc.o release\ap.o release\dataanalysis.o release\diffequations.o release\fasttransforms.o release\integration.o release\interpolation.o release\linalg.o release\optimization.o release\solvers.o release\specialfunctions.o release\statistics.o release\PosCalculator.o release\Magnet.o release\moc_mainwindow.o
 
 distclean: clean 
 	-$(DEL_FILE) .qmake.stash
@@ -540,7 +540,549 @@ release/mainwindow.o: ../GitTest2/mainwindow.cpp ../GitTest2/mainwindow.h \
 		A:/Qt/5.7/mingw53_32/include/QtWidgets/QWidget
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\mainwindow.o ..\GitTest2\mainwindow.cpp
 
-release/magnet.o: ../GitTest2/magnet.cpp ../GitTest2/magnet.h \
+release/Sensor.o: ../GitTest2/Sensor.cpp ../GitTest2/sensor.h \
+		../GitTest2/Magnet.h \
+		C:/Libraries/Eigen/Eigen/Dense \
+		C:/Libraries/Eigen/Eigen/Core \
+		C:/Libraries/Eigen/Eigen/src/Core/util/DisableStupidWarnings.h \
+		C:/Libraries/Eigen/Eigen/src/Core/util/Macros.h \
+		C:/Libraries/Eigen/Eigen/src/Core/util/MKL_support.h \
+		C:/Libraries/Eigen/Eigen/src/misc/blas.h \
+		C:/Libraries/Eigen/Eigen/src/Core/util/Constants.h \
+		C:/Libraries/Eigen/Eigen/src/Core/util/Meta.h \
+		C:/Libraries/Eigen/Eigen/src/Core/util/ForwardDeclarations.h \
+		C:/Libraries/Eigen/Eigen/src/Core/util/StaticAssert.h \
+		C:/Libraries/Eigen/Eigen/src/Core/util/XprHelper.h \
+		C:/Libraries/Eigen/Eigen/src/Core/util/Memory.h \
+		C:/Libraries/Eigen/Eigen/src/Core/NumTraits.h \
+		C:/Libraries/Eigen/Eigen/src/Core/MathFunctions.h \
+		C:/Libraries/Eigen/Eigen/src/Core/GenericPacketMath.h \
+		C:/Libraries/Eigen/Eigen/src/Core/MathFunctionsImpl.h \
+		C:/Libraries/Eigen/Eigen/src/Core/arch/SSE/PacketMath.h \
+		C:/Libraries/Eigen/Eigen/src/Core/arch/AVX/PacketMath.h \
+		C:/Libraries/Eigen/Eigen/src/Core/arch/AVX512/PacketMath.h \
+		C:/Libraries/Eigen/Eigen/src/Core/arch/AVX512/MathFunctions.h \
+		C:/Libraries/Eigen/Eigen/src/Core/arch/SSE/Complex.h \
+		C:/Libraries/Eigen/Eigen/src/Core/arch/SSE/MathFunctions.h \
+		C:/Libraries/Eigen/Eigen/src/Core/arch/AVX/MathFunctions.h \
+		C:/Libraries/Eigen/Eigen/src/Core/arch/AVX/Complex.h \
+		C:/Libraries/Eigen/Eigen/src/Core/arch/AVX/TypeCasting.h \
+		C:/Libraries/Eigen/Eigen/src/Core/arch/SSE/TypeCasting.h \
+		C:/Libraries/Eigen/Eigen/src/Core/arch/AltiVec/PacketMath.h \
+		C:/Libraries/Eigen/Eigen/src/Core/arch/AltiVec/MathFunctions.h \
+		C:/Libraries/Eigen/Eigen/src/Core/arch/AltiVec/Complex.h \
+		C:/Libraries/Eigen/Eigen/src/Core/arch/NEON/PacketMath.h \
+		C:/Libraries/Eigen/Eigen/src/Core/arch/NEON/MathFunctions.h \
+		C:/Libraries/Eigen/Eigen/src/Core/arch/NEON/Complex.h \
+		C:/Libraries/Eigen/Eigen/src/Core/arch/ZVector/PacketMath.h \
+		C:/Libraries/Eigen/Eigen/src/Core/arch/ZVector/MathFunctions.h \
+		C:/Libraries/Eigen/Eigen/src/Core/arch/ZVector/Complex.h \
+		C:/Libraries/Eigen/Eigen/src/Core/arch/CUDA/Half.h \
+		C:/Libraries/Eigen/Eigen/src/Core/arch/CUDA/PacketMathHalf.h \
+		C:/Libraries/Eigen/Eigen/src/Core/arch/CUDA/TypeCasting.h \
+		C:/Libraries/Eigen/Eigen/src/Core/arch/CUDA/PacketMath.h \
+		C:/Libraries/Eigen/Eigen/src/Core/arch/CUDA/MathFunctions.h \
+		C:/Libraries/Eigen/Eigen/src/Core/arch/Default/Settings.h \
+		C:/Libraries/Eigen/Eigen/src/Core/functors/TernaryFunctors.h \
+		C:/Libraries/Eigen/Eigen/src/Core/functors/BinaryFunctors.h \
+		C:/Libraries/Eigen/Eigen/src/Core/functors/UnaryFunctors.h \
+		C:/Libraries/Eigen/Eigen/src/Core/functors/NullaryFunctors.h \
+		C:/Libraries/Eigen/Eigen/src/Core/functors/StlFunctors.h \
+		C:/Libraries/Eigen/Eigen/src/Core/functors/AssignmentFunctors.h \
+		C:/Libraries/Eigen/Eigen/src/Core/arch/CUDA/Complex.h \
+		C:/Libraries/Eigen/Eigen/src/Core/IO.h \
+		C:/Libraries/Eigen/Eigen/src/Core/DenseCoeffsBase.h \
+		C:/Libraries/Eigen/Eigen/src/Core/DenseBase.h \
+		C:/Libraries/Eigen/Eigen/src/plugins/BlockMethods.h \
+		C:/Libraries/Eigen/Eigen/src/Core/MatrixBase.h \
+		C:/Libraries/Eigen/Eigen/src/plugins/CommonCwiseUnaryOps.h \
+		C:/Libraries/Eigen/Eigen/src/plugins/CommonCwiseBinaryOps.h \
+		C:/Libraries/Eigen/Eigen/src/plugins/MatrixCwiseUnaryOps.h \
+		C:/Libraries/Eigen/Eigen/src/plugins/MatrixCwiseBinaryOps.h \
+		C:/Libraries/Eigen/Eigen/src/Core/EigenBase.h \
+		C:/Libraries/Eigen/Eigen/src/Core/Product.h \
+		C:/Libraries/Eigen/Eigen/src/Core/CoreEvaluators.h \
+		C:/Libraries/Eigen/Eigen/src/Core/AssignEvaluator.h \
+		C:/Libraries/Eigen/Eigen/src/Core/Assign.h \
+		C:/Libraries/Eigen/Eigen/src/Core/ArrayBase.h \
+		C:/Libraries/Eigen/Eigen/src/plugins/ArrayCwiseUnaryOps.h \
+		C:/Libraries/Eigen/Eigen/src/plugins/ArrayCwiseBinaryOps.h \
+		C:/Libraries/Eigen/Eigen/src/Core/util/BlasUtil.h \
+		C:/Libraries/Eigen/Eigen/src/Core/DenseStorage.h \
+		C:/Libraries/Eigen/Eigen/src/Core/NestByValue.h \
+		C:/Libraries/Eigen/Eigen/src/Core/ReturnByValue.h \
+		C:/Libraries/Eigen/Eigen/src/Core/NoAlias.h \
+		C:/Libraries/Eigen/Eigen/src/Core/PlainObjectBase.h \
+		C:/Libraries/Eigen/Eigen/src/Core/Matrix.h \
+		C:/Libraries/Eigen/Eigen/src/Core/Array.h \
+		C:/Libraries/Eigen/Eigen/src/Core/CwiseTernaryOp.h \
+		C:/Libraries/Eigen/Eigen/src/Core/CwiseBinaryOp.h \
+		C:/Libraries/Eigen/Eigen/src/Core/CwiseUnaryOp.h \
+		C:/Libraries/Eigen/Eigen/src/Core/CwiseNullaryOp.h \
+		C:/Libraries/Eigen/Eigen/src/Core/CwiseUnaryView.h \
+		C:/Libraries/Eigen/Eigen/src/Core/SelfCwiseBinaryOp.h \
+		C:/Libraries/Eigen/Eigen/src/Core/Dot.h \
+		C:/Libraries/Eigen/Eigen/src/Core/StableNorm.h \
+		C:/Libraries/Eigen/Eigen/src/Core/Stride.h \
+		C:/Libraries/Eigen/Eigen/src/Core/MapBase.h \
+		C:/Libraries/Eigen/Eigen/src/Core/Map.h \
+		C:/Libraries/Eigen/Eigen/src/Core/Ref.h \
+		C:/Libraries/Eigen/Eigen/src/Core/Block.h \
+		C:/Libraries/Eigen/Eigen/src/Core/VectorBlock.h \
+		C:/Libraries/Eigen/Eigen/src/Core/Transpose.h \
+		C:/Libraries/Eigen/Eigen/src/Core/DiagonalMatrix.h \
+		C:/Libraries/Eigen/Eigen/src/Core/Diagonal.h \
+		C:/Libraries/Eigen/Eigen/src/Core/DiagonalProduct.h \
+		C:/Libraries/Eigen/Eigen/src/Core/Redux.h \
+		C:/Libraries/Eigen/Eigen/src/Core/Visitor.h \
+		C:/Libraries/Eigen/Eigen/src/Core/Fuzzy.h \
+		C:/Libraries/Eigen/Eigen/src/Core/Swap.h \
+		C:/Libraries/Eigen/Eigen/src/Core/CommaInitializer.h \
+		C:/Libraries/Eigen/Eigen/src/Core/GeneralProduct.h \
+		C:/Libraries/Eigen/Eigen/src/Core/Solve.h \
+		C:/Libraries/Eigen/Eigen/src/Core/Inverse.h \
+		C:/Libraries/Eigen/Eigen/src/Core/SolverBase.h \
+		C:/Libraries/Eigen/Eigen/src/Core/PermutationMatrix.h \
+		C:/Libraries/Eigen/Eigen/src/Core/Transpositions.h \
+		C:/Libraries/Eigen/Eigen/src/Core/TriangularMatrix.h \
+		C:/Libraries/Eigen/Eigen/src/Core/SelfAdjointView.h \
+		C:/Libraries/Eigen/Eigen/src/Core/products/GeneralBlockPanelKernel.h \
+		C:/Libraries/Eigen/Eigen/src/Core/products/Parallelizer.h \
+		C:/Libraries/Eigen/Eigen/src/Core/ProductEvaluators.h \
+		C:/Libraries/Eigen/Eigen/src/Core/products/GeneralMatrixVector.h \
+		C:/Libraries/Eigen/Eigen/src/Core/products/GeneralMatrixMatrix.h \
+		C:/Libraries/Eigen/Eigen/src/Core/SolveTriangular.h \
+		C:/Libraries/Eigen/Eigen/src/Core/products/GeneralMatrixMatrixTriangular.h \
+		C:/Libraries/Eigen/Eigen/src/Core/products/SelfadjointMatrixVector.h \
+		C:/Libraries/Eigen/Eigen/src/Core/products/SelfadjointMatrixMatrix.h \
+		C:/Libraries/Eigen/Eigen/src/Core/products/SelfadjointProduct.h \
+		C:/Libraries/Eigen/Eigen/src/Core/products/SelfadjointRank2Update.h \
+		C:/Libraries/Eigen/Eigen/src/Core/products/TriangularMatrixVector.h \
+		C:/Libraries/Eigen/Eigen/src/Core/products/TriangularMatrixMatrix.h \
+		C:/Libraries/Eigen/Eigen/src/Core/products/TriangularSolverMatrix.h \
+		C:/Libraries/Eigen/Eigen/src/Core/products/TriangularSolverVector.h \
+		C:/Libraries/Eigen/Eigen/src/Core/BandMatrix.h \
+		C:/Libraries/Eigen/Eigen/src/Core/CoreIterators.h \
+		C:/Libraries/Eigen/Eigen/src/Core/ConditionEstimator.h \
+		C:/Libraries/Eigen/Eigen/src/Core/BooleanRedux.h \
+		C:/Libraries/Eigen/Eigen/src/Core/Select.h \
+		C:/Libraries/Eigen/Eigen/src/Core/VectorwiseOp.h \
+		C:/Libraries/Eigen/Eigen/src/Core/Random.h \
+		C:/Libraries/Eigen/Eigen/src/Core/Replicate.h \
+		C:/Libraries/Eigen/Eigen/src/Core/Reverse.h \
+		C:/Libraries/Eigen/Eigen/src/Core/ArrayWrapper.h \
+		C:/Libraries/Eigen/Eigen/src/Core/products/GeneralMatrixMatrix_BLAS.h \
+		C:/Libraries/Eigen/Eigen/src/Core/products/GeneralMatrixVector_BLAS.h \
+		C:/Libraries/Eigen/Eigen/src/Core/products/GeneralMatrixMatrixTriangular_BLAS.h \
+		C:/Libraries/Eigen/Eigen/src/Core/products/SelfadjointMatrixMatrix_BLAS.h \
+		C:/Libraries/Eigen/Eigen/src/Core/products/SelfadjointMatrixVector_BLAS.h \
+		C:/Libraries/Eigen/Eigen/src/Core/products/TriangularMatrixMatrix_BLAS.h \
+		C:/Libraries/Eigen/Eigen/src/Core/products/TriangularMatrixVector_BLAS.h \
+		C:/Libraries/Eigen/Eigen/src/Core/products/TriangularSolverMatrix_BLAS.h \
+		C:/Libraries/Eigen/Eigen/src/Core/Assign_MKL.h \
+		C:/Libraries/Eigen/Eigen/src/Core/GlobalFunctions.h \
+		C:/Libraries/Eigen/Eigen/src/Core/util/ReenableStupidWarnings.h \
+		C:/Libraries/Eigen/Eigen/LU \
+		C:/Libraries/Eigen/Eigen/src/misc/Kernel.h \
+		C:/Libraries/Eigen/Eigen/src/misc/Image.h \
+		C:/Libraries/Eigen/Eigen/src/LU/FullPivLU.h \
+		C:/Libraries/Eigen/Eigen/src/LU/PartialPivLU.h \
+		C:/Libraries/Eigen/Eigen/src/misc/lapacke.h \
+		C:/Libraries/Eigen/Eigen/src/misc/lapacke_mangling.h \
+		C:/Libraries/Eigen/Eigen/src/LU/PartialPivLU_LAPACKE.h \
+		C:/Libraries/Eigen/Eigen/src/LU/Determinant.h \
+		C:/Libraries/Eigen/Eigen/src/LU/InverseImpl.h \
+		C:/Libraries/Eigen/Eigen/src/LU/arch/Inverse_SSE.h \
+		C:/Libraries/Eigen/Eigen/Cholesky \
+		C:/Libraries/Eigen/Eigen/src/Cholesky/LLT.h \
+		C:/Libraries/Eigen/Eigen/src/Cholesky/LDLT.h \
+		C:/Libraries/Eigen/Eigen/src/Cholesky/LLT_LAPACKE.h \
+		C:/Libraries/Eigen/Eigen/QR \
+		C:/Libraries/Eigen/Eigen/Jacobi \
+		C:/Libraries/Eigen/Eigen/src/Jacobi/Jacobi.h \
+		C:/Libraries/Eigen/Eigen/Householder \
+		C:/Libraries/Eigen/Eigen/src/Householder/Householder.h \
+		C:/Libraries/Eigen/Eigen/src/Householder/HouseholderSequence.h \
+		C:/Libraries/Eigen/Eigen/src/Householder/BlockHouseholder.h \
+		C:/Libraries/Eigen/Eigen/src/QR/HouseholderQR.h \
+		C:/Libraries/Eigen/Eigen/src/QR/FullPivHouseholderQR.h \
+		C:/Libraries/Eigen/Eigen/src/QR/ColPivHouseholderQR.h \
+		C:/Libraries/Eigen/Eigen/src/QR/CompleteOrthogonalDecomposition.h \
+		C:/Libraries/Eigen/Eigen/src/QR/HouseholderQR_LAPACKE.h \
+		C:/Libraries/Eigen/Eigen/src/QR/ColPivHouseholderQR_LAPACKE.h \
+		C:/Libraries/Eigen/Eigen/SVD \
+		C:/Libraries/Eigen/Eigen/src/misc/RealSvd2x2.h \
+		C:/Libraries/Eigen/Eigen/src/SVD/UpperBidiagonalization.h \
+		C:/Libraries/Eigen/Eigen/src/SVD/SVDBase.h \
+		C:/Libraries/Eigen/Eigen/src/SVD/JacobiSVD.h \
+		C:/Libraries/Eigen/Eigen/src/SVD/BDCSVD.h \
+		C:/Libraries/Eigen/Eigen/src/SVD/JacobiSVD_LAPACKE.h \
+		C:/Libraries/Eigen/Eigen/Geometry \
+		C:/Libraries/Eigen/Eigen/src/Geometry/OrthoMethods.h \
+		C:/Libraries/Eigen/Eigen/src/Geometry/EulerAngles.h \
+		C:/Libraries/Eigen/Eigen/src/Geometry/Homogeneous.h \
+		C:/Libraries/Eigen/Eigen/src/Geometry/RotationBase.h \
+		C:/Libraries/Eigen/Eigen/src/Geometry/Rotation2D.h \
+		C:/Libraries/Eigen/Eigen/src/Geometry/Quaternion.h \
+		C:/Libraries/Eigen/Eigen/src/Geometry/AngleAxis.h \
+		C:/Libraries/Eigen/Eigen/src/Geometry/Transform.h \
+		C:/Libraries/Eigen/Eigen/src/Geometry/Translation.h \
+		C:/Libraries/Eigen/Eigen/src/Geometry/Scaling.h \
+		C:/Libraries/Eigen/Eigen/src/Geometry/Hyperplane.h \
+		C:/Libraries/Eigen/Eigen/src/Geometry/ParametrizedLine.h \
+		C:/Libraries/Eigen/Eigen/src/Geometry/AlignedBox.h \
+		C:/Libraries/Eigen/Eigen/src/Geometry/Umeyama.h \
+		C:/Libraries/Eigen/Eigen/src/Geometry/arch/Geometry_SSE.h \
+		C:/Libraries/Eigen/Eigen/Eigenvalues \
+		C:/Libraries/Eigen/Eigen/src/Eigenvalues/Tridiagonalization.h \
+		C:/Libraries/Eigen/Eigen/src/Eigenvalues/RealSchur.h \
+		C:/Libraries/Eigen/Eigen/src/Eigenvalues/HessenbergDecomposition.h \
+		C:/Libraries/Eigen/Eigen/src/Eigenvalues/EigenSolver.h \
+		C:/Libraries/Eigen/Eigen/src/Eigenvalues/SelfAdjointEigenSolver.h \
+		C:/Libraries/Eigen/Eigen/src/Eigenvalues/GeneralizedSelfAdjointEigenSolver.h \
+		C:/Libraries/Eigen/Eigen/src/Eigenvalues/ComplexSchur.h \
+		C:/Libraries/Eigen/Eigen/src/Eigenvalues/ComplexEigenSolver.h \
+		C:/Libraries/Eigen/Eigen/src/Eigenvalues/RealQZ.h \
+		C:/Libraries/Eigen/Eigen/src/Eigenvalues/GeneralizedEigenSolver.h \
+		C:/Libraries/Eigen/Eigen/src/Eigenvalues/MatrixBaseEigenvalues.h \
+		C:/Libraries/Eigen/Eigen/src/Eigenvalues/RealSchur_LAPACKE.h \
+		C:/Libraries/Eigen/Eigen/src/Eigenvalues/ComplexSchur_LAPACKE.h \
+		C:/Libraries/Eigen/Eigen/src/Eigenvalues/SelfAdjointEigenSolver_LAPACKE.h \
+		../GitTest2/magnet.h \
+		C:/Libraries/Eigen/unsupported/Eigen/MatrixFunctions \
+		C:/Libraries/Eigen/unsupported/Eigen/src/MatrixFunctions/MatrixExponential.h \
+		C:/Libraries/Eigen/unsupported/Eigen/src/MatrixFunctions/StemFunction.h \
+		C:/Libraries/Eigen/unsupported/Eigen/src/MatrixFunctions/MatrixFunction.h \
+		C:/Libraries/Eigen/unsupported/Eigen/src/MatrixFunctions/MatrixSquareRoot.h \
+		C:/Libraries/Eigen/unsupported/Eigen/src/MatrixFunctions/MatrixLogarithm.h \
+		C:/Libraries/Eigen/unsupported/Eigen/src/MatrixFunctions/MatrixPower.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\Sensor.o ..\GitTest2\Sensor.cpp
+
+release/alglibinternal.o: ../GitTest2/alglibinternal.cpp ../GitTest2/stdafx.h \
+		../GitTest2/alglibinternal.h \
+		../GitTest2/ap.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\alglibinternal.o ..\GitTest2\alglibinternal.cpp
+
+release/alglibmisc.o: ../GitTest2/alglibmisc.cpp ../GitTest2/stdafx.h \
+		../GitTest2/alglibmisc.h \
+		../GitTest2/ap.h \
+		../GitTest2/alglibinternal.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\alglibmisc.o ..\GitTest2\alglibmisc.cpp
+
+release/ap.o: ../GitTest2/ap.cpp ../GitTest2/stdafx.h \
+		../GitTest2/ap.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\ap.o ..\GitTest2\ap.cpp
+
+release/dataanalysis.o: ../GitTest2/dataanalysis.cpp ../GitTest2/stdafx.h \
+		../GitTest2/dataanalysis.h \
+		../GitTest2/ap.h \
+		../GitTest2/alglibinternal.h \
+		../GitTest2/linalg.h \
+		../GitTest2/alglibmisc.h \
+		../GitTest2/statistics.h \
+		../GitTest2/specialfunctions.h \
+		../GitTest2/solvers.h \
+		../GitTest2/optimization.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\dataanalysis.o ..\GitTest2\dataanalysis.cpp
+
+release/diffequations.o: ../GitTest2/diffequations.cpp ../GitTest2/stdafx.h \
+		../GitTest2/diffequations.h \
+		../GitTest2/ap.h \
+		../GitTest2/alglibinternal.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\diffequations.o ..\GitTest2\diffequations.cpp
+
+release/fasttransforms.o: ../GitTest2/fasttransforms.cpp ../GitTest2/stdafx.h \
+		../GitTest2/fasttransforms.h \
+		../GitTest2/ap.h \
+		../GitTest2/alglibinternal.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\fasttransforms.o ..\GitTest2\fasttransforms.cpp
+
+release/integration.o: ../GitTest2/integration.cpp ../GitTest2/stdafx.h \
+		../GitTest2/integration.h \
+		../GitTest2/ap.h \
+		../GitTest2/alglibinternal.h \
+		../GitTest2/linalg.h \
+		../GitTest2/alglibmisc.h \
+		../GitTest2/specialfunctions.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\integration.o ..\GitTest2\integration.cpp
+
+release/interpolation.o: ../GitTest2/interpolation.cpp ../GitTest2/stdafx.h \
+		../GitTest2/interpolation.h \
+		../GitTest2/ap.h \
+		../GitTest2/alglibinternal.h \
+		../GitTest2/alglibmisc.h \
+		../GitTest2/linalg.h \
+		../GitTest2/solvers.h \
+		../GitTest2/optimization.h \
+		../GitTest2/specialfunctions.h \
+		../GitTest2/integration.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\interpolation.o ..\GitTest2\interpolation.cpp
+
+release/linalg.o: ../GitTest2/linalg.cpp ../GitTest2/stdafx.h \
+		../GitTest2/linalg.h \
+		../GitTest2/ap.h \
+		../GitTest2/alglibinternal.h \
+		../GitTest2/alglibmisc.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\linalg.o ..\GitTest2\linalg.cpp
+
+release/optimization.o: ../GitTest2/optimization.cpp ../GitTest2/stdafx.h \
+		../GitTest2/optimization.h \
+		../GitTest2/ap.h \
+		../GitTest2/alglibinternal.h \
+		../GitTest2/alglibmisc.h \
+		../GitTest2/linalg.h \
+		../GitTest2/solvers.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\optimization.o ..\GitTest2\optimization.cpp
+
+release/solvers.o: ../GitTest2/solvers.cpp ../GitTest2/stdafx.h \
+		../GitTest2/solvers.h \
+		../GitTest2/ap.h \
+		../GitTest2/alglibinternal.h \
+		../GitTest2/linalg.h \
+		../GitTest2/alglibmisc.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\solvers.o ..\GitTest2\solvers.cpp
+
+release/specialfunctions.o: ../GitTest2/specialfunctions.cpp ../GitTest2/stdafx.h \
+		../GitTest2/specialfunctions.h \
+		../GitTest2/ap.h \
+		../GitTest2/alglibinternal.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\specialfunctions.o ..\GitTest2\specialfunctions.cpp
+
+release/statistics.o: ../GitTest2/statistics.cpp ../GitTest2/stdafx.h \
+		../GitTest2/statistics.h \
+		../GitTest2/ap.h \
+		../GitTest2/alglibinternal.h \
+		../GitTest2/linalg.h \
+		../GitTest2/alglibmisc.h \
+		../GitTest2/specialfunctions.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\statistics.o ..\GitTest2\statistics.cpp
+
+release/PosCalculator.o: ../GitTest2/PosCalculator.cpp ../GitTest2/stdafx.h \
+		../GitTest2/posCalculator.h \
+		../GitTest2/Magnet.h \
+		C:/Libraries/Eigen/Eigen/Dense \
+		C:/Libraries/Eigen/Eigen/Core \
+		C:/Libraries/Eigen/Eigen/src/Core/util/DisableStupidWarnings.h \
+		C:/Libraries/Eigen/Eigen/src/Core/util/Macros.h \
+		C:/Libraries/Eigen/Eigen/src/Core/util/MKL_support.h \
+		C:/Libraries/Eigen/Eigen/src/misc/blas.h \
+		C:/Libraries/Eigen/Eigen/src/Core/util/Constants.h \
+		C:/Libraries/Eigen/Eigen/src/Core/util/Meta.h \
+		C:/Libraries/Eigen/Eigen/src/Core/util/ForwardDeclarations.h \
+		C:/Libraries/Eigen/Eigen/src/Core/util/StaticAssert.h \
+		C:/Libraries/Eigen/Eigen/src/Core/util/XprHelper.h \
+		C:/Libraries/Eigen/Eigen/src/Core/util/Memory.h \
+		C:/Libraries/Eigen/Eigen/src/Core/NumTraits.h \
+		C:/Libraries/Eigen/Eigen/src/Core/MathFunctions.h \
+		C:/Libraries/Eigen/Eigen/src/Core/GenericPacketMath.h \
+		C:/Libraries/Eigen/Eigen/src/Core/MathFunctionsImpl.h \
+		C:/Libraries/Eigen/Eigen/src/Core/arch/SSE/PacketMath.h \
+		C:/Libraries/Eigen/Eigen/src/Core/arch/AVX/PacketMath.h \
+		C:/Libraries/Eigen/Eigen/src/Core/arch/AVX512/PacketMath.h \
+		C:/Libraries/Eigen/Eigen/src/Core/arch/AVX512/MathFunctions.h \
+		C:/Libraries/Eigen/Eigen/src/Core/arch/SSE/Complex.h \
+		C:/Libraries/Eigen/Eigen/src/Core/arch/SSE/MathFunctions.h \
+		C:/Libraries/Eigen/Eigen/src/Core/arch/AVX/MathFunctions.h \
+		C:/Libraries/Eigen/Eigen/src/Core/arch/AVX/Complex.h \
+		C:/Libraries/Eigen/Eigen/src/Core/arch/AVX/TypeCasting.h \
+		C:/Libraries/Eigen/Eigen/src/Core/arch/SSE/TypeCasting.h \
+		C:/Libraries/Eigen/Eigen/src/Core/arch/AltiVec/PacketMath.h \
+		C:/Libraries/Eigen/Eigen/src/Core/arch/AltiVec/MathFunctions.h \
+		C:/Libraries/Eigen/Eigen/src/Core/arch/AltiVec/Complex.h \
+		C:/Libraries/Eigen/Eigen/src/Core/arch/NEON/PacketMath.h \
+		C:/Libraries/Eigen/Eigen/src/Core/arch/NEON/MathFunctions.h \
+		C:/Libraries/Eigen/Eigen/src/Core/arch/NEON/Complex.h \
+		C:/Libraries/Eigen/Eigen/src/Core/arch/ZVector/PacketMath.h \
+		C:/Libraries/Eigen/Eigen/src/Core/arch/ZVector/MathFunctions.h \
+		C:/Libraries/Eigen/Eigen/src/Core/arch/ZVector/Complex.h \
+		C:/Libraries/Eigen/Eigen/src/Core/arch/CUDA/Half.h \
+		C:/Libraries/Eigen/Eigen/src/Core/arch/CUDA/PacketMathHalf.h \
+		C:/Libraries/Eigen/Eigen/src/Core/arch/CUDA/TypeCasting.h \
+		C:/Libraries/Eigen/Eigen/src/Core/arch/CUDA/PacketMath.h \
+		C:/Libraries/Eigen/Eigen/src/Core/arch/CUDA/MathFunctions.h \
+		C:/Libraries/Eigen/Eigen/src/Core/arch/Default/Settings.h \
+		C:/Libraries/Eigen/Eigen/src/Core/functors/TernaryFunctors.h \
+		C:/Libraries/Eigen/Eigen/src/Core/functors/BinaryFunctors.h \
+		C:/Libraries/Eigen/Eigen/src/Core/functors/UnaryFunctors.h \
+		C:/Libraries/Eigen/Eigen/src/Core/functors/NullaryFunctors.h \
+		C:/Libraries/Eigen/Eigen/src/Core/functors/StlFunctors.h \
+		C:/Libraries/Eigen/Eigen/src/Core/functors/AssignmentFunctors.h \
+		C:/Libraries/Eigen/Eigen/src/Core/arch/CUDA/Complex.h \
+		C:/Libraries/Eigen/Eigen/src/Core/IO.h \
+		C:/Libraries/Eigen/Eigen/src/Core/DenseCoeffsBase.h \
+		C:/Libraries/Eigen/Eigen/src/Core/DenseBase.h \
+		C:/Libraries/Eigen/Eigen/src/plugins/BlockMethods.h \
+		C:/Libraries/Eigen/Eigen/src/Core/MatrixBase.h \
+		C:/Libraries/Eigen/Eigen/src/plugins/CommonCwiseUnaryOps.h \
+		C:/Libraries/Eigen/Eigen/src/plugins/CommonCwiseBinaryOps.h \
+		C:/Libraries/Eigen/Eigen/src/plugins/MatrixCwiseUnaryOps.h \
+		C:/Libraries/Eigen/Eigen/src/plugins/MatrixCwiseBinaryOps.h \
+		C:/Libraries/Eigen/Eigen/src/Core/EigenBase.h \
+		C:/Libraries/Eigen/Eigen/src/Core/Product.h \
+		C:/Libraries/Eigen/Eigen/src/Core/CoreEvaluators.h \
+		C:/Libraries/Eigen/Eigen/src/Core/AssignEvaluator.h \
+		C:/Libraries/Eigen/Eigen/src/Core/Assign.h \
+		C:/Libraries/Eigen/Eigen/src/Core/ArrayBase.h \
+		C:/Libraries/Eigen/Eigen/src/plugins/ArrayCwiseUnaryOps.h \
+		C:/Libraries/Eigen/Eigen/src/plugins/ArrayCwiseBinaryOps.h \
+		C:/Libraries/Eigen/Eigen/src/Core/util/BlasUtil.h \
+		C:/Libraries/Eigen/Eigen/src/Core/DenseStorage.h \
+		C:/Libraries/Eigen/Eigen/src/Core/NestByValue.h \
+		C:/Libraries/Eigen/Eigen/src/Core/ReturnByValue.h \
+		C:/Libraries/Eigen/Eigen/src/Core/NoAlias.h \
+		C:/Libraries/Eigen/Eigen/src/Core/PlainObjectBase.h \
+		C:/Libraries/Eigen/Eigen/src/Core/Matrix.h \
+		C:/Libraries/Eigen/Eigen/src/Core/Array.h \
+		C:/Libraries/Eigen/Eigen/src/Core/CwiseTernaryOp.h \
+		C:/Libraries/Eigen/Eigen/src/Core/CwiseBinaryOp.h \
+		C:/Libraries/Eigen/Eigen/src/Core/CwiseUnaryOp.h \
+		C:/Libraries/Eigen/Eigen/src/Core/CwiseNullaryOp.h \
+		C:/Libraries/Eigen/Eigen/src/Core/CwiseUnaryView.h \
+		C:/Libraries/Eigen/Eigen/src/Core/SelfCwiseBinaryOp.h \
+		C:/Libraries/Eigen/Eigen/src/Core/Dot.h \
+		C:/Libraries/Eigen/Eigen/src/Core/StableNorm.h \
+		C:/Libraries/Eigen/Eigen/src/Core/Stride.h \
+		C:/Libraries/Eigen/Eigen/src/Core/MapBase.h \
+		C:/Libraries/Eigen/Eigen/src/Core/Map.h \
+		C:/Libraries/Eigen/Eigen/src/Core/Ref.h \
+		C:/Libraries/Eigen/Eigen/src/Core/Block.h \
+		C:/Libraries/Eigen/Eigen/src/Core/VectorBlock.h \
+		C:/Libraries/Eigen/Eigen/src/Core/Transpose.h \
+		C:/Libraries/Eigen/Eigen/src/Core/DiagonalMatrix.h \
+		C:/Libraries/Eigen/Eigen/src/Core/Diagonal.h \
+		C:/Libraries/Eigen/Eigen/src/Core/DiagonalProduct.h \
+		C:/Libraries/Eigen/Eigen/src/Core/Redux.h \
+		C:/Libraries/Eigen/Eigen/src/Core/Visitor.h \
+		C:/Libraries/Eigen/Eigen/src/Core/Fuzzy.h \
+		C:/Libraries/Eigen/Eigen/src/Core/Swap.h \
+		C:/Libraries/Eigen/Eigen/src/Core/CommaInitializer.h \
+		C:/Libraries/Eigen/Eigen/src/Core/GeneralProduct.h \
+		C:/Libraries/Eigen/Eigen/src/Core/Solve.h \
+		C:/Libraries/Eigen/Eigen/src/Core/Inverse.h \
+		C:/Libraries/Eigen/Eigen/src/Core/SolverBase.h \
+		C:/Libraries/Eigen/Eigen/src/Core/PermutationMatrix.h \
+		C:/Libraries/Eigen/Eigen/src/Core/Transpositions.h \
+		C:/Libraries/Eigen/Eigen/src/Core/TriangularMatrix.h \
+		C:/Libraries/Eigen/Eigen/src/Core/SelfAdjointView.h \
+		C:/Libraries/Eigen/Eigen/src/Core/products/GeneralBlockPanelKernel.h \
+		C:/Libraries/Eigen/Eigen/src/Core/products/Parallelizer.h \
+		C:/Libraries/Eigen/Eigen/src/Core/ProductEvaluators.h \
+		C:/Libraries/Eigen/Eigen/src/Core/products/GeneralMatrixVector.h \
+		C:/Libraries/Eigen/Eigen/src/Core/products/GeneralMatrixMatrix.h \
+		C:/Libraries/Eigen/Eigen/src/Core/SolveTriangular.h \
+		C:/Libraries/Eigen/Eigen/src/Core/products/GeneralMatrixMatrixTriangular.h \
+		C:/Libraries/Eigen/Eigen/src/Core/products/SelfadjointMatrixVector.h \
+		C:/Libraries/Eigen/Eigen/src/Core/products/SelfadjointMatrixMatrix.h \
+		C:/Libraries/Eigen/Eigen/src/Core/products/SelfadjointProduct.h \
+		C:/Libraries/Eigen/Eigen/src/Core/products/SelfadjointRank2Update.h \
+		C:/Libraries/Eigen/Eigen/src/Core/products/TriangularMatrixVector.h \
+		C:/Libraries/Eigen/Eigen/src/Core/products/TriangularMatrixMatrix.h \
+		C:/Libraries/Eigen/Eigen/src/Core/products/TriangularSolverMatrix.h \
+		C:/Libraries/Eigen/Eigen/src/Core/products/TriangularSolverVector.h \
+		C:/Libraries/Eigen/Eigen/src/Core/BandMatrix.h \
+		C:/Libraries/Eigen/Eigen/src/Core/CoreIterators.h \
+		C:/Libraries/Eigen/Eigen/src/Core/ConditionEstimator.h \
+		C:/Libraries/Eigen/Eigen/src/Core/BooleanRedux.h \
+		C:/Libraries/Eigen/Eigen/src/Core/Select.h \
+		C:/Libraries/Eigen/Eigen/src/Core/VectorwiseOp.h \
+		C:/Libraries/Eigen/Eigen/src/Core/Random.h \
+		C:/Libraries/Eigen/Eigen/src/Core/Replicate.h \
+		C:/Libraries/Eigen/Eigen/src/Core/Reverse.h \
+		C:/Libraries/Eigen/Eigen/src/Core/ArrayWrapper.h \
+		C:/Libraries/Eigen/Eigen/src/Core/products/GeneralMatrixMatrix_BLAS.h \
+		C:/Libraries/Eigen/Eigen/src/Core/products/GeneralMatrixVector_BLAS.h \
+		C:/Libraries/Eigen/Eigen/src/Core/products/GeneralMatrixMatrixTriangular_BLAS.h \
+		C:/Libraries/Eigen/Eigen/src/Core/products/SelfadjointMatrixMatrix_BLAS.h \
+		C:/Libraries/Eigen/Eigen/src/Core/products/SelfadjointMatrixVector_BLAS.h \
+		C:/Libraries/Eigen/Eigen/src/Core/products/TriangularMatrixMatrix_BLAS.h \
+		C:/Libraries/Eigen/Eigen/src/Core/products/TriangularMatrixVector_BLAS.h \
+		C:/Libraries/Eigen/Eigen/src/Core/products/TriangularSolverMatrix_BLAS.h \
+		C:/Libraries/Eigen/Eigen/src/Core/Assign_MKL.h \
+		C:/Libraries/Eigen/Eigen/src/Core/GlobalFunctions.h \
+		C:/Libraries/Eigen/Eigen/src/Core/util/ReenableStupidWarnings.h \
+		C:/Libraries/Eigen/Eigen/LU \
+		C:/Libraries/Eigen/Eigen/src/misc/Kernel.h \
+		C:/Libraries/Eigen/Eigen/src/misc/Image.h \
+		C:/Libraries/Eigen/Eigen/src/LU/FullPivLU.h \
+		C:/Libraries/Eigen/Eigen/src/LU/PartialPivLU.h \
+		C:/Libraries/Eigen/Eigen/src/misc/lapacke.h \
+		C:/Libraries/Eigen/Eigen/src/misc/lapacke_mangling.h \
+		C:/Libraries/Eigen/Eigen/src/LU/PartialPivLU_LAPACKE.h \
+		C:/Libraries/Eigen/Eigen/src/LU/Determinant.h \
+		C:/Libraries/Eigen/Eigen/src/LU/InverseImpl.h \
+		C:/Libraries/Eigen/Eigen/src/LU/arch/Inverse_SSE.h \
+		C:/Libraries/Eigen/Eigen/Cholesky \
+		C:/Libraries/Eigen/Eigen/src/Cholesky/LLT.h \
+		C:/Libraries/Eigen/Eigen/src/Cholesky/LDLT.h \
+		C:/Libraries/Eigen/Eigen/src/Cholesky/LLT_LAPACKE.h \
+		C:/Libraries/Eigen/Eigen/QR \
+		C:/Libraries/Eigen/Eigen/Jacobi \
+		C:/Libraries/Eigen/Eigen/src/Jacobi/Jacobi.h \
+		C:/Libraries/Eigen/Eigen/Householder \
+		C:/Libraries/Eigen/Eigen/src/Householder/Householder.h \
+		C:/Libraries/Eigen/Eigen/src/Householder/HouseholderSequence.h \
+		C:/Libraries/Eigen/Eigen/src/Householder/BlockHouseholder.h \
+		C:/Libraries/Eigen/Eigen/src/QR/HouseholderQR.h \
+		C:/Libraries/Eigen/Eigen/src/QR/FullPivHouseholderQR.h \
+		C:/Libraries/Eigen/Eigen/src/QR/ColPivHouseholderQR.h \
+		C:/Libraries/Eigen/Eigen/src/QR/CompleteOrthogonalDecomposition.h \
+		C:/Libraries/Eigen/Eigen/src/QR/HouseholderQR_LAPACKE.h \
+		C:/Libraries/Eigen/Eigen/src/QR/ColPivHouseholderQR_LAPACKE.h \
+		C:/Libraries/Eigen/Eigen/SVD \
+		C:/Libraries/Eigen/Eigen/src/misc/RealSvd2x2.h \
+		C:/Libraries/Eigen/Eigen/src/SVD/UpperBidiagonalization.h \
+		C:/Libraries/Eigen/Eigen/src/SVD/SVDBase.h \
+		C:/Libraries/Eigen/Eigen/src/SVD/JacobiSVD.h \
+		C:/Libraries/Eigen/Eigen/src/SVD/BDCSVD.h \
+		C:/Libraries/Eigen/Eigen/src/SVD/JacobiSVD_LAPACKE.h \
+		C:/Libraries/Eigen/Eigen/Geometry \
+		C:/Libraries/Eigen/Eigen/src/Geometry/OrthoMethods.h \
+		C:/Libraries/Eigen/Eigen/src/Geometry/EulerAngles.h \
+		C:/Libraries/Eigen/Eigen/src/Geometry/Homogeneous.h \
+		C:/Libraries/Eigen/Eigen/src/Geometry/RotationBase.h \
+		C:/Libraries/Eigen/Eigen/src/Geometry/Rotation2D.h \
+		C:/Libraries/Eigen/Eigen/src/Geometry/Quaternion.h \
+		C:/Libraries/Eigen/Eigen/src/Geometry/AngleAxis.h \
+		C:/Libraries/Eigen/Eigen/src/Geometry/Transform.h \
+		C:/Libraries/Eigen/Eigen/src/Geometry/Translation.h \
+		C:/Libraries/Eigen/Eigen/src/Geometry/Scaling.h \
+		C:/Libraries/Eigen/Eigen/src/Geometry/Hyperplane.h \
+		C:/Libraries/Eigen/Eigen/src/Geometry/ParametrizedLine.h \
+		C:/Libraries/Eigen/Eigen/src/Geometry/AlignedBox.h \
+		C:/Libraries/Eigen/Eigen/src/Geometry/Umeyama.h \
+		C:/Libraries/Eigen/Eigen/src/Geometry/arch/Geometry_SSE.h \
+		C:/Libraries/Eigen/Eigen/Eigenvalues \
+		C:/Libraries/Eigen/Eigen/src/Eigenvalues/Tridiagonalization.h \
+		C:/Libraries/Eigen/Eigen/src/Eigenvalues/RealSchur.h \
+		C:/Libraries/Eigen/Eigen/src/Eigenvalues/HessenbergDecomposition.h \
+		C:/Libraries/Eigen/Eigen/src/Eigenvalues/EigenSolver.h \
+		C:/Libraries/Eigen/Eigen/src/Eigenvalues/SelfAdjointEigenSolver.h \
+		C:/Libraries/Eigen/Eigen/src/Eigenvalues/GeneralizedSelfAdjointEigenSolver.h \
+		C:/Libraries/Eigen/Eigen/src/Eigenvalues/ComplexSchur.h \
+		C:/Libraries/Eigen/Eigen/src/Eigenvalues/ComplexEigenSolver.h \
+		C:/Libraries/Eigen/Eigen/src/Eigenvalues/RealQZ.h \
+		C:/Libraries/Eigen/Eigen/src/Eigenvalues/GeneralizedEigenSolver.h \
+		C:/Libraries/Eigen/Eigen/src/Eigenvalues/MatrixBaseEigenvalues.h \
+		C:/Libraries/Eigen/Eigen/src/Eigenvalues/RealSchur_LAPACKE.h \
+		C:/Libraries/Eigen/Eigen/src/Eigenvalues/ComplexSchur_LAPACKE.h \
+		C:/Libraries/Eigen/Eigen/src/Eigenvalues/SelfAdjointEigenSolver_LAPACKE.h \
+		../GitTest2/Sensor.h \
+		../GitTest2/optimization.h \
+		../GitTest2/ap.h \
+		../GitTest2/alglibinternal.h \
+		../GitTest2/alglibmisc.h \
+		../GitTest2/linalg.h \
+		../GitTest2/solvers.h \
+		C:/Libraries/Eigen/unsupported/Eigen/MatrixFunctions \
+		C:/Libraries/Eigen/unsupported/Eigen/src/MatrixFunctions/MatrixExponential.h \
+		C:/Libraries/Eigen/unsupported/Eigen/src/MatrixFunctions/StemFunction.h \
+		C:/Libraries/Eigen/unsupported/Eigen/src/MatrixFunctions/MatrixFunction.h \
+		C:/Libraries/Eigen/unsupported/Eigen/src/MatrixFunctions/MatrixSquareRoot.h \
+		C:/Libraries/Eigen/unsupported/Eigen/src/MatrixFunctions/MatrixLogarithm.h \
+		C:/Libraries/Eigen/unsupported/Eigen/src/MatrixFunctions/MatrixPower.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\PosCalculator.o ..\GitTest2\PosCalculator.cpp
+
+release/Magnet.o: ../GitTest2/Magnet.cpp ../GitTest2/Magnet.h \
 		C:/Libraries/Eigen/Eigen/Dense \
 		C:/Libraries/Eigen/Eigen/Core \
 		C:/Libraries/Eigen/Eigen/src/Core/util/DisableStupidWarnings.h \
@@ -747,547 +1289,7 @@ release/magnet.o: ../GitTest2/magnet.cpp ../GitTest2/magnet.h \
 		C:/Libraries/Eigen/Eigen/src/Eigenvalues/RealSchur_LAPACKE.h \
 		C:/Libraries/Eigen/Eigen/src/Eigenvalues/ComplexSchur_LAPACKE.h \
 		C:/Libraries/Eigen/Eigen/src/Eigenvalues/SelfAdjointEigenSolver_LAPACKE.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\magnet.o ..\GitTest2\magnet.cpp
-
-release/posCalculator.o: ../GitTest2/posCalculator.cpp ../GitTest2/stdafx.h \
-		../GitTest2/sensor.h \
-		../GitTest2/magnet.h \
-		C:/Libraries/Eigen/Eigen/Dense \
-		C:/Libraries/Eigen/Eigen/Core \
-		C:/Libraries/Eigen/Eigen/src/Core/util/DisableStupidWarnings.h \
-		C:/Libraries/Eigen/Eigen/src/Core/util/Macros.h \
-		C:/Libraries/Eigen/Eigen/src/Core/util/MKL_support.h \
-		C:/Libraries/Eigen/Eigen/src/misc/blas.h \
-		C:/Libraries/Eigen/Eigen/src/Core/util/Constants.h \
-		C:/Libraries/Eigen/Eigen/src/Core/util/Meta.h \
-		C:/Libraries/Eigen/Eigen/src/Core/util/ForwardDeclarations.h \
-		C:/Libraries/Eigen/Eigen/src/Core/util/StaticAssert.h \
-		C:/Libraries/Eigen/Eigen/src/Core/util/XprHelper.h \
-		C:/Libraries/Eigen/Eigen/src/Core/util/Memory.h \
-		C:/Libraries/Eigen/Eigen/src/Core/NumTraits.h \
-		C:/Libraries/Eigen/Eigen/src/Core/MathFunctions.h \
-		C:/Libraries/Eigen/Eigen/src/Core/GenericPacketMath.h \
-		C:/Libraries/Eigen/Eigen/src/Core/MathFunctionsImpl.h \
-		C:/Libraries/Eigen/Eigen/src/Core/arch/SSE/PacketMath.h \
-		C:/Libraries/Eigen/Eigen/src/Core/arch/AVX/PacketMath.h \
-		C:/Libraries/Eigen/Eigen/src/Core/arch/AVX512/PacketMath.h \
-		C:/Libraries/Eigen/Eigen/src/Core/arch/AVX512/MathFunctions.h \
-		C:/Libraries/Eigen/Eigen/src/Core/arch/SSE/Complex.h \
-		C:/Libraries/Eigen/Eigen/src/Core/arch/SSE/MathFunctions.h \
-		C:/Libraries/Eigen/Eigen/src/Core/arch/AVX/MathFunctions.h \
-		C:/Libraries/Eigen/Eigen/src/Core/arch/AVX/Complex.h \
-		C:/Libraries/Eigen/Eigen/src/Core/arch/AVX/TypeCasting.h \
-		C:/Libraries/Eigen/Eigen/src/Core/arch/SSE/TypeCasting.h \
-		C:/Libraries/Eigen/Eigen/src/Core/arch/AltiVec/PacketMath.h \
-		C:/Libraries/Eigen/Eigen/src/Core/arch/AltiVec/MathFunctions.h \
-		C:/Libraries/Eigen/Eigen/src/Core/arch/AltiVec/Complex.h \
-		C:/Libraries/Eigen/Eigen/src/Core/arch/NEON/PacketMath.h \
-		C:/Libraries/Eigen/Eigen/src/Core/arch/NEON/MathFunctions.h \
-		C:/Libraries/Eigen/Eigen/src/Core/arch/NEON/Complex.h \
-		C:/Libraries/Eigen/Eigen/src/Core/arch/ZVector/PacketMath.h \
-		C:/Libraries/Eigen/Eigen/src/Core/arch/ZVector/MathFunctions.h \
-		C:/Libraries/Eigen/Eigen/src/Core/arch/ZVector/Complex.h \
-		C:/Libraries/Eigen/Eigen/src/Core/arch/CUDA/Half.h \
-		C:/Libraries/Eigen/Eigen/src/Core/arch/CUDA/PacketMathHalf.h \
-		C:/Libraries/Eigen/Eigen/src/Core/arch/CUDA/TypeCasting.h \
-		C:/Libraries/Eigen/Eigen/src/Core/arch/CUDA/PacketMath.h \
-		C:/Libraries/Eigen/Eigen/src/Core/arch/CUDA/MathFunctions.h \
-		C:/Libraries/Eigen/Eigen/src/Core/arch/Default/Settings.h \
-		C:/Libraries/Eigen/Eigen/src/Core/functors/TernaryFunctors.h \
-		C:/Libraries/Eigen/Eigen/src/Core/functors/BinaryFunctors.h \
-		C:/Libraries/Eigen/Eigen/src/Core/functors/UnaryFunctors.h \
-		C:/Libraries/Eigen/Eigen/src/Core/functors/NullaryFunctors.h \
-		C:/Libraries/Eigen/Eigen/src/Core/functors/StlFunctors.h \
-		C:/Libraries/Eigen/Eigen/src/Core/functors/AssignmentFunctors.h \
-		C:/Libraries/Eigen/Eigen/src/Core/arch/CUDA/Complex.h \
-		C:/Libraries/Eigen/Eigen/src/Core/IO.h \
-		C:/Libraries/Eigen/Eigen/src/Core/DenseCoeffsBase.h \
-		C:/Libraries/Eigen/Eigen/src/Core/DenseBase.h \
-		C:/Libraries/Eigen/Eigen/src/plugins/BlockMethods.h \
-		C:/Libraries/Eigen/Eigen/src/Core/MatrixBase.h \
-		C:/Libraries/Eigen/Eigen/src/plugins/CommonCwiseUnaryOps.h \
-		C:/Libraries/Eigen/Eigen/src/plugins/CommonCwiseBinaryOps.h \
-		C:/Libraries/Eigen/Eigen/src/plugins/MatrixCwiseUnaryOps.h \
-		C:/Libraries/Eigen/Eigen/src/plugins/MatrixCwiseBinaryOps.h \
-		C:/Libraries/Eigen/Eigen/src/Core/EigenBase.h \
-		C:/Libraries/Eigen/Eigen/src/Core/Product.h \
-		C:/Libraries/Eigen/Eigen/src/Core/CoreEvaluators.h \
-		C:/Libraries/Eigen/Eigen/src/Core/AssignEvaluator.h \
-		C:/Libraries/Eigen/Eigen/src/Core/Assign.h \
-		C:/Libraries/Eigen/Eigen/src/Core/ArrayBase.h \
-		C:/Libraries/Eigen/Eigen/src/plugins/ArrayCwiseUnaryOps.h \
-		C:/Libraries/Eigen/Eigen/src/plugins/ArrayCwiseBinaryOps.h \
-		C:/Libraries/Eigen/Eigen/src/Core/util/BlasUtil.h \
-		C:/Libraries/Eigen/Eigen/src/Core/DenseStorage.h \
-		C:/Libraries/Eigen/Eigen/src/Core/NestByValue.h \
-		C:/Libraries/Eigen/Eigen/src/Core/ReturnByValue.h \
-		C:/Libraries/Eigen/Eigen/src/Core/NoAlias.h \
-		C:/Libraries/Eigen/Eigen/src/Core/PlainObjectBase.h \
-		C:/Libraries/Eigen/Eigen/src/Core/Matrix.h \
-		C:/Libraries/Eigen/Eigen/src/Core/Array.h \
-		C:/Libraries/Eigen/Eigen/src/Core/CwiseTernaryOp.h \
-		C:/Libraries/Eigen/Eigen/src/Core/CwiseBinaryOp.h \
-		C:/Libraries/Eigen/Eigen/src/Core/CwiseUnaryOp.h \
-		C:/Libraries/Eigen/Eigen/src/Core/CwiseNullaryOp.h \
-		C:/Libraries/Eigen/Eigen/src/Core/CwiseUnaryView.h \
-		C:/Libraries/Eigen/Eigen/src/Core/SelfCwiseBinaryOp.h \
-		C:/Libraries/Eigen/Eigen/src/Core/Dot.h \
-		C:/Libraries/Eigen/Eigen/src/Core/StableNorm.h \
-		C:/Libraries/Eigen/Eigen/src/Core/Stride.h \
-		C:/Libraries/Eigen/Eigen/src/Core/MapBase.h \
-		C:/Libraries/Eigen/Eigen/src/Core/Map.h \
-		C:/Libraries/Eigen/Eigen/src/Core/Ref.h \
-		C:/Libraries/Eigen/Eigen/src/Core/Block.h \
-		C:/Libraries/Eigen/Eigen/src/Core/VectorBlock.h \
-		C:/Libraries/Eigen/Eigen/src/Core/Transpose.h \
-		C:/Libraries/Eigen/Eigen/src/Core/DiagonalMatrix.h \
-		C:/Libraries/Eigen/Eigen/src/Core/Diagonal.h \
-		C:/Libraries/Eigen/Eigen/src/Core/DiagonalProduct.h \
-		C:/Libraries/Eigen/Eigen/src/Core/Redux.h \
-		C:/Libraries/Eigen/Eigen/src/Core/Visitor.h \
-		C:/Libraries/Eigen/Eigen/src/Core/Fuzzy.h \
-		C:/Libraries/Eigen/Eigen/src/Core/Swap.h \
-		C:/Libraries/Eigen/Eigen/src/Core/CommaInitializer.h \
-		C:/Libraries/Eigen/Eigen/src/Core/GeneralProduct.h \
-		C:/Libraries/Eigen/Eigen/src/Core/Solve.h \
-		C:/Libraries/Eigen/Eigen/src/Core/Inverse.h \
-		C:/Libraries/Eigen/Eigen/src/Core/SolverBase.h \
-		C:/Libraries/Eigen/Eigen/src/Core/PermutationMatrix.h \
-		C:/Libraries/Eigen/Eigen/src/Core/Transpositions.h \
-		C:/Libraries/Eigen/Eigen/src/Core/TriangularMatrix.h \
-		C:/Libraries/Eigen/Eigen/src/Core/SelfAdjointView.h \
-		C:/Libraries/Eigen/Eigen/src/Core/products/GeneralBlockPanelKernel.h \
-		C:/Libraries/Eigen/Eigen/src/Core/products/Parallelizer.h \
-		C:/Libraries/Eigen/Eigen/src/Core/ProductEvaluators.h \
-		C:/Libraries/Eigen/Eigen/src/Core/products/GeneralMatrixVector.h \
-		C:/Libraries/Eigen/Eigen/src/Core/products/GeneralMatrixMatrix.h \
-		C:/Libraries/Eigen/Eigen/src/Core/SolveTriangular.h \
-		C:/Libraries/Eigen/Eigen/src/Core/products/GeneralMatrixMatrixTriangular.h \
-		C:/Libraries/Eigen/Eigen/src/Core/products/SelfadjointMatrixVector.h \
-		C:/Libraries/Eigen/Eigen/src/Core/products/SelfadjointMatrixMatrix.h \
-		C:/Libraries/Eigen/Eigen/src/Core/products/SelfadjointProduct.h \
-		C:/Libraries/Eigen/Eigen/src/Core/products/SelfadjointRank2Update.h \
-		C:/Libraries/Eigen/Eigen/src/Core/products/TriangularMatrixVector.h \
-		C:/Libraries/Eigen/Eigen/src/Core/products/TriangularMatrixMatrix.h \
-		C:/Libraries/Eigen/Eigen/src/Core/products/TriangularSolverMatrix.h \
-		C:/Libraries/Eigen/Eigen/src/Core/products/TriangularSolverVector.h \
-		C:/Libraries/Eigen/Eigen/src/Core/BandMatrix.h \
-		C:/Libraries/Eigen/Eigen/src/Core/CoreIterators.h \
-		C:/Libraries/Eigen/Eigen/src/Core/ConditionEstimator.h \
-		C:/Libraries/Eigen/Eigen/src/Core/BooleanRedux.h \
-		C:/Libraries/Eigen/Eigen/src/Core/Select.h \
-		C:/Libraries/Eigen/Eigen/src/Core/VectorwiseOp.h \
-		C:/Libraries/Eigen/Eigen/src/Core/Random.h \
-		C:/Libraries/Eigen/Eigen/src/Core/Replicate.h \
-		C:/Libraries/Eigen/Eigen/src/Core/Reverse.h \
-		C:/Libraries/Eigen/Eigen/src/Core/ArrayWrapper.h \
-		C:/Libraries/Eigen/Eigen/src/Core/products/GeneralMatrixMatrix_BLAS.h \
-		C:/Libraries/Eigen/Eigen/src/Core/products/GeneralMatrixVector_BLAS.h \
-		C:/Libraries/Eigen/Eigen/src/Core/products/GeneralMatrixMatrixTriangular_BLAS.h \
-		C:/Libraries/Eigen/Eigen/src/Core/products/SelfadjointMatrixMatrix_BLAS.h \
-		C:/Libraries/Eigen/Eigen/src/Core/products/SelfadjointMatrixVector_BLAS.h \
-		C:/Libraries/Eigen/Eigen/src/Core/products/TriangularMatrixMatrix_BLAS.h \
-		C:/Libraries/Eigen/Eigen/src/Core/products/TriangularMatrixVector_BLAS.h \
-		C:/Libraries/Eigen/Eigen/src/Core/products/TriangularSolverMatrix_BLAS.h \
-		C:/Libraries/Eigen/Eigen/src/Core/Assign_MKL.h \
-		C:/Libraries/Eigen/Eigen/src/Core/GlobalFunctions.h \
-		C:/Libraries/Eigen/Eigen/src/Core/util/ReenableStupidWarnings.h \
-		C:/Libraries/Eigen/Eigen/LU \
-		C:/Libraries/Eigen/Eigen/src/misc/Kernel.h \
-		C:/Libraries/Eigen/Eigen/src/misc/Image.h \
-		C:/Libraries/Eigen/Eigen/src/LU/FullPivLU.h \
-		C:/Libraries/Eigen/Eigen/src/LU/PartialPivLU.h \
-		C:/Libraries/Eigen/Eigen/src/misc/lapacke.h \
-		C:/Libraries/Eigen/Eigen/src/misc/lapacke_mangling.h \
-		C:/Libraries/Eigen/Eigen/src/LU/PartialPivLU_LAPACKE.h \
-		C:/Libraries/Eigen/Eigen/src/LU/Determinant.h \
-		C:/Libraries/Eigen/Eigen/src/LU/InverseImpl.h \
-		C:/Libraries/Eigen/Eigen/src/LU/arch/Inverse_SSE.h \
-		C:/Libraries/Eigen/Eigen/Cholesky \
-		C:/Libraries/Eigen/Eigen/src/Cholesky/LLT.h \
-		C:/Libraries/Eigen/Eigen/src/Cholesky/LDLT.h \
-		C:/Libraries/Eigen/Eigen/src/Cholesky/LLT_LAPACKE.h \
-		C:/Libraries/Eigen/Eigen/QR \
-		C:/Libraries/Eigen/Eigen/Jacobi \
-		C:/Libraries/Eigen/Eigen/src/Jacobi/Jacobi.h \
-		C:/Libraries/Eigen/Eigen/Householder \
-		C:/Libraries/Eigen/Eigen/src/Householder/Householder.h \
-		C:/Libraries/Eigen/Eigen/src/Householder/HouseholderSequence.h \
-		C:/Libraries/Eigen/Eigen/src/Householder/BlockHouseholder.h \
-		C:/Libraries/Eigen/Eigen/src/QR/HouseholderQR.h \
-		C:/Libraries/Eigen/Eigen/src/QR/FullPivHouseholderQR.h \
-		C:/Libraries/Eigen/Eigen/src/QR/ColPivHouseholderQR.h \
-		C:/Libraries/Eigen/Eigen/src/QR/CompleteOrthogonalDecomposition.h \
-		C:/Libraries/Eigen/Eigen/src/QR/HouseholderQR_LAPACKE.h \
-		C:/Libraries/Eigen/Eigen/src/QR/ColPivHouseholderQR_LAPACKE.h \
-		C:/Libraries/Eigen/Eigen/SVD \
-		C:/Libraries/Eigen/Eigen/src/misc/RealSvd2x2.h \
-		C:/Libraries/Eigen/Eigen/src/SVD/UpperBidiagonalization.h \
-		C:/Libraries/Eigen/Eigen/src/SVD/SVDBase.h \
-		C:/Libraries/Eigen/Eigen/src/SVD/JacobiSVD.h \
-		C:/Libraries/Eigen/Eigen/src/SVD/BDCSVD.h \
-		C:/Libraries/Eigen/Eigen/src/SVD/JacobiSVD_LAPACKE.h \
-		C:/Libraries/Eigen/Eigen/Geometry \
-		C:/Libraries/Eigen/Eigen/src/Geometry/OrthoMethods.h \
-		C:/Libraries/Eigen/Eigen/src/Geometry/EulerAngles.h \
-		C:/Libraries/Eigen/Eigen/src/Geometry/Homogeneous.h \
-		C:/Libraries/Eigen/Eigen/src/Geometry/RotationBase.h \
-		C:/Libraries/Eigen/Eigen/src/Geometry/Rotation2D.h \
-		C:/Libraries/Eigen/Eigen/src/Geometry/Quaternion.h \
-		C:/Libraries/Eigen/Eigen/src/Geometry/AngleAxis.h \
-		C:/Libraries/Eigen/Eigen/src/Geometry/Transform.h \
-		C:/Libraries/Eigen/Eigen/src/Geometry/Translation.h \
-		C:/Libraries/Eigen/Eigen/src/Geometry/Scaling.h \
-		C:/Libraries/Eigen/Eigen/src/Geometry/Hyperplane.h \
-		C:/Libraries/Eigen/Eigen/src/Geometry/ParametrizedLine.h \
-		C:/Libraries/Eigen/Eigen/src/Geometry/AlignedBox.h \
-		C:/Libraries/Eigen/Eigen/src/Geometry/Umeyama.h \
-		C:/Libraries/Eigen/Eigen/src/Geometry/arch/Geometry_SSE.h \
-		C:/Libraries/Eigen/Eigen/Eigenvalues \
-		C:/Libraries/Eigen/Eigen/src/Eigenvalues/Tridiagonalization.h \
-		C:/Libraries/Eigen/Eigen/src/Eigenvalues/RealSchur.h \
-		C:/Libraries/Eigen/Eigen/src/Eigenvalues/HessenbergDecomposition.h \
-		C:/Libraries/Eigen/Eigen/src/Eigenvalues/EigenSolver.h \
-		C:/Libraries/Eigen/Eigen/src/Eigenvalues/SelfAdjointEigenSolver.h \
-		C:/Libraries/Eigen/Eigen/src/Eigenvalues/GeneralizedSelfAdjointEigenSolver.h \
-		C:/Libraries/Eigen/Eigen/src/Eigenvalues/ComplexSchur.h \
-		C:/Libraries/Eigen/Eigen/src/Eigenvalues/ComplexEigenSolver.h \
-		C:/Libraries/Eigen/Eigen/src/Eigenvalues/RealQZ.h \
-		C:/Libraries/Eigen/Eigen/src/Eigenvalues/GeneralizedEigenSolver.h \
-		C:/Libraries/Eigen/Eigen/src/Eigenvalues/MatrixBaseEigenvalues.h \
-		C:/Libraries/Eigen/Eigen/src/Eigenvalues/RealSchur_LAPACKE.h \
-		C:/Libraries/Eigen/Eigen/src/Eigenvalues/ComplexSchur_LAPACKE.h \
-		C:/Libraries/Eigen/Eigen/src/Eigenvalues/SelfAdjointEigenSolver_LAPACKE.h \
-		../GitTest2/optimization.h \
-		../GitTest2/ap.h \
-		../GitTest2/alglibinternal.h \
-		../GitTest2/alglibmisc.h \
-		../GitTest2/linalg.h \
-		../GitTest2/solvers.h \
-		C:/Libraries/Eigen/unsupported/Eigen/MatrixFunctions \
-		C:/Libraries/Eigen/unsupported/Eigen/src/MatrixFunctions/MatrixExponential.h \
-		C:/Libraries/Eigen/unsupported/Eigen/src/MatrixFunctions/StemFunction.h \
-		C:/Libraries/Eigen/unsupported/Eigen/src/MatrixFunctions/MatrixFunction.h \
-		C:/Libraries/Eigen/unsupported/Eigen/src/MatrixFunctions/MatrixSquareRoot.h \
-		C:/Libraries/Eigen/unsupported/Eigen/src/MatrixFunctions/MatrixLogarithm.h \
-		C:/Libraries/Eigen/unsupported/Eigen/src/MatrixFunctions/MatrixPower.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\posCalculator.o ..\GitTest2\posCalculator.cpp
-
-release/Sensor.o: ../GitTest2/Sensor.cpp ../GitTest2/sensor.h \
-		../GitTest2/magnet.h \
-		C:/Libraries/Eigen/Eigen/Dense \
-		C:/Libraries/Eigen/Eigen/Core \
-		C:/Libraries/Eigen/Eigen/src/Core/util/DisableStupidWarnings.h \
-		C:/Libraries/Eigen/Eigen/src/Core/util/Macros.h \
-		C:/Libraries/Eigen/Eigen/src/Core/util/MKL_support.h \
-		C:/Libraries/Eigen/Eigen/src/misc/blas.h \
-		C:/Libraries/Eigen/Eigen/src/Core/util/Constants.h \
-		C:/Libraries/Eigen/Eigen/src/Core/util/Meta.h \
-		C:/Libraries/Eigen/Eigen/src/Core/util/ForwardDeclarations.h \
-		C:/Libraries/Eigen/Eigen/src/Core/util/StaticAssert.h \
-		C:/Libraries/Eigen/Eigen/src/Core/util/XprHelper.h \
-		C:/Libraries/Eigen/Eigen/src/Core/util/Memory.h \
-		C:/Libraries/Eigen/Eigen/src/Core/NumTraits.h \
-		C:/Libraries/Eigen/Eigen/src/Core/MathFunctions.h \
-		C:/Libraries/Eigen/Eigen/src/Core/GenericPacketMath.h \
-		C:/Libraries/Eigen/Eigen/src/Core/MathFunctionsImpl.h \
-		C:/Libraries/Eigen/Eigen/src/Core/arch/SSE/PacketMath.h \
-		C:/Libraries/Eigen/Eigen/src/Core/arch/AVX/PacketMath.h \
-		C:/Libraries/Eigen/Eigen/src/Core/arch/AVX512/PacketMath.h \
-		C:/Libraries/Eigen/Eigen/src/Core/arch/AVX512/MathFunctions.h \
-		C:/Libraries/Eigen/Eigen/src/Core/arch/SSE/Complex.h \
-		C:/Libraries/Eigen/Eigen/src/Core/arch/SSE/MathFunctions.h \
-		C:/Libraries/Eigen/Eigen/src/Core/arch/AVX/MathFunctions.h \
-		C:/Libraries/Eigen/Eigen/src/Core/arch/AVX/Complex.h \
-		C:/Libraries/Eigen/Eigen/src/Core/arch/AVX/TypeCasting.h \
-		C:/Libraries/Eigen/Eigen/src/Core/arch/SSE/TypeCasting.h \
-		C:/Libraries/Eigen/Eigen/src/Core/arch/AltiVec/PacketMath.h \
-		C:/Libraries/Eigen/Eigen/src/Core/arch/AltiVec/MathFunctions.h \
-		C:/Libraries/Eigen/Eigen/src/Core/arch/AltiVec/Complex.h \
-		C:/Libraries/Eigen/Eigen/src/Core/arch/NEON/PacketMath.h \
-		C:/Libraries/Eigen/Eigen/src/Core/arch/NEON/MathFunctions.h \
-		C:/Libraries/Eigen/Eigen/src/Core/arch/NEON/Complex.h \
-		C:/Libraries/Eigen/Eigen/src/Core/arch/ZVector/PacketMath.h \
-		C:/Libraries/Eigen/Eigen/src/Core/arch/ZVector/MathFunctions.h \
-		C:/Libraries/Eigen/Eigen/src/Core/arch/ZVector/Complex.h \
-		C:/Libraries/Eigen/Eigen/src/Core/arch/CUDA/Half.h \
-		C:/Libraries/Eigen/Eigen/src/Core/arch/CUDA/PacketMathHalf.h \
-		C:/Libraries/Eigen/Eigen/src/Core/arch/CUDA/TypeCasting.h \
-		C:/Libraries/Eigen/Eigen/src/Core/arch/CUDA/PacketMath.h \
-		C:/Libraries/Eigen/Eigen/src/Core/arch/CUDA/MathFunctions.h \
-		C:/Libraries/Eigen/Eigen/src/Core/arch/Default/Settings.h \
-		C:/Libraries/Eigen/Eigen/src/Core/functors/TernaryFunctors.h \
-		C:/Libraries/Eigen/Eigen/src/Core/functors/BinaryFunctors.h \
-		C:/Libraries/Eigen/Eigen/src/Core/functors/UnaryFunctors.h \
-		C:/Libraries/Eigen/Eigen/src/Core/functors/NullaryFunctors.h \
-		C:/Libraries/Eigen/Eigen/src/Core/functors/StlFunctors.h \
-		C:/Libraries/Eigen/Eigen/src/Core/functors/AssignmentFunctors.h \
-		C:/Libraries/Eigen/Eigen/src/Core/arch/CUDA/Complex.h \
-		C:/Libraries/Eigen/Eigen/src/Core/IO.h \
-		C:/Libraries/Eigen/Eigen/src/Core/DenseCoeffsBase.h \
-		C:/Libraries/Eigen/Eigen/src/Core/DenseBase.h \
-		C:/Libraries/Eigen/Eigen/src/plugins/BlockMethods.h \
-		C:/Libraries/Eigen/Eigen/src/Core/MatrixBase.h \
-		C:/Libraries/Eigen/Eigen/src/plugins/CommonCwiseUnaryOps.h \
-		C:/Libraries/Eigen/Eigen/src/plugins/CommonCwiseBinaryOps.h \
-		C:/Libraries/Eigen/Eigen/src/plugins/MatrixCwiseUnaryOps.h \
-		C:/Libraries/Eigen/Eigen/src/plugins/MatrixCwiseBinaryOps.h \
-		C:/Libraries/Eigen/Eigen/src/Core/EigenBase.h \
-		C:/Libraries/Eigen/Eigen/src/Core/Product.h \
-		C:/Libraries/Eigen/Eigen/src/Core/CoreEvaluators.h \
-		C:/Libraries/Eigen/Eigen/src/Core/AssignEvaluator.h \
-		C:/Libraries/Eigen/Eigen/src/Core/Assign.h \
-		C:/Libraries/Eigen/Eigen/src/Core/ArrayBase.h \
-		C:/Libraries/Eigen/Eigen/src/plugins/ArrayCwiseUnaryOps.h \
-		C:/Libraries/Eigen/Eigen/src/plugins/ArrayCwiseBinaryOps.h \
-		C:/Libraries/Eigen/Eigen/src/Core/util/BlasUtil.h \
-		C:/Libraries/Eigen/Eigen/src/Core/DenseStorage.h \
-		C:/Libraries/Eigen/Eigen/src/Core/NestByValue.h \
-		C:/Libraries/Eigen/Eigen/src/Core/ReturnByValue.h \
-		C:/Libraries/Eigen/Eigen/src/Core/NoAlias.h \
-		C:/Libraries/Eigen/Eigen/src/Core/PlainObjectBase.h \
-		C:/Libraries/Eigen/Eigen/src/Core/Matrix.h \
-		C:/Libraries/Eigen/Eigen/src/Core/Array.h \
-		C:/Libraries/Eigen/Eigen/src/Core/CwiseTernaryOp.h \
-		C:/Libraries/Eigen/Eigen/src/Core/CwiseBinaryOp.h \
-		C:/Libraries/Eigen/Eigen/src/Core/CwiseUnaryOp.h \
-		C:/Libraries/Eigen/Eigen/src/Core/CwiseNullaryOp.h \
-		C:/Libraries/Eigen/Eigen/src/Core/CwiseUnaryView.h \
-		C:/Libraries/Eigen/Eigen/src/Core/SelfCwiseBinaryOp.h \
-		C:/Libraries/Eigen/Eigen/src/Core/Dot.h \
-		C:/Libraries/Eigen/Eigen/src/Core/StableNorm.h \
-		C:/Libraries/Eigen/Eigen/src/Core/Stride.h \
-		C:/Libraries/Eigen/Eigen/src/Core/MapBase.h \
-		C:/Libraries/Eigen/Eigen/src/Core/Map.h \
-		C:/Libraries/Eigen/Eigen/src/Core/Ref.h \
-		C:/Libraries/Eigen/Eigen/src/Core/Block.h \
-		C:/Libraries/Eigen/Eigen/src/Core/VectorBlock.h \
-		C:/Libraries/Eigen/Eigen/src/Core/Transpose.h \
-		C:/Libraries/Eigen/Eigen/src/Core/DiagonalMatrix.h \
-		C:/Libraries/Eigen/Eigen/src/Core/Diagonal.h \
-		C:/Libraries/Eigen/Eigen/src/Core/DiagonalProduct.h \
-		C:/Libraries/Eigen/Eigen/src/Core/Redux.h \
-		C:/Libraries/Eigen/Eigen/src/Core/Visitor.h \
-		C:/Libraries/Eigen/Eigen/src/Core/Fuzzy.h \
-		C:/Libraries/Eigen/Eigen/src/Core/Swap.h \
-		C:/Libraries/Eigen/Eigen/src/Core/CommaInitializer.h \
-		C:/Libraries/Eigen/Eigen/src/Core/GeneralProduct.h \
-		C:/Libraries/Eigen/Eigen/src/Core/Solve.h \
-		C:/Libraries/Eigen/Eigen/src/Core/Inverse.h \
-		C:/Libraries/Eigen/Eigen/src/Core/SolverBase.h \
-		C:/Libraries/Eigen/Eigen/src/Core/PermutationMatrix.h \
-		C:/Libraries/Eigen/Eigen/src/Core/Transpositions.h \
-		C:/Libraries/Eigen/Eigen/src/Core/TriangularMatrix.h \
-		C:/Libraries/Eigen/Eigen/src/Core/SelfAdjointView.h \
-		C:/Libraries/Eigen/Eigen/src/Core/products/GeneralBlockPanelKernel.h \
-		C:/Libraries/Eigen/Eigen/src/Core/products/Parallelizer.h \
-		C:/Libraries/Eigen/Eigen/src/Core/ProductEvaluators.h \
-		C:/Libraries/Eigen/Eigen/src/Core/products/GeneralMatrixVector.h \
-		C:/Libraries/Eigen/Eigen/src/Core/products/GeneralMatrixMatrix.h \
-		C:/Libraries/Eigen/Eigen/src/Core/SolveTriangular.h \
-		C:/Libraries/Eigen/Eigen/src/Core/products/GeneralMatrixMatrixTriangular.h \
-		C:/Libraries/Eigen/Eigen/src/Core/products/SelfadjointMatrixVector.h \
-		C:/Libraries/Eigen/Eigen/src/Core/products/SelfadjointMatrixMatrix.h \
-		C:/Libraries/Eigen/Eigen/src/Core/products/SelfadjointProduct.h \
-		C:/Libraries/Eigen/Eigen/src/Core/products/SelfadjointRank2Update.h \
-		C:/Libraries/Eigen/Eigen/src/Core/products/TriangularMatrixVector.h \
-		C:/Libraries/Eigen/Eigen/src/Core/products/TriangularMatrixMatrix.h \
-		C:/Libraries/Eigen/Eigen/src/Core/products/TriangularSolverMatrix.h \
-		C:/Libraries/Eigen/Eigen/src/Core/products/TriangularSolverVector.h \
-		C:/Libraries/Eigen/Eigen/src/Core/BandMatrix.h \
-		C:/Libraries/Eigen/Eigen/src/Core/CoreIterators.h \
-		C:/Libraries/Eigen/Eigen/src/Core/ConditionEstimator.h \
-		C:/Libraries/Eigen/Eigen/src/Core/BooleanRedux.h \
-		C:/Libraries/Eigen/Eigen/src/Core/Select.h \
-		C:/Libraries/Eigen/Eigen/src/Core/VectorwiseOp.h \
-		C:/Libraries/Eigen/Eigen/src/Core/Random.h \
-		C:/Libraries/Eigen/Eigen/src/Core/Replicate.h \
-		C:/Libraries/Eigen/Eigen/src/Core/Reverse.h \
-		C:/Libraries/Eigen/Eigen/src/Core/ArrayWrapper.h \
-		C:/Libraries/Eigen/Eigen/src/Core/products/GeneralMatrixMatrix_BLAS.h \
-		C:/Libraries/Eigen/Eigen/src/Core/products/GeneralMatrixVector_BLAS.h \
-		C:/Libraries/Eigen/Eigen/src/Core/products/GeneralMatrixMatrixTriangular_BLAS.h \
-		C:/Libraries/Eigen/Eigen/src/Core/products/SelfadjointMatrixMatrix_BLAS.h \
-		C:/Libraries/Eigen/Eigen/src/Core/products/SelfadjointMatrixVector_BLAS.h \
-		C:/Libraries/Eigen/Eigen/src/Core/products/TriangularMatrixMatrix_BLAS.h \
-		C:/Libraries/Eigen/Eigen/src/Core/products/TriangularMatrixVector_BLAS.h \
-		C:/Libraries/Eigen/Eigen/src/Core/products/TriangularSolverMatrix_BLAS.h \
-		C:/Libraries/Eigen/Eigen/src/Core/Assign_MKL.h \
-		C:/Libraries/Eigen/Eigen/src/Core/GlobalFunctions.h \
-		C:/Libraries/Eigen/Eigen/src/Core/util/ReenableStupidWarnings.h \
-		C:/Libraries/Eigen/Eigen/LU \
-		C:/Libraries/Eigen/Eigen/src/misc/Kernel.h \
-		C:/Libraries/Eigen/Eigen/src/misc/Image.h \
-		C:/Libraries/Eigen/Eigen/src/LU/FullPivLU.h \
-		C:/Libraries/Eigen/Eigen/src/LU/PartialPivLU.h \
-		C:/Libraries/Eigen/Eigen/src/misc/lapacke.h \
-		C:/Libraries/Eigen/Eigen/src/misc/lapacke_mangling.h \
-		C:/Libraries/Eigen/Eigen/src/LU/PartialPivLU_LAPACKE.h \
-		C:/Libraries/Eigen/Eigen/src/LU/Determinant.h \
-		C:/Libraries/Eigen/Eigen/src/LU/InverseImpl.h \
-		C:/Libraries/Eigen/Eigen/src/LU/arch/Inverse_SSE.h \
-		C:/Libraries/Eigen/Eigen/Cholesky \
-		C:/Libraries/Eigen/Eigen/src/Cholesky/LLT.h \
-		C:/Libraries/Eigen/Eigen/src/Cholesky/LDLT.h \
-		C:/Libraries/Eigen/Eigen/src/Cholesky/LLT_LAPACKE.h \
-		C:/Libraries/Eigen/Eigen/QR \
-		C:/Libraries/Eigen/Eigen/Jacobi \
-		C:/Libraries/Eigen/Eigen/src/Jacobi/Jacobi.h \
-		C:/Libraries/Eigen/Eigen/Householder \
-		C:/Libraries/Eigen/Eigen/src/Householder/Householder.h \
-		C:/Libraries/Eigen/Eigen/src/Householder/HouseholderSequence.h \
-		C:/Libraries/Eigen/Eigen/src/Householder/BlockHouseholder.h \
-		C:/Libraries/Eigen/Eigen/src/QR/HouseholderQR.h \
-		C:/Libraries/Eigen/Eigen/src/QR/FullPivHouseholderQR.h \
-		C:/Libraries/Eigen/Eigen/src/QR/ColPivHouseholderQR.h \
-		C:/Libraries/Eigen/Eigen/src/QR/CompleteOrthogonalDecomposition.h \
-		C:/Libraries/Eigen/Eigen/src/QR/HouseholderQR_LAPACKE.h \
-		C:/Libraries/Eigen/Eigen/src/QR/ColPivHouseholderQR_LAPACKE.h \
-		C:/Libraries/Eigen/Eigen/SVD \
-		C:/Libraries/Eigen/Eigen/src/misc/RealSvd2x2.h \
-		C:/Libraries/Eigen/Eigen/src/SVD/UpperBidiagonalization.h \
-		C:/Libraries/Eigen/Eigen/src/SVD/SVDBase.h \
-		C:/Libraries/Eigen/Eigen/src/SVD/JacobiSVD.h \
-		C:/Libraries/Eigen/Eigen/src/SVD/BDCSVD.h \
-		C:/Libraries/Eigen/Eigen/src/SVD/JacobiSVD_LAPACKE.h \
-		C:/Libraries/Eigen/Eigen/Geometry \
-		C:/Libraries/Eigen/Eigen/src/Geometry/OrthoMethods.h \
-		C:/Libraries/Eigen/Eigen/src/Geometry/EulerAngles.h \
-		C:/Libraries/Eigen/Eigen/src/Geometry/Homogeneous.h \
-		C:/Libraries/Eigen/Eigen/src/Geometry/RotationBase.h \
-		C:/Libraries/Eigen/Eigen/src/Geometry/Rotation2D.h \
-		C:/Libraries/Eigen/Eigen/src/Geometry/Quaternion.h \
-		C:/Libraries/Eigen/Eigen/src/Geometry/AngleAxis.h \
-		C:/Libraries/Eigen/Eigen/src/Geometry/Transform.h \
-		C:/Libraries/Eigen/Eigen/src/Geometry/Translation.h \
-		C:/Libraries/Eigen/Eigen/src/Geometry/Scaling.h \
-		C:/Libraries/Eigen/Eigen/src/Geometry/Hyperplane.h \
-		C:/Libraries/Eigen/Eigen/src/Geometry/ParametrizedLine.h \
-		C:/Libraries/Eigen/Eigen/src/Geometry/AlignedBox.h \
-		C:/Libraries/Eigen/Eigen/src/Geometry/Umeyama.h \
-		C:/Libraries/Eigen/Eigen/src/Geometry/arch/Geometry_SSE.h \
-		C:/Libraries/Eigen/Eigen/Eigenvalues \
-		C:/Libraries/Eigen/Eigen/src/Eigenvalues/Tridiagonalization.h \
-		C:/Libraries/Eigen/Eigen/src/Eigenvalues/RealSchur.h \
-		C:/Libraries/Eigen/Eigen/src/Eigenvalues/HessenbergDecomposition.h \
-		C:/Libraries/Eigen/Eigen/src/Eigenvalues/EigenSolver.h \
-		C:/Libraries/Eigen/Eigen/src/Eigenvalues/SelfAdjointEigenSolver.h \
-		C:/Libraries/Eigen/Eigen/src/Eigenvalues/GeneralizedSelfAdjointEigenSolver.h \
-		C:/Libraries/Eigen/Eigen/src/Eigenvalues/ComplexSchur.h \
-		C:/Libraries/Eigen/Eigen/src/Eigenvalues/ComplexEigenSolver.h \
-		C:/Libraries/Eigen/Eigen/src/Eigenvalues/RealQZ.h \
-		C:/Libraries/Eigen/Eigen/src/Eigenvalues/GeneralizedEigenSolver.h \
-		C:/Libraries/Eigen/Eigen/src/Eigenvalues/MatrixBaseEigenvalues.h \
-		C:/Libraries/Eigen/Eigen/src/Eigenvalues/RealSchur_LAPACKE.h \
-		C:/Libraries/Eigen/Eigen/src/Eigenvalues/ComplexSchur_LAPACKE.h \
-		C:/Libraries/Eigen/Eigen/src/Eigenvalues/SelfAdjointEigenSolver_LAPACKE.h \
-		C:/Libraries/Eigen/unsupported/Eigen/MatrixFunctions \
-		C:/Libraries/Eigen/unsupported/Eigen/src/MatrixFunctions/MatrixExponential.h \
-		C:/Libraries/Eigen/unsupported/Eigen/src/MatrixFunctions/StemFunction.h \
-		C:/Libraries/Eigen/unsupported/Eigen/src/MatrixFunctions/MatrixFunction.h \
-		C:/Libraries/Eigen/unsupported/Eigen/src/MatrixFunctions/MatrixSquareRoot.h \
-		C:/Libraries/Eigen/unsupported/Eigen/src/MatrixFunctions/MatrixLogarithm.h \
-		C:/Libraries/Eigen/unsupported/Eigen/src/MatrixFunctions/MatrixPower.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\Sensor.o ..\GitTest2\Sensor.cpp
-
-release/alglibinternal.o: ../GitTest2/alglibinternal.cpp ../GitTest2/stdafx.h \
-		../GitTest2/alglibinternal.h \
-		../GitTest2/ap.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\alglibinternal.o ..\GitTest2\alglibinternal.cpp
-
-release/alglibmisc.o: ../GitTest2/alglibmisc.cpp ../GitTest2/stdafx.h \
-		../GitTest2/alglibmisc.h \
-		../GitTest2/ap.h \
-		../GitTest2/alglibinternal.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\alglibmisc.o ..\GitTest2\alglibmisc.cpp
-
-release/ap.o: ../GitTest2/ap.cpp ../GitTest2/stdafx.h \
-		../GitTest2/ap.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\ap.o ..\GitTest2\ap.cpp
-
-release/dataanalysis.o: ../GitTest2/dataanalysis.cpp ../GitTest2/stdafx.h \
-		../GitTest2/dataanalysis.h \
-		../GitTest2/ap.h \
-		../GitTest2/alglibinternal.h \
-		../GitTest2/linalg.h \
-		../GitTest2/alglibmisc.h \
-		../GitTest2/statistics.h \
-		../GitTest2/specialfunctions.h \
-		../GitTest2/solvers.h \
-		../GitTest2/optimization.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\dataanalysis.o ..\GitTest2\dataanalysis.cpp
-
-release/diffequations.o: ../GitTest2/diffequations.cpp ../GitTest2/stdafx.h \
-		../GitTest2/diffequations.h \
-		../GitTest2/ap.h \
-		../GitTest2/alglibinternal.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\diffequations.o ..\GitTest2\diffequations.cpp
-
-release/fasttransforms.o: ../GitTest2/fasttransforms.cpp ../GitTest2/stdafx.h \
-		../GitTest2/fasttransforms.h \
-		../GitTest2/ap.h \
-		../GitTest2/alglibinternal.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\fasttransforms.o ..\GitTest2\fasttransforms.cpp
-
-release/integration.o: ../GitTest2/integration.cpp ../GitTest2/stdafx.h \
-		../GitTest2/integration.h \
-		../GitTest2/ap.h \
-		../GitTest2/alglibinternal.h \
-		../GitTest2/linalg.h \
-		../GitTest2/alglibmisc.h \
-		../GitTest2/specialfunctions.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\integration.o ..\GitTest2\integration.cpp
-
-release/interpolation.o: ../GitTest2/interpolation.cpp ../GitTest2/stdafx.h \
-		../GitTest2/interpolation.h \
-		../GitTest2/ap.h \
-		../GitTest2/alglibinternal.h \
-		../GitTest2/alglibmisc.h \
-		../GitTest2/linalg.h \
-		../GitTest2/solvers.h \
-		../GitTest2/optimization.h \
-		../GitTest2/specialfunctions.h \
-		../GitTest2/integration.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\interpolation.o ..\GitTest2\interpolation.cpp
-
-release/linalg.o: ../GitTest2/linalg.cpp ../GitTest2/stdafx.h \
-		../GitTest2/linalg.h \
-		../GitTest2/ap.h \
-		../GitTest2/alglibinternal.h \
-		../GitTest2/alglibmisc.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\linalg.o ..\GitTest2\linalg.cpp
-
-release/optimization.o: ../GitTest2/optimization.cpp ../GitTest2/stdafx.h \
-		../GitTest2/optimization.h \
-		../GitTest2/ap.h \
-		../GitTest2/alglibinternal.h \
-		../GitTest2/alglibmisc.h \
-		../GitTest2/linalg.h \
-		../GitTest2/solvers.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\optimization.o ..\GitTest2\optimization.cpp
-
-release/solvers.o: ../GitTest2/solvers.cpp ../GitTest2/stdafx.h \
-		../GitTest2/solvers.h \
-		../GitTest2/ap.h \
-		../GitTest2/alglibinternal.h \
-		../GitTest2/linalg.h \
-		../GitTest2/alglibmisc.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\solvers.o ..\GitTest2\solvers.cpp
-
-release/specialfunctions.o: ../GitTest2/specialfunctions.cpp ../GitTest2/stdafx.h \
-		../GitTest2/specialfunctions.h \
-		../GitTest2/ap.h \
-		../GitTest2/alglibinternal.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\specialfunctions.o ..\GitTest2\specialfunctions.cpp
-
-release/statistics.o: ../GitTest2/statistics.cpp ../GitTest2/stdafx.h \
-		../GitTest2/statistics.h \
-		../GitTest2/ap.h \
-		../GitTest2/alglibinternal.h \
-		../GitTest2/linalg.h \
-		../GitTest2/alglibmisc.h \
-		../GitTest2/specialfunctions.h
-	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\statistics.o ..\GitTest2\statistics.cpp
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\Magnet.o ..\GitTest2\Magnet.cpp
 
 release/moc_mainwindow.o: release/moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\moc_mainwindow.o release\moc_mainwindow.cpp

@@ -1,8 +1,6 @@
 INPUT(
 ./release\main.o
 ./release\mainwindow.o
-./release\magnet.o
-./release\posCalculator.o
 ./release\Sensor.o
 ./release\alglibinternal.o
 ./release\alglibmisc.o
@@ -17,5 +15,7 @@ INPUT(
 ./release\solvers.o
 ./release\specialfunctions.o
 ./release\statistics.o
+./release\PosCalculator.o
+./release\Magnet.o
 ./release\moc_mainwindow.o
 );

@@ -391,33 +391,33 @@ int mainfn()
 			
 			Sleep(10);
 		}
-		else{
-            //this condition will run only if we haven't calibrated the sensors yet (taken data on arduinos and uploaded truncation values to local registers)
-			for(int k = 0; k<20; k++){
-				if(writeData(calibChar)){
-					Sleep(800);//give sensors plenty of time to take measurements and do averaging
-					if(k==18){
-						cout << "last measurement, please rotate sensors to operating position" << endl;
-						char throwaway;
-						cin >> throwaway;
-					}
-					else if(k==19){
-						cout << "done calibrating!" << endl;
-						firstMeas = true;
-						calibrated = true;
-                        storeCalibrationData(); //store initialD
-					}
-					else{
-						cout << "please rotate sensors." << endl;
-						Sleep(500);
-					}
-				}
-			}
-		
-		}
+
 	}
 	
 	return 0;
+}
+
+void calibrateSystem(){
+    for(int k = 0; k<20; k++){
+        if(writeData(calibChar)){
+            Sleep(800);//give sensors plenty of time to take measurements and do averaging
+            if(k==18){
+                cout << "last measurement, please rotate sensors to operating position" << endl;
+                char throwaway;
+                cin >> throwaway;
+            }
+            else if(k==19){
+                cout << "done calibrating!" << endl;
+                firstMeas = true;
+                calibrated = true;
+                storeCalibrationData(); //store initialD
+            }
+            else{
+                cout << "please rotate sensors." << endl;
+                Sleep(500);
+            }
+        }
+    }
 }
 
 void setZeroVals(){

@@ -42,6 +42,7 @@ public:
     void setZeroVals();
     void calibrateSystem();
     void storeCalibrationData();
+    void gatherSampleCovarData();
 private:
     string portNumber;
     HANDLE hSerial;

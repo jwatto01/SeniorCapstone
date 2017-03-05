@@ -22,6 +22,7 @@ public:
 	void updateOffsets();
 	void updateRawData(const Vector3i &rD);
 	void updateNSensor(int n);
+    void reset();
 	int getNSensor();
 	Vector3d getOffsets();
 	Vector3d getScaledReading();

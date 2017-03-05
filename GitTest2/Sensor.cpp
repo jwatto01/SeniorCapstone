@@ -153,6 +153,20 @@ Vector3d sensor::getOffsets(){
 	return offsets;
 }
 
+void sensor::reset(){
+    numZeroVals = 0;
+    nMeasCount = 0;
+    nAvgMeasCount = 0;
+    avgScaledVal.setZero();
+    sumScaledVal.setZero();
+    senseVal.setZero();
+    scaledVal.setZero();
+    offsets.setZero();
+    rawData.setZero();
+    meanNoise.setZero();
+    initialDataSample = MatrixXd::Constant(100,3,0.0);
+}
+
 void sensor::updateSenseVal(const Vector3d &newVal){
 	senseVal = newVal;
 	scaledVal = newVal;

@@ -270,40 +270,7 @@ int mainfn()
 				}
 				else{
 						if(allSensors[7].getNumAvgMeasCount() == 100 && (allSensors[7].getNumMeasCount() == 1000)){
-							for(int i = 0; i<8; i++)
-								cout << allSensors[i].getsampleCoVar() << endl;		
-							
-                            //If we reach this point, we've already acquired values of sample covariance in each sensor object
-                            //This is where we begin tracking
-							cout << "Place magnet in sensing region." << endl;
-                            //replace the cin command with something (perhaps split up this section of code into a new function and call this function from button press eventhandler)
 
-                            double bestResults = 1000.0;
-							VectorXd bestParams(7);
-							//get best first solution to setup minlmoptimization
-							for(int k = 0; k<7; k++) startPoint[k] = setOfStartPoints(0,k);
-							x.setcontent(7,startPoint);
-							alglib::minlmoptimize(state, funcVect, jacobian);
-							for(int i = 0; i<10; i++){
-								//update start point
-								for(int k = 0; k<7; k++) startPoint[k] = setOfStartPoints(i,k);
-							
-								x.setcontent(7,startPoint);
-								minlmrestartfrom(state, x);
-								alglib::minlmoptimize(state, funcVect, jacobian);
-								minlmresults(state,x,rep);
-								if(state.f < bestResults){
-									bestResults = state.f;
-									cout << state.f << endl;
-									for(int j = 0; j<7; j++) bestParams(j) = x[j];
-								}
-							}/**/
-							//provide magnet with best parameters to start with
-							for(int j = 0; j<3; j++) curMagPos(j) = bestParams(j);
-							for(int j = 0; j<3; j++) curMagOr(j) = bestParams(j+3);
-							M1.updatePosition(curMagPos);
-							M1.updateOrientation(curMagOr);
-							M1.updateDipoleMoment(bestParams(6));
 						}
 						if(allSensors[7].getNumAvgMeasCount() > 100 && !(allSensors[7].getNumMeasCount()%10)){//take 100 samples first to find the standard dev for all axis
 							//re-evaluate magnet's position based on new avg data
@@ -395,6 +362,65 @@ int mainfn()
 	}
 	
 	return 0;
+}
+
+//this will acquire 1000 data samples from which the sampleCoVariance will be calculated from automatically for each sensor object
+void gatherSampleCovarData(){
+    //first ensure that all the sensor classes contain no data in initialDataSample
+    for(int i = 0; i<8; i++){
+        allSensors[i].reset();
+    }
+    //then acquire 1000 samples
+    for(int i = 0; i<1000; i++){
+        Sleep(10);
+        if(writeData(startC)){
+            int nCharsRead = 0;
+            Sleep(50);
+            nCharsRead = readData(dataINBuffer);//Get new packet
+            if(nCharsRead == 169)
+                updateSensorReadings(dataINBuffer);
+            else//error occurred, so lets resignal arduino for data
+            {
+                cout << "error, read " << nCharsRead << " bytes read from Arduino!" << endl;
+                char throwaway;
+                //need to determine how to handle errors (popup forum?)
+                cin >> throwaway;//suspend until user tells to continue
+                continue;
+            }
+        }
+    }
+}
+
+void findFirstLocation(){
+    //We've already acquired values of sample covariance in each sensor object
+    //This is where we begin tracking, so must be sure that the magnet is in the sensing region
+
+    double bestResults = 1000.0;//bad initial value to be updated below
+    VectorXd bestParams(7);
+    //get best first solution to setup minlmoptimization
+    for(int k = 0; k<7; k++) startPoint[k] = setOfStartPoints(0,k);
+    x.setcontent(7,startPoint);
+    alglib::minlmoptimize(state, funcVect, jacobian);
+    for(int i = 0; i<10; i++){
+        //update start point
+        for(int k = 0; k<7; k++) startPoint[k] = setOfStartPoints(i,k);
+
+        x.setcontent(7,startPoint);
+        minlmrestartfrom(state, x);
+        alglib::minlmoptimize(state, funcVect, jacobian);
+        minlmresults(state,x,rep);
+        if(state.f < bestResults){
+            bestResults = state.f;
+            cout << state.f << endl;
+            for(int j = 0; j<7; j++) bestParams(j) = x[j];
+        }
+    }/**/
+    //provide magnet with best parameters to start with
+    for(int j = 0; j<3; j++) curMagPos(j) = bestParams(j);
+    for(int j = 0; j<3; j++) curMagOr(j) = bestParams(j+3);
+    M1.updatePosition(curMagPos);
+    M1.updateOrientation(curMagOr);
+    M1.updateDipoleMoment(bestParams(6));
 }
 
 void calibrateSystem(){

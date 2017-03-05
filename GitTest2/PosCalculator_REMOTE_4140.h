@@ -41,7 +41,6 @@ public:
     void updateSensorReadings(char byteBuff[169]);
     void setZeroVals();
     void calibrateSystem();
-    void gatherSampleCovarData();
     void storeNoiseData();
 private:
     string portNumber;

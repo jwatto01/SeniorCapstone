@@ -41,8 +41,7 @@ public:
     void updateSensorReadings(char byteBuff[169]);
     void setZeroVals();
     void calibrateSystem();
-    void gatherSampleCovarData();
-    void storeNoiseData();
+    void storeCalibrationData();
 private:
     string portNumber;
     HANDLE hSerial;

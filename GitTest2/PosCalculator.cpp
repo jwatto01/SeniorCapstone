@@ -268,10 +268,7 @@ int mainfn()
 					firstMeas = false;
 					cout << "Must now take sample of data to acquire sensor standard deviation values" << endl;
 				}
-				else{
-						if(allSensors[7].getNumAvgMeasCount() == 100 && (allSensors[7].getNumMeasCount() == 1000)){
-
-						}
+                else{
 						if(allSensors[7].getNumAvgMeasCount() > 100 && !(allSensors[7].getNumMeasCount()%10)){//take 100 samples first to find the standard dev for all axis
 							//re-evaluate magnet's position based on new avg data
 							//if nMeasCount % 10 = 0, then we have a new updated average!
@@ -389,6 +386,8 @@ void gatherSampleCovarData(){
             }
         }
     }
+
+    storeNoiseData(); //store initialD
 }
 
 void findFirstLocation(){
@@ -436,7 +435,6 @@ void calibrateSystem(){
                 cout << "done calibrating!" << endl;
                 firstMeas = true;
                 calibrated = true;
-                storeCalibrationData(); //store initialD
             }
             else{
                 cout << "please rotate sensors." << endl;
@@ -491,7 +489,7 @@ void convertToMicroTesla(const Vector3i& rawData, Vector3d &retArr){
 		retArr(i) = ((double)rawData(i)+30000.0)*(2e-3) / 60000.0 - 1e-3;
 }
 
-void storeCalibrationData(){
+void storeNoiseData(){
 
 }
 

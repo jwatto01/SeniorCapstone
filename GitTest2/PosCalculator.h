@@ -25,15 +25,30 @@ public:
     bool getConnected();
     COMSTAT getStatus();
     Magnet getM1();
+    Sensor* getSensors();
+
     PosCalculator();
-    //a
     PosCalculator(string, HANDLE, bool, COMSTAT, Magnet);
+
+    Vector3d residual(sensor &curSensor);
+    void funcVect(const real_1d_array &x, real_1d_array& fi, void* obj);
+    void convertToMicroTesla(const Vector3i &rawData, Vector3d &retArr);
+    void meritFunc(const real_1d_array &x, double& fi, void* obj);
+    void jacobian(const real_1d_array &x, real_1d_array &fi, real_2d_array &jac, void* obj);
+    bool connectArduino(char *portName);
+    int readData(char buffer[169]);
+    bool writeData(char buffer[1]);
+    void updateSensorReadings(char byteBuff[169]);
+    void setZeroVals();
+    void calibrateSystem();
+    void storeCalibrationData();
 private:
     string portNumber;
     HANDLE hSerial;
     bool connected;
     COMSTAT status;
     Magnet M1;
+    Sensor allsensors[8];
 };
 
 

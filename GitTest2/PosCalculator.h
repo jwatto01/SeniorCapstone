@@ -26,6 +26,7 @@ public:
     COMSTAT getStatus();
     Magnet getM1();
     PosCalculator();
+    //b
     PosCalculator(string, HANDLE, bool, COMSTAT, Magnet);
 private:
     string portNumber;

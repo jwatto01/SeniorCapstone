@@ -29,7 +29,6 @@ public:
     MatrixXd getSetOfStartPoints();
 
     PosCalculator();
-    PosCalculator(string, HANDLE, bool, COMSTAT, Magnet);
 
     int startTracking();
     Vector3d residual(sensor &curSensor);

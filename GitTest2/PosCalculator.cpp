@@ -51,16 +51,21 @@ sensor S7({-0.152, 0.129, 0.076},{0.7854, -1.5708, -1.5708}, 7), S8({-0.152,-0.1
 
 //sensor allSensors[8];
 
-PosCalculator::PosCalculator(string portNumber_, HANDLE hSerial_, bool  connected_, COMSTAT status_, Magnet M1_){
-    portNumber = portNumber_;
-    hSerial = hSerial_;
-    connected = connected_;
-    status = status_;
-    M1 = M1_;
-    sensor S1({0.161, -0.132, 0.334},{-1.5708, 1.5708, 0.7854}, 1), S2({0.161, 0.132, 0.335},{-1.5708, 1.5708, -0.7854}, 2);
-    sensor S3({0.161, 0.126, 0.086},{-1.5708, 1.5708, 0.7854}, 3), S4({0.161, -0.116, 0.084},{-1.5708, 1.5708, -0.7854}, 4);
-    sensor S5({-0.152, -0.133, 0.3385},{1.5708, 1.5708, -0.7854}, 5), S6({-0.152, 0.132, 0.331},{1.5708, 1.5708, 0.7854}, 6);
-    sensor S7({-0.152, 0.129, 0.076},{1.5708, 1.5708, -0.7854}, 7), S8({-0.152,-0.11,0.097},{1.5708, 1.5708, 0.7854}, 8);
+PosCalculator::PosCalculator(){
+    portNumber = "COM9";
+    M1 = new Magnet();
+    hSerial = CreateFileA(portName,
+    GENERIC_READ | GENERIC_WRITE,
+    0,
+    NULL,
+    OPEN_EXISTING,
+    FILE_ATTRIBUTE_NORMAL,
+    NULL);
+    connected = false;
+    Sensor S1({0.161, -0.132, 0.334},{-1.5708, 1.5708, 0.7854}, 1), S2({0.161, 0.132, 0.335},{-1.5708, 1.5708, -0.7854}, 2);
+    Sensor S3({0.161, 0.126, 0.086},{-1.5708, 1.5708, 0.7854}, 3), S4({0.161, -0.116, 0.084},{-1.5708, 1.5708, -0.7854}, 4);
+    Sensor S5({-0.152, -0.133, 0.3385},{1.5708, 1.5708, -0.7854}, 5), S6({-0.152, 0.132, 0.331},{1.5708, 1.5708, 0.7854}, 6);
+    Sensor S7({-0.152, 0.129, 0.076},{1.5708, 1.5708, -0.7854}, 7), S8({-0.152,-0.11,0.097},{1.5708, 1.5708, 0.7854}, 8);
     allsensors = {S1, S2, S3, S4, S5, S6, S7, S8};
     setOfStartPoints.resize(10,7);
     setOfStartPoints << -0.1 , 0.0 , 0.05 , 0.0 , 0.0 , 0.0 , M1.dipoleMomentVal()
@@ -494,13 +499,7 @@ void PosCalculator::storeNoiseData(){
 bool PosCalculator::connectArduino(char *portName){
 
     //Connects to the port.
-    hSerial = CreateFileA(portName,
-    GENERIC_READ | GENERIC_WRITE,
-    0,
-    NULL,
-    OPEN_EXISTING,
-    FILE_ATTRIBUTE_NORMAL,
-    NULL);
+
 	
 	COMSTAT status;
     if(hSerial==INVALID_HANDLE_VALUE)
@@ -566,7 +565,7 @@ int PosCalculator::readData(char buffer[169]){
     	
 		while(!bytesToRead){//loop until we have non-zero bytes to read from COM
 			ClearCommError(hSerial, &errors, &status);
-			bytesToRead = status.cbInQue;
+            bytesToRead = status.cbInQue;
 		}
 		if(ReadFile(hSerial, buffer, bytesToRead, &bytesRead, 0)) return (int)bytesRead;
 		

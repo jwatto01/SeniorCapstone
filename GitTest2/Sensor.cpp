@@ -35,7 +35,7 @@ sensor::sensor(){
 	meanNoise.setZero();
 	initialDataSample = MatrixXd::Constant(100,3,0.0);
 }
-sensor::sensor(const Vector3d &sensorPos, const Vector3d &sensorOr, int nS){
+Sensor::sensor(const Vector3d &sensorPos, const Vector3d &sensorOr, int nS){
 	numZeroVals = 0;
 	position = sensorPos;
 	orientation = sensorOr;
@@ -60,7 +60,7 @@ Vector3d sensor::getReading(){
 	return senseVal;
 }
 
-Vector3d sensor::getPosition(){
+Vector3d Sensor::getPosition(){
 	return position;
 }
 //this is what we expect the magnetic field strength to be for a given sensor

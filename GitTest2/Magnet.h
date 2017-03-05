@@ -7,11 +7,11 @@
 using Eigen::MatrixXd;
 using Eigen::Vector3d;
 
-class magnet
+class Magnet
 {
 
 public:
-	magnet();
+    Magnet();
 	void updatePosition(const Vector3d &newPos);
 	void updateDipoleMoment(double newDM);
 	void updateOrientation(const Vector3d &newOr);

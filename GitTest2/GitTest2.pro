@@ -14,8 +14,6 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    magnet.cpp \
-    posCalculator.cpp \
     Sensor.cpp \
     alglibinternal.cpp \
     alglibmisc.cpp \
@@ -29,10 +27,10 @@ SOURCES += main.cpp\
     optimization.cpp \
     solvers.cpp \
     specialfunctions.cpp \
-    statistics.cpp
+    statistics.cpp \
+    PosCalculator.cpp \
+    Magnet.cpp
 HEADERS  += mainwindow.h \
-    magnet.h \
-    posCalculator.h \
     Sensor.h \
     alglibinternal.h \
     alglibmisc.h \
@@ -47,7 +45,9 @@ HEADERS  += mainwindow.h \
     solvers.h \
     specialfunctions.h \
     statistics.h \
-    stdafx.h
+    stdafx.h \
+    PosCalculator.h \
+    Magnet.h
 
 FORMS    += mainwindow.ui
 

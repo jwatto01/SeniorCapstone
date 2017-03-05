@@ -2,7 +2,7 @@
 #ifndef SENSOR_H
 #define SENSOR_H
 
-#include "magnet.h"
+#include "Magnet.h"
 #include <initializer_list>
 #include <Eigen/Dense>
 
@@ -11,12 +11,12 @@ using Eigen::Matrix3d;
 using Eigen::VectorXd;
 using Eigen::Vector3d;
 using Eigen::Vector3i;
-class sensor
+class Sensor
 {
 
 public:
-	sensor();
-	sensor(const Vector3d &sensorPos, const Vector3d &sensorOr, int nS);
+    Sensor();
+    Sensor(const Vector3d &sensorPos, const Vector3d &sensorOr, int nS);
 	void updateSenseVal(const Vector3d &newVal);
 	void updatePosition(const Vector3d &newPos);
 	void updateOffsets();
@@ -25,7 +25,7 @@ public:
 	int getNSensor();
 	Vector3d getOffsets();
 	Vector3d getScaledReading();
-	Vector3d calculateMagField(magnet &M1);
+    Vector3d calculateMagField(Magnet &M1);
 	Vector3d getReading();
 	Vector3d getPosition();
 	Vector3d getOrientation();

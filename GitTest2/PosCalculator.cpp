@@ -3,18 +3,7 @@
 //
 #include "stdafx.h"
 #include <iostream>
-#include "sensor.h"
-#include "magnet.h"
-#include <stdio.h>
-#include <windows.h>
-#include <math.h>
-#include <fstream>
-#include <optimization.h>
-#include <string.h>
-#include <sstream>
-#include <stdlib.h>
-#include <Eigen/Dense>
-#include <unsupported/Eigen/MatrixFunctions>
+#include <posCalculator.h>
 
 #define ARDUINO_WAIT_TIME 2000
 
@@ -416,6 +405,7 @@ int mainfn()
 						cout << "done calibrating!" << endl;
 						firstMeas = true;
 						calibrated = true;
+                        storeCalibrationData(); //store initialD
 					}
 					else{
 						cout << "please rotate sensors." << endl;
@@ -468,7 +458,6 @@ void updateSensorReadings(char byteBuff[169]){
 		//update current sensor's measurement data
 		allSensors[i].updateSenseVal(newSenseVal);
 	}
-    storeCalibrationData(); //store initialD
 }
 
 void convertToMicroTesla(const Vector3i& rawData, Vector3d &retArr){

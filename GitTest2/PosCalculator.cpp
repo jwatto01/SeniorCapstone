@@ -297,8 +297,25 @@ int PosCalculator::startTracking()
                 for(int i = 0; i<3; i++) startPoint[i] = curMagPos(i);
                 for(int i = 0; i<3; i++) startPoint[i+3] = curMagOr(i);
                 startPoint[6] = M1.dipoleMomentVal();
-
+                //todo:
+                //implement checking to see if solution is within 5mm of previous location, and also ensure that orientation does not change dramatically from last orientation
+                //do this by updating boundary conditions of the solution set
                 params_result.setcontent(7,startPoint);
+
+                //calculate new lower and upper bounds such that they are close to the previous solution
+                double maxDeltaPos = 5e-3;//set a +-5mm bound on new solution
+
+                double newZ = startPoint(2) - maxDeltaPos;
+                if(newZ < 0.0) newZ = 0.0;//ensure we don't start to find solutions that are below test bed
+
+                lbound(0) = startPoint(0) - maxDeltaPos;
+                lbound(1) = startPoint(1) - maxDeltaPos;
+                lbound(2) = newZ;
+                hbound(0) = startPoint(0) + maxDeltaPos;;
+                hbound(1) = startPoint(1) + maxDeltaPos;;
+                hbound(2) = startPoint(2) + maxDeltaPos;;
+
+                minlmsetbc(state,lbound,hbound);
                 minlmrestartfrom(state,params_result);
                 //cout << "before solve" << endl;
                 alglib::minlmoptimize(state, funcVect, jacobian);
@@ -313,7 +330,10 @@ int PosCalculator::startTracking()
                 M1.updateOrientation(newMagOr);
                 M1.updateDipoleMoment(params_result[6]);
                 //This is where new location is decided so it should be ouput in someway to the main window
-                cout << params_result[6] << endl;
+                cout << params_result << endl;
+
+
+
 
 
                 //used to print resulting solution to log for analysis via matlab, but now we just want to log them locally.

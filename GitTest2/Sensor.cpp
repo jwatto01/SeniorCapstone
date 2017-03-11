@@ -1,14 +1,14 @@
-//sensor.cpp
+//Sensor.cpp
 //we can have multiple sensors and only one magnet.
 //each sensor has xyz coordinates along with an orientation with respect
 //to the magnet's vector (theta and phi, but phi has zero influence on
 //magnetic field strength due to symmetry)
 
 #include <iostream>
-#include "sensor.h"
+#include "Sensor.h"
 #include "math.h"
 //#include <numeric>
-#include "magnet.h"
+#include "Magnet.h"
 #include <fstream>
 #include <Eigen/Dense>
 #include <unsupported/Eigen/MatrixFunctions>
@@ -19,7 +19,7 @@ const int numAverages = 10;
 const double permeability_fs = 0.00000125663706;
 const double PI = 3.14159265;
 //constructor
-sensor::sensor(){
+Sensor::Sensor(){
 	numZeroVals = 0;
 	nSensor = -1;//default -1, meaning it is unset in application
 	nMeasCount = 0;
@@ -35,7 +35,7 @@ sensor::sensor(){
 	meanNoise.setZero();
 	initialDataSample = MatrixXd::Constant(100,3,0.0);
 }
-Sensor::sensor(const Vector3d &sensorPos, const Vector3d &sensorOr, int nS){
+Sensor::Sensor(const Vector3d &sensorPos, const Vector3d &sensorOr, int nS){
 	numZeroVals = 0;
 	position = sensorPos;
 	orientation = sensorOr;
@@ -51,12 +51,12 @@ Sensor::sensor(const Vector3d &sensorPos, const Vector3d &sensorOr, int nS){
 	meanNoise.setZero();
 	initialDataSample = MatrixXd::Constant(100,3,0.0);
 }
-void sensor::updateOffsets(){
+void Sensor::updateOffsets(){
 	offsets = meanNoise;
 	std::cout << "offsets: " << std::endl << offsets << std::endl;
 }
 
-Vector3d sensor::getReading(){
+Vector3d Sensor::getReading(){
 	return senseVal;
 }
 
@@ -64,7 +64,7 @@ Vector3d Sensor::getPosition(){
 	return position;
 }
 //this is what we expect the magnetic field strength to be for a given sensor
-Vector3d sensor::calculateMagField(magnet &M1){
+Vector3d Sensor::calculateMagField(Magnet &M1){
 	double m1dipoleMoment = M1.dipoleMomentVal();
 	double thetaMagField, phiMagField;
 	Vector3d magPos = M1.posVal();
@@ -137,23 +137,23 @@ Vector3d sensor::calculateMagField(magnet &M1){
 	return magField;
 }
 
-void sensor::updateNSensor(int n){
+void Sensor::updateNSensor(int n){
 	nSensor = n;
 }
 
-int sensor::getNSensor(){
+int Sensor::getNSensor(){
 	return nSensor;
 }
 
-void sensor::updateRawData(const Vector3i &rData){
+void Sensor::updateRawData(const Vector3i &rData){
 	rawData = rData;
 }
 
-Vector3d sensor::getOffsets(){
+Vector3d Sensor::getOffsets(){
 	return offsets;
 }
 
-void sensor::reset(){
+void Sensor::reset(){
     numZeroVals = 0;
     nMeasCount = 0;
     nAvgMeasCount = 0;
@@ -167,7 +167,7 @@ void sensor::reset(){
     initialDataSample = MatrixXd::Constant(100,3,0.0);
 }
 
-void sensor::updateSenseVal(const Vector3d &newVal){
+void Sensor::updateSenseVal(const Vector3d &newVal){
 	senseVal = newVal;
 	scaledVal = newVal;
 	Vector3d zeroVect;
@@ -220,14 +220,14 @@ void sensor::updateSenseVal(const Vector3d &newVal){
 		sampleCoVar = sampleCoVariance(initialDataSample);
 }
 
-Vector3d sensor::getOrientation(){
+Vector3d Sensor::getOrientation(){
 	return orientation;
 }
-int sensor::getNumAvgMeasCount(){
+int Sensor::getNumAvgMeasCount(){
 	return nAvgMeasCount;
 }
 //calculate the covariance for current sensor
-Matrix3d sensor::sampleCoVariance(const MatrixXd &data){
+Matrix3d Sensor::sampleCoVariance(const MatrixXd &data){
 	/*std::ofstream fout;
 	fout.open("C:\\Users\\andre_000\\Desktop\\test.txt", std::ofstream::app);//make last argument ofstream::trunc to only keep one value in there at a time
 	for(int i = 0; i<100; i++){
@@ -248,33 +248,33 @@ Matrix3d sensor::sampleCoVariance(const MatrixXd &data){
 	sqrtSampleCoVar = cov.sqrt();
 	return cov;
 }
-Vector3d sensor::getMeanNoise(){
+Vector3d Sensor::getMeanNoise(){
 	return meanNoise;
 }
-Matrix3d sensor::getSQRTsampleCoVar(){
+Matrix3d Sensor::getSQRTsampleCoVar(){
 	return sqrtSampleCoVar;
 }
 
-Matrix3d sensor::getsampleCoVar(){
+Matrix3d Sensor::getsampleCoVar(){
 	return sampleCoVar;
 }
 
-MatrixXd sensor::getInitialDataSample(){
+MatrixXd Sensor::getInitialDataSample(){
     return initialDataSample;
 }
 
-Vector3d sensor::getAvgScaledVal(){
+Vector3d Sensor::getAvgScaledVal(){
 	return avgScaledVal;
 }
 
-int sensor::getNumMeasCount(){
+int Sensor::getNumMeasCount(){
 	return nMeasCount;
 }
 
-Vector3d sensor::getScaledReading(){
+Vector3d Sensor::getScaledReading(){
 	return scaledVal;
 }
-void sensor::updatePosition(const Vector3d &newPos){
+void Sensor::updatePosition(const Vector3d &newPos){
 	position = newPos;
 }
 

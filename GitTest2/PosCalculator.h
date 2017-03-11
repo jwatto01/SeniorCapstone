@@ -14,6 +14,12 @@
 #include <stdlib.h>
 #include <Eigen/Dense>
 #include <unsupported/Eigen/MatrixFunctions>
+using namespace alglib;
+using namespace std;
+using Eigen::MatrixXd;
+using Eigen::VectorXd;
+using Eigen::Vector3i;
+using Eigen::Vector3d;
 class PosCalculator
 {
 public:
@@ -31,7 +37,7 @@ public:
     PosCalculator();
 
     int startTracking();
-    Vector3d residual(sensor &curSensor);
+    Vector3d residual(Sensor &curSensor);
     void funcVect(const real_1d_array &x, real_1d_array& fi, void* obj);
     void convertToMicroTesla(const Vector3i &rawData, Vector3d &retArr);
     //void meritFunc(const real_1d_array &x, double& fi, void* obj);
@@ -49,10 +55,12 @@ private:
     string portNumber;
     HANDLE hSerial;
     bool connected;
+    bool firstMeas;
     COMSTAT status;
     Magnet M1;
-    Sensor allsensors[8];
+    Sensor allSensors[8];
     MatrixXd setOfStartPoints;
+    double startPoint[7];
     real_1d_array params_result;
     real_1d_array lbound;
     real_1d_array hbound;

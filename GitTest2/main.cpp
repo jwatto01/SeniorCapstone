@@ -7,7 +7,7 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     MainWindow w;
     w.show();
-    PosCalculator driver = new PosCalculator();
+    PosCalculator driver;
     //depending on button presses: calibrate -> calibrateSystem
     //Read Noise -> gatherSampleCovarData()
     //StartTracking -> findFirstLocation() -> loop that contains startTracking()

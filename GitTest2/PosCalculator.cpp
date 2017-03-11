@@ -19,7 +19,7 @@ using Eigen::Vector3d;
 const double PI = 3.14159265;
 const ae_int_t n = 7;
 const ae_int_t m = 24;
-const char startC[1] = {'S'}, calibChar[1] = {'C'};
+char startC[1] = {'S'}, calibChar[1] = {'C'};
 //string portNumber;
 //HANDLE hSerial;
 //bool connected;
@@ -53,7 +53,10 @@ sensor S7({-0.152, 0.129, 0.076},{0.7854, -1.5708, -1.5708}, 7), S8({-0.152,-0.1
 
 PosCalculator::PosCalculator(){
     portNumber = "COM9";
-    M1 = new Magnet();
+    char * portName = new char[portNumber.size() + 1];
+    std::copy(portNumber.begin(), portNumber.end(), portName);
+    portName[portNumber.size()] = '\0';
+    firstMeas = false;
     hSerial = CreateFileA(portName,
     GENERIC_READ | GENERIC_WRITE,
     0,
@@ -61,12 +64,20 @@ PosCalculator::PosCalculator(){
     OPEN_EXISTING,
     FILE_ATTRIBUTE_NORMAL,
     NULL);
+    delete []portName;
     connected = false;
     Sensor S1({0.161, -0.132, 0.334},{-1.5708, 1.5708, 0.7854}, 1), S2({0.161, 0.132, 0.335},{-1.5708, 1.5708, -0.7854}, 2);
     Sensor S3({0.161, 0.126, 0.086},{-1.5708, 1.5708, 0.7854}, 3), S4({0.161, -0.116, 0.084},{-1.5708, 1.5708, -0.7854}, 4);
     Sensor S5({-0.152, -0.133, 0.3385},{1.5708, 1.5708, -0.7854}, 5), S6({-0.152, 0.132, 0.331},{1.5708, 1.5708, 0.7854}, 6);
     Sensor S7({-0.152, 0.129, 0.076},{1.5708, 1.5708, -0.7854}, 7), S8({-0.152,-0.11,0.097},{1.5708, 1.5708, 0.7854}, 8);
-    allsensors = {S1, S2, S3, S4, S5, S6, S7, S8};
+    allSensors[0] = S1;
+    allSensors[1] = S2;
+    allSensors[2] = S3;
+    allSensors[3] = S4;
+    allSensors[4] = S5;
+    allSensors[5] = S6;
+    allSensors[6] = S7;
+    allSensors[7] = S8;
     setOfStartPoints.resize(10,7);
     setOfStartPoints << -0.1 , 0.0 , 0.05 , 0.0 , 0.0 , 0.0 , M1.dipoleMomentVal()
                      , 0.0 , 0.1 , 0.05 , 0.0 , 0.0 , 0.0 , M1.dipoleMomentVal()
@@ -88,7 +99,7 @@ PosCalculator::PosCalculator(){
     minlmsetcond(state,1e-14,1e-14,1e-14,1000);
 }
 
-Vector3d PosCalculator::residual(sensor &curSensor){
+Vector3d PosCalculator::residual(Sensor &curSensor){
 	Vector3d expectedMagField = curSensor.calculateMagField(M1);
 	Vector3d actualMagField = curSensor.getAvgScaledVal();
 	Vector3d difference;
@@ -229,18 +240,10 @@ void PosCalculator::jacobian(const real_1d_array &x, real_1d_array &fi, real_2d_
 //get ten measurements and update param results
 int PosCalculator::startTracking()
 {
-	//Setup sensors and magnet parameters
-	//place magnet somewhere in xyz space to initialize
-    /*Vector3d newMagPos(0.0, 0.0, 0.0);//x, y, z coordinates in meters
-    Vector3d newMagOr(0.0,0.0,0.0);*///magnet orientation in euclidean angles (start with pointing along z axis)
-//	M1.updatePosition(newMagPos);
-//	M1.updateOrientation(newMagOr);
-
-    //this is where we requested user input (i.e. button press)
-
-
     Vector3d curMagPos = M1.posVal();
     Vector3d curMagOr = M1.orientation();
+    Vector3d newMagPos(0.0, 0.0, 0.0);
+    Vector3d newMagOr(0.0,0.0,0.0);//magnet orientation in euclidean angles (start with pointing along z axis)
 
     //start communication with arduino on com port
     string str = "COM9";
@@ -267,11 +270,11 @@ int PosCalculator::startTracking()
             char throwaway;
             //need to determine how to handle errors (popup forum?)
             cin >> throwaway;//suspend until user tells to continue
-            continue;
+            return -1;
         }
         if(firstMeas){
+            findFirstLocation();
             firstMeas = false;
-            cout << "Must now take sample of data to acquire sensor standard deviation values" << endl;
         }
         else{
             if(allSensors[7].getNumAvgMeasCount() > 100 && !(allSensors[7].getNumMeasCount()%10)){//take 100 samples first to find the standard dev for all axis
@@ -305,15 +308,15 @@ int PosCalculator::startTracking()
                 //calculate new lower and upper bounds such that they are close to the previous solution
                 double maxDeltaPos = 5e-3;//set a +-5mm bound on new solution
 
-                double newZ = startPoint(2) - maxDeltaPos;
+                double newZ = startPoint[2] - maxDeltaPos;
                 if(newZ < 0.0) newZ = 0.0;//ensure we don't start to find solutions that are below test bed
 
-                lbound(0) = startPoint(0) - maxDeltaPos;
-                lbound(1) = startPoint(1) - maxDeltaPos;
+                lbound(0) = startPoint[0] - maxDeltaPos;
+                lbound(1) = startPoint[1] - maxDeltaPos;
                 lbound(2) = newZ;
-                hbound(0) = startPoint(0) + maxDeltaPos;;
-                hbound(1) = startPoint(1) + maxDeltaPos;;
-                hbound(2) = startPoint(2) + maxDeltaPos;;
+                hbound(0) = startPoint[0] + maxDeltaPos;;
+                hbound(1) = startPoint[1] + maxDeltaPos;;
+                hbound(2) = startPoint[2] + maxDeltaPos;;
 
                 minlmsetbc(state,lbound,hbound);
                 minlmrestartfrom(state,params_result);
@@ -324,13 +327,14 @@ int PosCalculator::startTracking()
                 cout << rep.terminationtype << endl;
                 //cout << rep.iterationscount << endl;
                 //cout << rep.nfunc << endl;
+
                 for(int k = 0; k<3; k++) newMagPos(k) = params_result[k];
                 for(int k = 0; k<3; k++) newMagOr(k) = params_result[k+3];
                 M1.updatePosition(newMagPos);
                 M1.updateOrientation(newMagOr);
                 M1.updateDipoleMoment(params_result[6]);
                 //This is where new location is decided so it should be ouput in someway to the main window
-                cout << params_result << endl;
+                //cout << params_result << endl;
 
 
 
@@ -390,6 +394,16 @@ void PosCalculator::gatherSampleCovarData(){
     for(int i = 0; i<8; i++){
         allSensors[i].reset();
     }
+    //then connect to the arduino
+    string str = "COM9";
+    char * writable = new char[str.size() + 1];
+    std::copy(str.begin(), str.end(), writable);
+    writable[str.size()] = '\0';
+
+    connectArduino(writable);
+    delete []writable;
+    char dataINBuffer[169];
+
     //then acquire 1000 samples
     for(int i = 0; i<1000; i++){
         Sleep(10);
@@ -457,7 +471,7 @@ void PosCalculator::calibrateSystem(){
             else if(k==19){
                 cout << "done calibrating!" << endl;
                 firstMeas = true;
-                calibrated = true;
+                //calibrated = true;
             }
             else{
                 cout << "please rotate sensors." << endl;
@@ -520,8 +534,7 @@ bool PosCalculator::connectArduino(char *portName){
 
     //Connects to the port.
 
-	
-	COMSTAT status;
+
     if(hSerial==INVALID_HANDLE_VALUE)
     {
         if(GetLastError()==ERROR_FILE_NOT_FOUND){

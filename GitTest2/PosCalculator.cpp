@@ -113,7 +113,7 @@ void PosCalculator::funcVect(const real_1d_array &x, real_1d_array& fi, void* ob
 	double origMagDipole;
 	Matrix3d curSqCoVar, invSQCoVar;
 	Vector3d curDiff, magPos, magOr, origMagPos, origMagOr;
-	origMagPos = M1.posVal();
+    origMagPos = M1.posVal();
 	origMagOr = M1.orientation();
 	origMagDipole = M1.dipoleMomentVal();
 	

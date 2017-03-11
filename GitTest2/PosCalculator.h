@@ -38,10 +38,10 @@ public:
 
     int startTracking();
     Vector3d residual(Sensor &curSensor);
-    void funcVect(const real_1d_array &x, real_1d_array& fi, void* obj);
+    static void funcVect(const real_1d_array &x, real_1d_array& fi, void* obj);
     void convertToMicroTesla(const Vector3i &rawData, Vector3d &retArr);
     //void meritFunc(const real_1d_array &x, double& fi, void* obj);
-    void jacobian(const real_1d_array &x, real_1d_array &fi, real_2d_array &jac, void* obj);
+    static void jacobian(const real_1d_array &x, real_1d_array &fi, real_2d_array &jac, void* obj);
     bool connectArduino(char *portName);
     int readData(char buffer[169]);
     bool writeData(char buffer[1]);
@@ -51,6 +51,7 @@ public:
     void gatherSampleCovarData();
     void storeNoiseData();
     void findFirstLocation();
+
 private:
     string portNumber;
     HANDLE hSerial;

@@ -430,6 +430,12 @@ void PosCalculator::gatherSampleCovarData(){
 void PosCalculator::findFirstLocation(){
     //We've already acquired values of sample covariance in each sensor object
     //This is where we begin tracking, so must be sure that the magnet is in the sensing region
+
+    Vector3d curMagPos = M1.posVal();
+    Vector3d curMagOr = M1.orientation();
+    curMagPos = M1.posVal();
+    curMagOr = M1.orientation();
+
     double startPoint[7];
     double bestResults = 1000.0;//bad initial value to be updated below
     VectorXd bestParams(7);

@@ -533,7 +533,12 @@ void PosCalculator::convertToMicroTesla(const Vector3i& rawData, Vector3d &retAr
 }
 
 void PosCalculator::storeNoiseData(){
-
+    ofstream file;
+    file.open("initialDataSamples.txt", std::ofstream::out | std::ofstream::trunc);
+    for (int i = 0; i < 8; i++){
+        file << i << endl << allSensors[i].getInitialDataSample() << endl;
+    }
+    file.close;
 }
 
 bool PosCalculator::connectArduino(char *portName){

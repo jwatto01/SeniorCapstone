@@ -6,7 +6,6 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
-    driver();
     ui->setupUi(this);
     //depending on button presses: calibrate -> calibrateSystem
     //Read Noise -> gatherSampleCovarData()
@@ -23,5 +22,11 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+
+void MainWindow::on_StartTrackingBtn_clicked()
+{
+    driver.startTracking();
 }
 

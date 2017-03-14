@@ -220,6 +220,14 @@ void Sensor::updateSenseVal(const Vector3d &newVal){
 		sampleCoVar = sampleCoVariance(initialDataSample);
 }
 
+void Sensor::readInitialDataSample(MatrixXd newDataSample){
+    reset();
+    nMeasCount = 1000;
+    nAvgMeasCount = 100;
+    initialDataSample = newDataSample;
+    sampleCoVar = sampleCoVariance(initialDataSample);
+}
+
 Vector3d Sensor::getOrientation(){
 	return orientation;
 }

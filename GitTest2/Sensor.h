@@ -37,6 +37,7 @@ public:
 	int getNumMeasCount();
 	int getNumAvgMeasCount();
 	Vector3d getMeanNoise();
+    void readInitialDataSample(MatrixXd newDataSample);
 	
 private:
 	int numZeroVals;//counter for number of consecutive sensor data = 0 (used to determine if sensor is functioning)

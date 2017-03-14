@@ -18,6 +18,8 @@ public:
 
 private slots:
 
+    void on_StartTrackingBtn_clicked();
+
 private:
     Ui::MainWindow *ui;
     PosCalculator driver;

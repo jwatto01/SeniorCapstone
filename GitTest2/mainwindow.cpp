@@ -6,6 +6,7 @@ MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
+    findLocations = true;
     ui->setupUi(this);
     //depending on button presses: calibrate -> calibrateSystem
     //Read Noise -> gatherSampleCovarData()
@@ -27,6 +28,27 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_StartTrackingBtn_clicked()
 {
-    driver.startTracking();
+    while (findLocations){
+        driver.startTracking();
+    }
 }
 
+void MainWindow::on_loadDataBtn_clicked()
+{
+    //call helper function and read in file
+}
+
+void MainWindow::on_calibrateBtn_clicked()
+{
+    driver.calibrateSystem();
+}
+
+void MainWindow::on_readNoiseBtn_clicked()
+{
+    driver.gatherSampleCovarData();
+}
+
+void MainWindow::on_stopTrackingBtn_clicked()
+{
+    findLocations = false;
+}

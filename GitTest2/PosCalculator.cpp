@@ -3,7 +3,7 @@
 //
 #include "stdafx.h"
 #include <iostream>
-#include <posCalculator.h>
+#include <PosCalculator.h>
 
 #define ARDUINO_WAIT_TIME 2000
 
@@ -248,13 +248,15 @@ int PosCalculator::startTracking()
     Vector3d newMagOr(0.0,0.0,0.0);//magnet orientation in euclidean angles (start with pointing along z axis)
 
     //start communication with arduino on com port
-    string str = "COM9";
-    char * writable = new char[str.size() + 1];
-    std::copy(str.begin(), str.end(), writable);
-    writable[str.size()] = '\0';
+    if (!connected){
+        string str = "COM9";
+        char * writable = new char[str.size() + 1];
+        std::copy(str.begin(), str.end(), writable);
+        writable[str.size()] = '\0';
 
-    connectArduino(writable);
-    delete []writable;
+        connectArduino(writable);
+        delete []writable;
+    }
     char dataINBuffer[169];
 
 
@@ -397,13 +399,15 @@ void PosCalculator::gatherSampleCovarData(){
         allSensors[i].reset();
     }
     //then connect to the arduino
-    string str = "COM9";
-    char * writable = new char[str.size() + 1];
-    std::copy(str.begin(), str.end(), writable);
-    writable[str.size()] = '\0';
+    if (!connected) {
+        string str = "COM9";
+        char * writable = new char[str.size() + 1];
+        std::copy(str.begin(), str.end(), writable);
+        writable[str.size()] = '\0';
 
-    connectArduino(writable);
-    delete []writable;
+        connectArduino(writable);
+        delete []writable;
+    }
     char dataINBuffer[169];
 
     //then acquire 1000 samples
@@ -468,6 +472,15 @@ void PosCalculator::findFirstLocation(){
 }
 
 void PosCalculator::calibrateSystem(){
+    if (!connected){
+        string str = "COM9";
+        char * writable = new char[str.size() + 1];
+        std::copy(str.begin(), str.end(), writable);
+        writable[str.size()] = '\0';
+
+        connectArduino(writable);
+        delete []writable;
+    }
     for(int k = 0; k<20; k++){
         if(writeData(calibChar)){
             Sleep(800);//give sensors plenty of time to take measurements and do averaging

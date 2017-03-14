@@ -215,7 +215,7 @@ void Sensor::updateSenseVal(const Vector3d &newVal){
 	}
 	
 	//time to compute the covariance for the sensor!
-	if(nAvgMeasCount == 100)
+    if(nAvgMeasCount == 100 && nMeasCount == 1000)
         //todo Store initialDataSample in data file to be read in rather than previous calculation
 		sampleCoVar = sampleCoVariance(initialDataSample);
 }

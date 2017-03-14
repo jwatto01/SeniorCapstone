@@ -20,9 +20,18 @@ private slots:
 
     void on_StartTrackingBtn_clicked();
 
+    void on_loadDataBtn_clicked();
+
+    void on_calibrateBtn_clicked();
+
+    void on_readNoiseBtn_clicked();
+
+    void on_stopTrackingBtn_clicked();
+
 private:
     Ui::MainWindow *ui;
     PosCalculator driver;
+    bool findLocations;
 };
 
 #endif // MAINWINDOW_H

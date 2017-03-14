@@ -34,7 +34,6 @@ public:
     MatrixXd getSetOfStartPoints();
 
     PosCalculator();
-
     int startTracking();
     static Vector3d residual(Sensor &curSensor);
     static void funcVect(const real_1d_array &x, real_1d_array& fi, void* obj);

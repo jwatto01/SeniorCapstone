@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <PosCalculator.h>
 
 namespace Ui {
 class MainWindow;
@@ -19,6 +20,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+    PosCalculator driver;
 };
 
 #endif // MAINWINDOW_H

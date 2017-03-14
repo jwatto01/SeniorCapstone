@@ -100,49 +100,49 @@ PosCalculator::PosCalculator(){
 }
 
 Vector3d PosCalculator::residual(Sensor &curSensor){
-	Vector3d expectedMagField = curSensor.calculateMagField(M1);
-	Vector3d actualMagField = curSensor.getAvgScaledVal();
-	Vector3d difference;
-	Vector3d meanNoise = curSensor.getMeanNoise();
-	difference = actualMagField - expectedMagField - meanNoise;
-	
-	return difference;
+    Vector3d expectedMagField = curSensor.calculateMagField(M1);
+    Vector3d actualMagField = curSensor.getAvgScaledVal();
+    Vector3d difference;
+    Vector3d meanNoise = curSensor.getMeanNoise();
+    difference = actualMagField - expectedMagField - meanNoise;
+
+    return difference;
 }
 
 void PosCalculator::funcVect(const real_1d_array &x, real_1d_array& fi, void* obj){
-	double origMagDipole;
-	Matrix3d curSqCoVar, invSQCoVar;
-	Vector3d curDiff, magPos, magOr, origMagPos, origMagOr;
+    double origMagDipole;
+    Matrix3d curSqCoVar, invSQCoVar;
+    Vector3d curDiff, magPos, magOr, origMagPos, origMagOr;
     origMagPos = M1.posVal();
-	origMagOr = M1.orientation();
-	origMagDipole = M1.dipoleMomentVal();
-	
-	//update magnet parameters
-	for(int i = 0; i<3; i++) magPos(i) = x[i];
-	for(int i = 0; i<3; i++) magOr(i) = x[i+3];
+    origMagOr = M1.orientation();
+    origMagDipole = M1.dipoleMomentVal();
+
+    //update magnet parameters
+    for(int i = 0; i<3; i++) magPos(i) = x[i];
+    for(int i = 0; i<3; i++) magOr(i) = x[i+3];
     M1.updatePosition(magPos);
-	M1.updateOrientation(magOr);
-	M1.updateDipoleMoment(x[6]);
-	
-	//calculate fi for all sensors and stack each 3x1 vector from sensor 0 to 7
-	for(int i = 0; i<24; i++){
-		curSqCoVar = allSensors[(i/3)].getSQRTsampleCoVar();
-		invSQCoVar = curSqCoVar.inverse();//find covariance^(-1)
+    M1.updateOrientation(magOr);
+    M1.updateDipoleMoment(x[6]);
+
+    //calculate fi for all sensors and stack each 3x1 vector from sensor 0 to 7
+    for(int i = 0; i<24; i++){
+        curSqCoVar = allSensors[(i/3)].getSQRTsampleCoVar();
+        invSQCoVar = curSqCoVar.inverse();//find covariance^(-1)
 
         curDiff = residual(allSensors[(i/3)]);//find ( d-s(x) )
-		Vector3d error = invSQCoVar * curDiff;
-		//stack the error vector in our function vector, forming a 24x1 vector
-		fi[i] = error(0);
-		i++;
-		fi[i] = error(1);
-		i++;
-		fi[i] = error(2);
-	}
+        Vector3d error = invSQCoVar * curDiff;
+        //stack the error vector in our function vector, forming a 24x1 vector
+        fi[i] = error(0);
+        i++;
+        fi[i] = error(1);
+        i++;
+        fi[i] = error(2);
+    }
 
-	//restore M1's parameters
-	M1.updatePosition(origMagPos);
-	M1.updateOrientation(origMagOr);
-	M1.updateDipoleMoment(origMagDipole);
+    //restore M1's parameters
+    M1.updatePosition(origMagPos);
+    M1.updateOrientation(origMagOr);
+    M1.updateDipoleMoment(origMagDipole);
 }
 
 /*
@@ -154,81 +154,81 @@ This algorithm attempts to solve the system of nonlinear equations
 */
 //jacobian is partial with respect to functor (24x1 stacked vector of function evaluations for all sensor axis)
 void PosCalculator::jacobian(const real_1d_array &x, real_1d_array &fi, real_2d_array &jac, void* obj){
-	//get curMagnet's position + orientation
-	Vector3d origMagPos, origMagOr, curMagPos, curMagOr, curDiff;
-	double origMagDipole = M1.dipoleMomentVal();
-	Matrix3d invSQCoVar, curSqCoVar;
-	for(int i = 0; i<3; i++) curMagPos(i) = x[i];
-	for(int i = 0; i<3; i++) curMagOr(i) = x[i+3];
-	origMagPos = M1.posVal();
-	origMagOr = M1.orientation();
-	M1.updatePosition(curMagPos);
-	M1.updateOrientation(curMagOr);
-	M1.updateDipoleMoment(x[6]);
-	double h = 1e-12;
-	
-	for(int i = 0; i<24; i++){
-		curSqCoVar = allSensors[(i/3)].getSQRTsampleCoVar();
-		invSQCoVar = curSqCoVar.inverse();//find covariance^(-1)
+    //get curMagnet's position + orientation
+    Vector3d origMagPos, origMagOr, curMagPos, curMagOr, curDiff;
+    double origMagDipole = M1.dipoleMomentVal();
+    Matrix3d invSQCoVar, curSqCoVar;
+    for(int i = 0; i<3; i++) curMagPos(i) = x[i];
+    for(int i = 0; i<3; i++) curMagOr(i) = x[i+3];
+    origMagPos = M1.posVal();
+    origMagOr = M1.orientation();
+    M1.updatePosition(curMagPos);
+    M1.updateOrientation(curMagOr);
+    M1.updateDipoleMoment(x[6]);
+    double h = 1e-12;
+
+    for(int i = 0; i<24; i++){
+        curSqCoVar = allSensors[(i/3)].getSQRTsampleCoVar();
+        invSQCoVar = curSqCoVar.inverse();//find covariance^(-1)
 
         curDiff = residual(allSensors[(i/3)]);//find ( d-s(x) )
-		Vector3d error = invSQCoVar * curDiff;
-		//stack the error vector in our function vector, forming a 25x1 vector
-		fi[i] = error(0);
-		i++;
-		fi[i] = error(1);
-		i++;
-		fi[i] = error(2);
-	}
-	
-	//partial with respect to function evaluation
+        Vector3d error = invSQCoVar * curDiff;
+        //stack the error vector in our function vector, forming a 25x1 vector
+        fi[i] = error(0);
+        i++;
+        fi[i] = error(1);
+        i++;
+        fi[i] = error(2);
+    }
 
-	for(int i = 0; i<7; i++){
-		//perterb parameters one at a time and calculate partial with respect to function vector, fi
-		if(i<3){
-			curMagPos(i) += h;
-			M1.updatePosition(curMagPos);
-		}
-		else if(i<6){
-			curMagOr(i-3) +=h;
-			M1.updateOrientation(curMagOr);
-		}
-		else{
-			M1.updateDipoleMoment(x[6] + h);
-		}
-		//evaluate funcion for updated position
-		for(int j = 0; j<24; j++){
-			curSqCoVar = allSensors[(j/3)].getSQRTsampleCoVar();
-			invSQCoVar = curSqCoVar.inverse();//find covariance^(-1)
-	
+    //partial with respect to function evaluation
+
+    for(int i = 0; i<7; i++){
+        //perterb parameters one at a time and calculate partial with respect to function vector, fi
+        if(i<3){
+            curMagPos(i) += h;
+            M1.updatePosition(curMagPos);
+        }
+        else if(i<6){
+            curMagOr(i-3) +=h;
+            M1.updateOrientation(curMagOr);
+        }
+        else{
+            M1.updateDipoleMoment(x[6] + h);
+        }
+        //evaluate funcion for updated position
+        for(int j = 0; j<24; j++){
+            curSqCoVar = allSensors[(j/3)].getSQRTsampleCoVar();
+            invSQCoVar = curSqCoVar.inverse();//find covariance^(-1)
+
             curDiff = residual(allSensors[(j/3)]);//find ( d-s(x) )
-			Vector3d error = invSQCoVar * curDiff;
-			
-			
-			jac[j][i] = (error(0)-fi[j])/h;
-			j++;
-			jac[j][i] = (error(1)-fi[j])/h;
-			j++;
-			jac[j][i] = (error(2)-fi[j])/h;
-		}
-		
-		//reset magnet position for next calculation
-		if(i<3){
-			curMagPos(i) -= h;
-			M1.updatePosition(curMagPos);
-		}
-		else if(i<6){
-			curMagOr(i-3) -=h;
-			M1.updateOrientation(curMagOr);
-		}
-		else{
-			M1.updateDipoleMoment(x[6] - h);
-		}
-	}
-	//restore magnet parameters
-	M1.updatePosition(origMagPos);
-	M1.updateOrientation(origMagOr);
-	M1.updateDipoleMoment(origMagDipole);
+            Vector3d error = invSQCoVar * curDiff;
+
+
+            jac[j][i] = (error(0)-fi[j])/h;
+            j++;
+            jac[j][i] = (error(1)-fi[j])/h;
+            j++;
+            jac[j][i] = (error(2)-fi[j])/h;
+        }
+
+        //reset magnet position for next calculation
+        if(i<3){
+            curMagPos(i) -= h;
+            M1.updatePosition(curMagPos);
+        }
+        else if(i<6){
+            curMagOr(i-3) -=h;
+            M1.updateOrientation(curMagOr);
+        }
+        else{
+            M1.updateDipoleMoment(x[6] - h);
+        }
+    }
+    //restore magnet parameters
+    M1.updatePosition(origMagPos);
+    M1.updateOrientation(origMagOr);
+    M1.updateDipoleMoment(origMagDipole);
 }
 
 //After arduino is connected, and we already have the sample covariance for each sensor
@@ -250,7 +250,7 @@ int PosCalculator::startTracking()
     char * writable = new char[str.size() + 1];
     std::copy(str.begin(), str.end(), writable);
     writable[str.size()] = '\0';
-    
+
     connectArduino(writable);
     delete []writable;
     char dataINBuffer[169];
@@ -306,7 +306,7 @@ int PosCalculator::startTracking()
                 params_result.setcontent(7,startPoint);
 
                 //calculate new lower and upper bounds such that they are close to the previous solution
-                double maxDeltaPos = 5e-3;//set a +-5mm bound on new solution
+                double maxDeltaPos = 20e-3;//set a +-20mm bound on new solution
 
                 double newZ = startPoint[2] - maxDeltaPos;
                 if(newZ < 0.0) newZ = 0.0;//ensure we don't start to find solutions that are below test bed
@@ -385,7 +385,7 @@ int PosCalculator::startTracking()
     }
 
     Sleep(10);
-	return 0;
+    return 0;
 }
 
 //this will acquire 1000 data samples from which the sampleCoVariance will be calculated from automatically for each sensor object
@@ -488,48 +488,48 @@ void PosCalculator::calibrateSystem(){
 }
 
 void PosCalculator::setZeroVals(){
-	for(int j = 0; j<8; j++){
-		allSensors[j].updateOffsets();
-	}
+    for(int j = 0; j<8; j++){
+        allSensors[j].updateOffsets();
+    }
 }
 
 //Unpack buffer then parse it into an array of ints
 //then map to double and update each sensor's measurement datamember
 void PosCalculator::updateSensorReadings(char byteBuff[169]){
-	
-	for(int i = 0; i<8; i++){
-		Vector3d newSenseVal;
-		Vector3i retRawData;
-		//unpack data
-		for(int j = 0; j<3; j++){
-			int unpackedRawData;
-			string temp = "";
-			for(int k = 0; k<7; k++){
-				//ignore all non-important data
-				if(byteBuff[i*21+j*7+k] != 'N' && byteBuff[i*21+j*7+k] != '!' && byteBuff[i*21+j*7+k] != ',')
-					temp += byteBuff[i*21+j*7+k];//append digit to temp string
-			}
-			//reconstruct int from temp
-			stringstream str(temp);
-			str >> unpackedRawData;
-			
-			retRawData(j) = unpackedRawData;
-			//cout << retRawData(j) << " ";
-		}
-		//cout << endl;
-		//retRawData(2) = -retRawData(2);//convert to left-handed coordinate system
-		
-		//convert raw data to micro teslas
-		allSensors[i].updateRawData(retRawData);
-		convertToMicroTesla(retRawData, newSenseVal);
-		//update current sensor's measurement data
-		allSensors[i].updateSenseVal(newSenseVal);
-	}
+
+    for(int i = 0; i<8; i++){
+        Vector3d newSenseVal;
+        Vector3i retRawData;
+        //unpack data
+        for(int j = 0; j<3; j++){
+            int unpackedRawData;
+            string temp = "";
+            for(int k = 0; k<7; k++){
+                //ignore all non-important data
+                if(byteBuff[i*21+j*7+k] != 'N' && byteBuff[i*21+j*7+k] != '!' && byteBuff[i*21+j*7+k] != ',')
+                    temp += byteBuff[i*21+j*7+k];//append digit to temp string
+            }
+            //reconstruct int from temp
+            stringstream str(temp);
+            str >> unpackedRawData;
+
+            retRawData(j) = unpackedRawData;
+            //cout << retRawData(j) << " ";
+        }
+        //cout << endl;
+        //retRawData(2) = -retRawData(2);//convert to left-handed coordinate system
+
+        //convert raw data to micro teslas
+        allSensors[i].updateRawData(retRawData);
+        convertToMicroTesla(retRawData, newSenseVal);
+        //update current sensor's measurement data
+        allSensors[i].updateSenseVal(newSenseVal);
+    }
 }
 
 void PosCalculator::convertToMicroTesla(const Vector3i& rawData, Vector3d &retArr){
-	for(int i = 0; i<3; i++)
-		retArr(i) = ((double)rawData(i)+30000.0)*(2e-3) / 60000.0 - 1e-3;
+    for(int i = 0; i<3; i++)
+        retArr(i) = ((double)rawData(i)+30000.0)*(2e-3) / 60000.0 - 1e-3;
 }
 
 void PosCalculator::storeNoiseData(){
@@ -577,8 +577,8 @@ bool PosCalculator::connectArduino(char *portName){
             dcbSerialParams.ByteSize=8;
             dcbSerialParams.StopBits=ONESTOPBIT;
             dcbSerialParams.Parity=NOPARITY;
-			dcbSerialParams.fDtrControl = DTR_CONTROL_ENABLE;//ensures arduino resets properly
-			
+            dcbSerialParams.fDtrControl = DTR_CONTROL_ENABLE;//ensures arduino resets properly
+
              if(!SetCommState(hSerial, &dcbSerialParams))
              {
                 cout << "ALERT: Could not set Serial Port parameters";
@@ -592,7 +592,7 @@ bool PosCalculator::connectArduino(char *portName){
                  PurgeComm(hSerial, PURGE_RXCLEAR | PURGE_TXCLEAR);
                  //Wait 2s as the arduino board will be reseting
                  Sleep(ARDUINO_WAIT_TIME);
-				 return true;
+                 return true;
              }
         }
     }
@@ -604,17 +604,17 @@ int PosCalculator::readData(char buffer[169]){
     unsigned int bytesToRead = 0;
     DWORD dwCommModemStatus;
     DWORD errors;
-    
+
     if(hSerial != INVALID_HANDLE_VALUE){
-    	
-		while(!bytesToRead){//loop until we have non-zero bytes to read from COM
-			ClearCommError(hSerial, &errors, &status);
+
+        while(!bytesToRead){//loop until we have non-zero bytes to read from COM
+            ClearCommError(hSerial, &errors, &status);
             bytesToRead = status.cbInQue;
-		}
-		if(ReadFile(hSerial, buffer, bytesToRead, &bytesRead, 0)) return (int)bytesRead;
-		
-	}
-	
+        }
+        if(ReadFile(hSerial, buffer, bytesToRead, &bytesRead, 0)) return (int)bytesRead;
+
+    }
+
     //If nothing has been read, or that an error was detected return -1
     cout << "error occurred while reading data from serial port" << endl;
     return -1;

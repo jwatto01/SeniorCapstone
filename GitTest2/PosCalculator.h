@@ -3,7 +3,6 @@
 
 #include <Magnet.h>
 #include <Sensor.h>
-#include "Magnet.h"
 #include <stdio.h>
 #include <windows.h>
 #include <math.h>
@@ -37,11 +36,11 @@ public:
     PosCalculator();
 
     int startTracking();
-    Vector3d residual(Sensor &curSensor);
-    void funcVect(const real_1d_array &x, real_1d_array& fi, void* obj);
+    static Vector3d residual(Sensor &curSensor);
+    static void funcVect(const real_1d_array &x, real_1d_array& fi, void* obj);
     void convertToMicroTesla(const Vector3i &rawData, Vector3d &retArr);
     //void meritFunc(const real_1d_array &x, double& fi, void* obj);
-    void jacobian(const real_1d_array &x, real_1d_array &fi, real_2d_array &jac, void* obj);
+    static void jacobian(const real_1d_array &x, real_1d_array &fi, real_2d_array &jac, void* obj);
     bool connectArduino(char *portName);
     int readData(char buffer[169]);
     bool writeData(char buffer[1]);
@@ -58,8 +57,7 @@ private:
     bool connected;
     bool firstMeas;
     COMSTAT status;
-    Magnet M1;
-    Sensor allSensors[8];
+
     MatrixXd setOfStartPoints;
     double startPoint[7];
     real_1d_array params_result;

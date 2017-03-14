@@ -20,6 +20,8 @@ const double PI = 3.14159265;
 const ae_int_t n = 7;
 const ae_int_t m = 24;
 char startC[1] = {'S'}, calibChar[1] = {'C'};
+Magnet M1;
+Sensor allSensors[8];
 //string portNumber;
 //HANDLE hSerial;
 //bool connected;
@@ -538,7 +540,7 @@ void PosCalculator::storeNoiseData(){
     for (int i = 0; i < 8; i++){
         file << i << endl << allSensors[i].getInitialDataSample() << endl;
     }
-    file.close;
+    file.close();
 }
 
 bool PosCalculator::connectArduino(char *portName){

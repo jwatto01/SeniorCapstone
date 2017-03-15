@@ -21,7 +21,11 @@ const ae_int_t n = 7;
 const ae_int_t m = 24;
 char startC[1] = {'S'}, calibChar[1] = {'C'};
 Magnet M1;
-Sensor allSensors[8];
+Sensor S1({0.161, -0.132, 0.334},{-1.5708, 1.5708, 0.7854}, 1), S2({0.161, 0.132, 0.335},{-1.5708, 1.5708, -0.7854}, 2);
+Sensor S3({0.161, 0.126, 0.086},{-1.5708, 1.5708, 0.7854}, 3), S4({0.161, -0.116, 0.084},{-1.5708, 1.5708, -0.7854}, 4);
+Sensor S5({-0.152, -0.133, 0.3385},{1.5708, 1.5708, -0.7854}, 5), S6({-0.152, 0.132, 0.331},{1.5708, 1.5708, 0.7854}, 6);
+Sensor S7({-0.152, 0.129, 0.076},{1.5708, 1.5708, -0.7854}, 7), S8({-0.152,-0.11,0.097},{1.5708, 1.5708, 0.7854}, 8);
+vector<Sensor> allSensors;
 //string portNumber;
 //HANDLE hSerial;
 //bool connected;
@@ -54,6 +58,14 @@ sensor S7({-0.152, 0.129, 0.076},{0.7854, -1.5708, -1.5708}, 7), S8({-0.152,-0.1
 //sensor allSensors[8];
 
 PosCalculator::PosCalculator(){
+    allSensors.push_back(S1);
+    allSensors.push_back(S2);
+    allSensors.push_back(S3);
+    allSensors.push_back(S4);
+    allSensors.push_back(S5);
+    allSensors.push_back(S6);
+    allSensors.push_back(S7);
+    allSensors.push_back(S8);
     portNumber = "COM9";
     char * portName = new char[portNumber.size() + 1];
     std::copy(portNumber.begin(), portNumber.end(), portName);
@@ -68,18 +80,6 @@ PosCalculator::PosCalculator(){
     NULL);
     delete []portName;
     connected = false;
-    Sensor S1({0.161, -0.132, 0.334},{-1.5708, 1.5708, 0.7854}, 1), S2({0.161, 0.132, 0.335},{-1.5708, 1.5708, -0.7854}, 2);
-    Sensor S3({0.161, 0.126, 0.086},{-1.5708, 1.5708, 0.7854}, 3), S4({0.161, -0.116, 0.084},{-1.5708, 1.5708, -0.7854}, 4);
-    Sensor S5({-0.152, -0.133, 0.3385},{1.5708, 1.5708, -0.7854}, 5), S6({-0.152, 0.132, 0.331},{1.5708, 1.5708, 0.7854}, 6);
-    Sensor S7({-0.152, 0.129, 0.076},{1.5708, 1.5708, -0.7854}, 7), S8({-0.152,-0.11,0.097},{1.5708, 1.5708, 0.7854}, 8);
-    allSensors[0] = S1;
-    allSensors[1] = S2;
-    allSensors[2] = S3;
-    allSensors[3] = S4;
-    allSensors[4] = S5;
-    allSensors[5] = S6;
-    allSensors[6] = S7;
-    allSensors[7] = S8;
     setOfStartPoints.resize(10,7);
     setOfStartPoints << -0.1 , 0.0 , 0.05 , 0.0 , 0.0 , 0.0 , M1.dipoleMomentVal()
                      , 0.0 , 0.1 , 0.05 , 0.0 , 0.0 , 0.0 , M1.dipoleMomentVal()
@@ -550,8 +550,12 @@ void PosCalculator::convertToMicroTesla(const Vector3i& rawData, Vector3d &retAr
 void PosCalculator::storeNoiseData(){
     ofstream file;
     file.open("initialDataSamples.txt", std::ofstream::out | std::ofstream::trunc);
+    file << "make sure file is created to be removed";
+    file.close();
+    remove("initialDataSamples.txt");
+    file.open("initialDataSamples.txt", ios::app);
     for (int i = 0; i < 8; i++){
-        file << i << endl << allSensors[i].getInitialDataSample() << endl;
+        file << allSensors[i].getInitialDataSample();
     }
     file.close();
 }

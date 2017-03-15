@@ -1,6 +1,9 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-
+#include <unsupported/Eigen/MatrixFunctions>
+#include <fstream>
+#include <QString>
+#include <PosCalculator.h>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -35,7 +38,23 @@ void MainWindow::on_StartTrackingBtn_clicked()
 
 void MainWindow::on_loadDataBtn_clicked()
 {
-    //call helper function and read in file
+    QString filePath = ui->filePathTxt->toPlainText();
+    MatrixXd initialDataSample = MatrixXd::Constant(100,3,0.0);
+    ifstream myFile;
+    myFile.open(filePath.toStdString());
+    int a, b, c;
+    int i;
+    for (int j = 0; j < 8; j++){
+        i = 0;
+        while (myFile >> a >> b >> c && i < 100)
+        {
+            initialDataSample(i, 0) = a;
+            initialDataSample(i, 1) = b;
+            initialDataSample(i, 2) = c;
+            i++;
+        }
+        allSensors.at(j).readInitialDataSample(initialDataSample);
+    }
 }
 
 void MainWindow::on_calibrateBtn_clicked()

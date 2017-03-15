@@ -19,8 +19,12 @@ using Eigen::MatrixXd;
 using Eigen::VectorXd;
 using Eigen::Vector3i;
 using Eigen::Vector3d;
+
+extern vector<Sensor> allSensors;
+
 class PosCalculator
 {
+
 public:
     //should likely break up these functions within the mainfn into things like calibrate(), acquireCoVar(), beginTracking(), etc...
     //and then make all other functions private
@@ -30,7 +34,6 @@ public:
     bool getConnected();
     COMSTAT getStatus();
     Magnet getM1();
-    Sensor* getSensors();
     MatrixXd getSetOfStartPoints();
 
     PosCalculator();

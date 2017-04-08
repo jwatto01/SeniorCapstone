@@ -46,7 +46,7 @@ void MainWindow::on_loadDataBtn_clicked()
     int i;
     for (int j = 0; j < 8; j++){
         i = 0;
-        while (myFile >> a >> b >> c && i < 100)
+        while ( i < 100 && myFile >> a >> b >> c)
         {
             initialDataSample(i, 0) = a;
             initialDataSample(i, 1) = b;
@@ -55,6 +55,7 @@ void MainWindow::on_loadDataBtn_clicked()
         }
         allSensors.at(j).readInitialDataSample(initialDataSample);
     }
+    myFile.close();
 }
 
 void MainWindow::on_calibrateBtn_clicked()

@@ -37,7 +37,7 @@ public:
     MatrixXd getSetOfStartPoints();
 
     PosCalculator();
-    int startTracking();
+    Vector3d startTracking();
     static Vector3d residual(Sensor &curSensor);
     static void funcVect(const real_1d_array &x, real_1d_array& fi, void* obj);
     void convertToMicroTesla(const Vector3i &rawData, Vector3d &retArr);
@@ -49,7 +49,7 @@ public:
     void updateSensorReadings(char byteBuff[169]);
     void setZeroVals();
     void calibrateSystem();
-    void gatherSampleCovarData();
+    void gatherSampleCovarData(bool b);
     void storeNoiseData();
     void findFirstLocation();
 

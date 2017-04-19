@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>673</width>
+    <width>1046</width>
     <height>615</height>
    </rect>
   </property>
@@ -17,8 +17,8 @@
    <widget class="QPushButton" name="calibrateBtn">
     <property name="geometry">
      <rect>
-      <x>510</x>
-      <y>10</y>
+      <x>220</x>
+      <y>20</y>
       <width>75</width>
       <height>23</height>
      </rect>
@@ -30,8 +30,8 @@
    <widget class="QPushButton" name="readNoiseBtn">
     <property name="geometry">
      <rect>
-      <x>590</x>
-      <y>10</y>
+      <x>300</x>
+      <y>20</y>
       <width>75</width>
       <height>23</height>
      </rect>
@@ -56,8 +56,8 @@
    <widget class="QPushButton" name="loadDataBtn">
     <property name="geometry">
      <rect>
-      <x>580</x>
-      <y>520</y>
+      <x>950</x>
+      <y>530</y>
       <width>75</width>
       <height>23</height>
      </rect>
@@ -82,8 +82,8 @@
    <widget class="QTextEdit" name="filePathTxt">
     <property name="geometry">
      <rect>
-      <x>280</x>
-      <y>520</y>
+      <x>650</x>
+      <y>530</y>
       <width>281</width>
       <height>21</height>
      </rect>
@@ -102,14 +102,37 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Enter File Path Here&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
-   <widget class="QWidget" name="widget" native="true">
+   <widget class="QCustomPlot" name="figure_1" native="true">
     <property name="geometry">
      <rect>
-      <x>29</x>
-      <y>79</y>
-      <width>621</width>
-      <height>411</height>
+      <x>40</x>
+      <y>80</y>
+      <width>461</width>
+      <height>401</height>
      </rect>
+    </property>
+   </widget>
+   <widget class="QCustomPlot" name="figure_2" native="true">
+    <property name="geometry">
+     <rect>
+      <x>520</x>
+      <y>80</y>
+      <width>481</width>
+      <height>401</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QProgressBar" name="progressBar">
+    <property name="geometry">
+     <rect>
+      <x>400</x>
+      <y>20</y>
+      <width>241</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="value">
+     <number>0</number>
     </property>
    </widget>
   </widget>
@@ -118,7 +141,7 @@ p, li { white-space: pre-wrap; }
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>673</width>
+     <width>1046</width>
      <height>21</height>
     </rect>
    </property>
@@ -134,6 +157,14 @@ p, li { white-space: pre-wrap; }
   <widget class="QStatusBar" name="statusBar"/>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>QCustomPlot</class>
+   <extends>QWidget</extends>
+   <header>qcustomplot.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

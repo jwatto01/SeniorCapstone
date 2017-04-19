@@ -3,7 +3,6 @@
 
 #include <QMainWindow>
 #include <PosCalculator.h>
-
 namespace Ui {
 class MainWindow;
 }

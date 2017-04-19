@@ -240,8 +240,9 @@ void PosCalculator::jacobian(const real_1d_array &x, real_1d_array &fi, real_2d_
 //and have loop to do start tracking
 
 //get ten measurements and update param results
-int PosCalculator::startTracking()
+Vector3d PosCalculator::startTracking()
 {
+    Vector3d retVal;
     Vector3d curMagPos = M1.posVal();
     Vector3d curMagOr = M1.orientation();
     Vector3d newMagPos(0.0, 0.0, 0.0);
@@ -274,7 +275,8 @@ int PosCalculator::startTracking()
             char throwaway;
             //need to determine how to handle errors (popup forum?)
             cin >> throwaway;//suspend until user tells to continue
-            return -1;
+            Vector3d retErr(0,0,0);
+            return retErr;
         }
         if(firstMeas){
             findFirstLocation();
@@ -358,6 +360,10 @@ int PosCalculator::startTracking()
                 for(int i = 0; i<6; i++) fout << params_result(i) << ",";
                 fout << params_result(6) << endl;
 
+                retVal(0) = params_result(0);
+                retVal(1) = params_result(1);
+                retVal(2) = params_result(2);
+
                 fout.close();//have to close the stream after writing
 
                 //print out avg scaled measurements
@@ -388,14 +394,16 @@ int PosCalculator::startTracking()
     }
 
     Sleep(10);
-    return 0;
+    return retVal;
 }
 
 //this will acquire 1000 data samples from which the sampleCoVariance will be calculated from automatically for each sensor object
-void PosCalculator::gatherSampleCovarData(){
+void PosCalculator::gatherSampleCovarData(bool gathering){
     //first ensure that all the sensor classes contain no data in initialDataSample
-    for(int i = 0; i<8; i++){
-        allSensors[i].reset();
+    if(!gathering){
+        for(int i = 0; i<8; i++){
+            allSensors[i].reset();
+        }
     }
     //then connect to the arduino
     if (!connected) {
@@ -410,7 +418,7 @@ void PosCalculator::gatherSampleCovarData(){
     char dataINBuffer[169];
 
     //then acquire 1000 samples
-    for(int i = 0; i<1000; i++){
+    for(int i = 0; i<10; i++){
         Sleep(10);
         if(writeData(startC)){
             int nCharsRead = 0;
@@ -429,7 +437,6 @@ void PosCalculator::gatherSampleCovarData(){
         }
     }
 
-    storeNoiseData(); //store initialD
 }
 
 void PosCalculator::findFirstLocation(){

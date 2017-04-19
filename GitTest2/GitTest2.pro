@@ -6,7 +6,7 @@
 
 QT       += core gui
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 
 TARGET = GitTest2
 TEMPLATE = app
@@ -29,7 +29,8 @@ SOURCES += main.cpp\
     specialfunctions.cpp \
     statistics.cpp \
     PosCalculator.cpp \
-    Magnet.cpp
+    Magnet.cpp \
+    qcustomplot.cpp
 HEADERS  += mainwindow.h \
     Sensor.h \
     alglibinternal.h \
@@ -47,7 +48,8 @@ HEADERS  += mainwindow.h \
     statistics.h \
     stdafx.h \
     PosCalculator.h \
-    Magnet.h
+    Magnet.h \
+    qcustomplot.h
 
 FORMS    += mainwindow.ui
 

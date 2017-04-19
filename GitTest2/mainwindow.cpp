@@ -31,8 +31,39 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_StartTrackingBtn_clicked()
 {
+    QCPScatterStyle myScatter;
+    myScatter.setShape(QCPScatterStyle::ssDisc);
+    myScatter.setPen(QPen(Qt::blue));
+    myScatter.setBrush(Qt::white);
+    myScatter.setSize(5);
+
+    ui->figure_1->addGraph();
+    ui->figure_2->addGraph();
+    ui->figure_1->graph(0)->setScatterStyle(myScatter);
+    ui->figure_2->graph(0)->setScatterStyle(myScatter);
+    ui->figure_1->graph(0)->setLineStyle(QCPGraph::lsNone);
+    ui->figure_2->graph(0)->setLineStyle(QCPGraph::lsNone);
+    ui->figure_1->yAxis->setRange(-0.25,0.25);
+    ui->figure_1->xAxis->setRange(-0.25,0.25);
+    ui->figure_2->yAxis->setRange(-0.25,0.25);
+    ui->figure_2->xAxis->setRange(-0.25,0.25);
+    ui->figure_1->yAxis->setLabel("Y-axis (m)");
+    ui->figure_1->xAxis->setLabel("X-axis (m)");
+    ui->figure_2->yAxis->setLabel("Z-axis (m)");
+    ui->figure_2->xAxis->setLabel("X-axis (m)");
+
+    Vector3d curPosition;
+    int trackCount = 0;
     while (findLocations){
-        driver.startTracking();
+        curPosition = driver.startTracking();
+        //only plot values once we've locked into a solution
+        if(trackCount >= 10){
+            ui->figure_1->graph(0)->addData(curPosition(0),curPosition(1));
+            ui->figure_2->graph(0)->addData(curPosition(0),curPosition(2));
+            ui->figure_1->replot();
+            ui->figure_2->replot();
+        }
+        trackCount++;
         QCoreApplication::processEvents();
     }
 }
@@ -66,7 +97,17 @@ void MainWindow::on_calibrateBtn_clicked()
 
 void MainWindow::on_readNoiseBtn_clicked()
 {
-    driver.gatherSampleCovarData();
+    ui->progressBar->setVisible(true);
+    ui->progressBar->setValue(0);
+    bool gathering = false;
+    for(int i = 0; i<100; i++){
+        driver.gatherSampleCovarData(gathering);
+        if(i==0)
+            gathering = true;
+        ui->progressBar->setValue(i);
+    }
+    driver.storeNoiseData();
+    ui->progressBar->setVisible(false);
 }
 
 void MainWindow::on_stopTrackingBtn_clicked()

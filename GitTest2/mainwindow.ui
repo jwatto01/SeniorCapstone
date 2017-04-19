@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>673</width>
+    <height>615</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,8 +17,8 @@
    <widget class="QPushButton" name="calibrateBtn">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>20</y>
+      <x>510</x>
+      <y>10</y>
       <width>75</width>
       <height>23</height>
      </rect>
@@ -30,8 +30,8 @@
    <widget class="QPushButton" name="readNoiseBtn">
     <property name="geometry">
      <rect>
-      <x>120</x>
-      <y>20</y>
+      <x>590</x>
+      <y>10</y>
       <width>75</width>
       <height>23</height>
      </rect>
@@ -43,10 +43,10 @@
    <widget class="QPushButton" name="StartTrackingBtn">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>50</y>
-      <width>75</width>
-      <height>23</height>
+      <x>20</x>
+      <y>10</y>
+      <width>81</width>
+      <height>41</height>
      </rect>
     </property>
     <property name="text">
@@ -56,8 +56,8 @@
    <widget class="QPushButton" name="loadDataBtn">
     <property name="geometry">
      <rect>
-      <x>120</x>
-      <y>50</y>
+      <x>580</x>
+      <y>520</y>
       <width>75</width>
       <height>23</height>
      </rect>
@@ -69,10 +69,10 @@
    <widget class="QPushButton" name="stopTrackingBtn">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>80</y>
-      <width>75</width>
-      <height>23</height>
+      <x>120</x>
+      <y>10</y>
+      <width>81</width>
+      <height>41</height>
      </rect>
     </property>
     <property name="text">
@@ -82,10 +82,10 @@
    <widget class="QTextEdit" name="filePathTxt">
     <property name="geometry">
      <rect>
-      <x>0</x>
-      <y>140</y>
-      <width>391</width>
-      <height>31</height>
+      <x>280</x>
+      <y>520</y>
+      <width>281</width>
+      <height>21</height>
      </rect>
     </property>
     <property name="toolTip">
@@ -102,13 +102,23 @@ p, li { white-space: pre-wrap; }
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Enter File Path Here&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
+   <widget class="QWidget" name="widget" native="true">
+    <property name="geometry">
+     <rect>
+      <x>29</x>
+      <y>79</y>
+      <width>621</width>
+      <height>411</height>
+     </rect>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>400</width>
+     <width>673</width>
      <height>21</height>
     </rect>
    </property>

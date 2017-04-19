@@ -66,7 +66,7 @@ PosCalculator::PosCalculator(){
     allSensors.push_back(S6);
     allSensors.push_back(S7);
     allSensors.push_back(S8);
-    portNumber = "COM9";
+    portNumber = "COM4";
     char * portName = new char[portNumber.size() + 1];
     std::copy(portNumber.begin(), portNumber.end(), portName);
     portName[portNumber.size()] = '\0';
@@ -249,7 +249,7 @@ int PosCalculator::startTracking()
 
     //start communication with arduino on com port
     if (!connected){
-        string str = "COM9";
+        string str = "COM4";
         char * writable = new char[str.size() + 1];
         std::copy(str.begin(), str.end(), writable);
         writable[str.size()] = '\0';
@@ -354,11 +354,10 @@ int PosCalculator::startTracking()
                 fout.open("C:\\Users\\andre_000\\Desktop\\test.txt", ofstream::app);//make last argument ofstream::trunc to only keep one value in there at a time
 
                 //This will loop through each sensor object and print the magnetic measurements (x, y, and z values) to the text file
-                for(int j = 0; j<8; j++){
-                    Vector3d tmpscaled = allSensors[j].getAvgScaledVal();
-                    for(int i = 0; i<2; i++) fout << tmpscaled(i) << ",";
-                    fout << tmpscaled(2) << endl;
-                }
+
+                for(int i = 0; i<6; i++) fout << params_result(i) << ",";
+                fout << params_result(6) << endl;
+
                 fout.close();//have to close the stream after writing
 
                 //print out avg scaled measurements
@@ -400,7 +399,7 @@ void PosCalculator::gatherSampleCovarData(){
     }
     //then connect to the arduino
     if (!connected) {
-        string str = "COM9";
+        string str = "COM4";
         char * writable = new char[str.size() + 1];
         std::copy(str.begin(), str.end(), writable);
         writable[str.size()] = '\0';
@@ -424,7 +423,7 @@ void PosCalculator::gatherSampleCovarData(){
                 cout << "error, read " << nCharsRead << " bytes read from Arduino!" << endl;
                 char throwaway;
                 //need to determine how to handle errors (popup forum?)
-                cin >> throwaway;//suspend until user tells to continue
+                //cin >> throwaway;//suspend until user tells to continue
                 continue;
             }
         }
@@ -473,7 +472,7 @@ void PosCalculator::findFirstLocation(){
 
 void PosCalculator::calibrateSystem(){
     if (!connected){
-        string str = "COM9";
+        string str = "COM4";
         char * writable = new char[str.size() + 1];
         std::copy(str.begin(), str.end(), writable);
         writable[str.size()] = '\0';
@@ -627,9 +626,15 @@ int PosCalculator::readData(char buffer[169]){
     if(hSerial != INVALID_HANDLE_VALUE){
 
         while(!bytesToRead){//loop until we have non-zero bytes to read from COM
+            while(status.cbInQue < 169){
+                ClearCommError(hSerial, &errors, &status);
+                if(status.cbInQue != 169 && status.cbInQue != 0)
+                    cout << status.cbInQue << endl;
+            }
             ClearCommError(hSerial, &errors, &status);
             bytesToRead = status.cbInQue;
         }
+        if(bytesToRead != 169) std::cout << "number of bytes to read: " << bytesToRead << std::endl;
         if(ReadFile(hSerial, buffer, bytesToRead, &bytesRead, 0)) return (int)bytesRead;
 
     }

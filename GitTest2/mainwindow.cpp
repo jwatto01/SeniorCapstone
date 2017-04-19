@@ -33,6 +33,7 @@ void MainWindow::on_StartTrackingBtn_clicked()
 {
     while (findLocations){
         driver.startTracking();
+        QCoreApplication::processEvents();
     }
 }
 
@@ -42,7 +43,7 @@ void MainWindow::on_loadDataBtn_clicked()
     MatrixXd initialDataSample = MatrixXd::Constant(100,3,0.0);
     ifstream myFile;
     myFile.open(filePath.toStdString());
-    int a, b, c;
+    double a, b, c;
     int i;
     for (int j = 0; j < 8; j++){
         i = 0;

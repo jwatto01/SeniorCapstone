@@ -30,10 +30,18 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->figure_1->xAxis->setRange(-0.25,0.25);
     ui->figure_2->yAxis->setRange(-0.25,0.25);
     ui->figure_2->xAxis->setRange(-0.25,0.25);
+    ui->figure_3->yAxis->setRange(-0.25*10^-4,0.25*10^-4);
+    ui->figure_3->xAxis->setRange(-0.25*10^-4,0.25*10^-4);
+    ui->figure_4->yAxis->setRange(-0.25*10^-4,0.25*10^-4);
+    ui->figure_4->xAxis->setRange(-0.25*10^-4,0.25*10^-4);
     ui->figure_1->yAxis->setLabel("Y-axis (m)");
     ui->figure_1->xAxis->setLabel("X-axis (m)");
     ui->figure_2->yAxis->setLabel("Z-axis (m)");
     ui->figure_2->xAxis->setLabel("X-axis (m)");
+    ui->figure_3->yAxis->setLabel("Y-axis (m)");
+    ui->figure_3->xAxis->setLabel("X-axis (m)");
+    ui->figure_4->yAxis->setLabel("Z-axis (m)");
+    ui->figure_4->xAxis->setLabel("X-axis (m)");
 
 
     //depending on button presses: calibrate -> calibrateSystem
@@ -123,8 +131,8 @@ void MainWindow::on_comboBox_currentIndexChanged(int index)
 {
     MatrixXd curInitDataSample = allSensors.at(index).getInitialDataSample();
     QVector<double> xVals(100), yVals(100);
-    VectorXd xVect = curInitDataSample.block(1,1,100,1);
-    VectorXd yVect = curInitDataSample.block<100,1>(1,2);
+    VectorXd xVect = curInitDataSample.block(0,0,100,1);
+    VectorXd yVect = curInitDataSample.block(0,1,100,1);
     memcpy(xVals.data(),xVect.data(),sizeof(double)*100);
     memcpy(yVals.data(),yVect.data(),sizeof(double)*100);
     ui->figure_3->graph(0)->setData(xVals,yVals);

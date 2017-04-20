@@ -166,17 +166,7 @@ p, li { white-space: pre-wrap; }
    <widget class="QCustomPlot" name="figure_4" native="true">
     <property name="geometry">
      <rect>
-      <x>390</x>
-      <y>570</y>
-      <width>241</width>
-      <height>221</height>
-     </rect>
-    </property>
-   </widget>
-   <widget class="QCustomPlot" name="figure_5" native="true">
-    <property name="geometry">
-     <rect>
-      <x>760</x>
+      <x>320</x>
       <y>570</y>
       <width>241</width>
       <height>221</height>

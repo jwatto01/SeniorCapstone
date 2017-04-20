@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1046</width>
-    <height>856</height>
+    <height>744</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -56,8 +56,8 @@
    <widget class="QPushButton" name="loadDataBtn">
     <property name="geometry">
      <rect>
-      <x>950</x>
-      <y>530</y>
+      <x>510</x>
+      <y>50</y>
       <width>75</width>
       <height>23</height>
      </rect>
@@ -82,8 +82,8 @@
    <widget class="QTextEdit" name="filePathTxt">
     <property name="geometry">
      <rect>
-      <x>650</x>
-      <y>530</y>
+      <x>220</x>
+      <y>50</y>
       <width>281</width>
       <height>21</height>
      </rect>
@@ -99,7 +99,7 @@
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Enter File Path Here&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Enter File Path To Load Data Here&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
    <widget class="QCustomPlot" name="figure_1" native="true">
@@ -107,25 +107,25 @@ p, li { white-space: pre-wrap; }
      <rect>
       <x>40</x>
       <y>80</y>
-      <width>461</width>
-      <height>401</height>
+      <width>361</width>
+      <height>291</height>
      </rect>
     </property>
    </widget>
    <widget class="QCustomPlot" name="figure_2" native="true">
     <property name="geometry">
      <rect>
-      <x>520</x>
+      <x>420</x>
       <y>80</y>
-      <width>481</width>
-      <height>401</height>
+      <width>331</width>
+      <height>291</height>
      </rect>
     </property>
    </widget>
    <widget class="QProgressBar" name="progressBar">
     <property name="geometry">
      <rect>
-      <x>400</x>
+      <x>380</x>
       <y>20</y>
       <width>241</width>
       <height>23</height>
@@ -138,8 +138,8 @@ p, li { white-space: pre-wrap; }
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>500</y>
+      <x>10</x>
+      <y>370</y>
       <width>161</width>
       <height>41</height>
      </rect>
@@ -156,9 +156,9 @@ p, li { white-space: pre-wrap; }
    <widget class="QCustomPlot" name="figure_3" native="true">
     <property name="geometry">
      <rect>
-      <x>40</x>
-      <y>570</y>
-      <width>241</width>
+      <x>10</x>
+      <y>440</y>
+      <width>391</width>
       <height>221</height>
      </rect>
     </property>
@@ -166,9 +166,9 @@ p, li { white-space: pre-wrap; }
    <widget class="QCustomPlot" name="figure_4" native="true">
     <property name="geometry">
      <rect>
-      <x>320</x>
-      <y>570</y>
-      <width>241</width>
+      <x>420</x>
+      <y>440</y>
+      <width>331</width>
       <height>221</height>
      </rect>
     </property>
@@ -176,8 +176,8 @@ p, li { white-space: pre-wrap; }
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>60</x>
-      <y>540</y>
+      <x>20</x>
+      <y>410</y>
       <width>81</width>
       <height>16</height>
      </rect>
@@ -189,8 +189,8 @@ p, li { white-space: pre-wrap; }
    <widget class="QComboBox" name="comboBox">
     <property name="geometry">
      <rect>
-      <x>140</x>
-      <y>540</y>
+      <x>100</x>
+      <y>410</y>
       <width>31</width>
       <height>22</height>
      </rect>

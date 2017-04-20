@@ -21,7 +21,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->figure_2->addGraph();
     ui->figure_3->addGraph();
     ui->figure_4->addGraph();
-    ui->figure_5->addGraph();
     ui->figure_1->graph(0)->setScatterStyle(myScatter);
     ui->figure_2->graph(0)->setScatterStyle(myScatter);
     ui->figure_1->graph(0)->setLineStyle(QCPGraph::lsNone);
@@ -30,10 +29,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->figure_1->xAxis->setRange(-0.25,0.25);
     ui->figure_2->yAxis->setRange(-0.25,0.25);
     ui->figure_2->xAxis->setRange(-0.25,0.25);
-    ui->figure_3->yAxis->setRange(-0.25*10^-4,0.25*10^-4);
-    ui->figure_3->xAxis->setRange(-0.25*10^-4,0.25*10^-4);
-    ui->figure_4->yAxis->setRange(-0.25*10^-4,0.25*10^-4);
-    ui->figure_4->xAxis->setRange(-0.25*10^-4,0.25*10^-4);
+    ui->figure_3->yAxis->setRange(-0.25/10000,0.25/10000);
+    ui->figure_3->xAxis->setRange(-0.25/10000,0.25/10000);
+    ui->figure_4->yAxis->setRange(-0.25/10000,0.25/10000);
+    ui->figure_4->xAxis->setRange(-0.25/10000,0.25/10000);
     ui->figure_1->yAxis->setLabel("Y-axis (m)");
     ui->figure_1->xAxis->setLabel("X-axis (m)");
     ui->figure_2->yAxis->setLabel("Z-axis (m)");

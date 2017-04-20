@@ -561,7 +561,7 @@ void PosCalculator::storeNoiseData(){
     remove("initialDataSamples.txt");
     file.open("initialDataSamples.txt", ios::app);
     for (int i = 0; i < 8; i++){
-        file << allSensors[i].getInitialDataSample();
+        file << allSensors[i].getInitialDataSample() << std::endl;
     }
     file.close();
 }

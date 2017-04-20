@@ -27,6 +27,8 @@ private slots:
 
     void on_stopTrackingBtn_clicked();
 
+    void on_comboBox_currentIndexChanged(int index);
+
 private:
     Ui::MainWindow *ui;
     PosCalculator driver;

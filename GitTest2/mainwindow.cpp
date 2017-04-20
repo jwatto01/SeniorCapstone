@@ -11,6 +11,31 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     findLocations = true;
     ui->setupUi(this);
+    QCPScatterStyle myScatter;
+    myScatter.setShape(QCPScatterStyle::ssDisc);
+    myScatter.setPen(QPen(Qt::blue));
+    myScatter.setBrush(Qt::white);
+    myScatter.setSize(5);
+
+    ui->figure_1->addGraph();
+    ui->figure_2->addGraph();
+    ui->figure_3->addGraph();
+    ui->figure_4->addGraph();
+    ui->figure_5->addGraph();
+    ui->figure_1->graph(0)->setScatterStyle(myScatter);
+    ui->figure_2->graph(0)->setScatterStyle(myScatter);
+    ui->figure_1->graph(0)->setLineStyle(QCPGraph::lsNone);
+    ui->figure_2->graph(0)->setLineStyle(QCPGraph::lsNone);
+    ui->figure_1->yAxis->setRange(-0.25,0.25);
+    ui->figure_1->xAxis->setRange(-0.25,0.25);
+    ui->figure_2->yAxis->setRange(-0.25,0.25);
+    ui->figure_2->xAxis->setRange(-0.25,0.25);
+    ui->figure_1->yAxis->setLabel("Y-axis (m)");
+    ui->figure_1->xAxis->setLabel("X-axis (m)");
+    ui->figure_2->yAxis->setLabel("Z-axis (m)");
+    ui->figure_2->xAxis->setLabel("X-axis (m)");
+
+
     //depending on button presses: calibrate -> calibrateSystem
     //Read Noise -> gatherSampleCovarData()
     //StartTracking -> findFirstLocation() -> loop that contains startTracking()
@@ -31,27 +56,6 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_StartTrackingBtn_clicked()
 {
-    QCPScatterStyle myScatter;
-    myScatter.setShape(QCPScatterStyle::ssDisc);
-    myScatter.setPen(QPen(Qt::blue));
-    myScatter.setBrush(Qt::white);
-    myScatter.setSize(5);
-
-    ui->figure_1->addGraph();
-    ui->figure_2->addGraph();
-    ui->figure_1->graph(0)->setScatterStyle(myScatter);
-    ui->figure_2->graph(0)->setScatterStyle(myScatter);
-    ui->figure_1->graph(0)->setLineStyle(QCPGraph::lsNone);
-    ui->figure_2->graph(0)->setLineStyle(QCPGraph::lsNone);
-    ui->figure_1->yAxis->setRange(-0.25,0.25);
-    ui->figure_1->xAxis->setRange(-0.25,0.25);
-    ui->figure_2->yAxis->setRange(-0.25,0.25);
-    ui->figure_2->xAxis->setRange(-0.25,0.25);
-    ui->figure_1->yAxis->setLabel("Y-axis (m)");
-    ui->figure_1->xAxis->setLabel("X-axis (m)");
-    ui->figure_2->yAxis->setLabel("Z-axis (m)");
-    ui->figure_2->xAxis->setLabel("X-axis (m)");
-
     Vector3d curPosition;
     int trackCount = 0;
     while (findLocations){
@@ -113,4 +117,15 @@ void MainWindow::on_readNoiseBtn_clicked()
 void MainWindow::on_stopTrackingBtn_clicked()
 {
     findLocations = false;
+}
+
+void MainWindow::on_comboBox_currentIndexChanged(int index)
+{
+    MatrixXd curInitDataSample = allSensors.at(index).getInitialDataSample();
+    QVector<double> xVals(100), yVals(100);
+    VectorXd xVect = curInitDataSample.block(1,1,100,1);
+    VectorXd yVect = curInitDataSample.block<100,1>(1,2);
+    memcpy(xVals.data(),xVect.data(),sizeof(double)*100);
+    memcpy(yVals.data(),yVect.data(),sizeof(double)*100);
+    ui->figure_3->graph(0)->setData(xVals,yVals);
 }

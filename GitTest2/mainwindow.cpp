@@ -129,10 +129,18 @@ void MainWindow::on_stopTrackingBtn_clicked()
 void MainWindow::on_comboBox_currentIndexChanged(int index)
 {
     MatrixXd curInitDataSample = allSensors.at(index).getInitialDataSample();
-    QVector<double> xVals(100), yVals(100);
+    QVector<double> freqBins(100), xVals(100), yVals(100), zVals(100);
     VectorXd xVect = curInitDataSample.block(0,0,100,1);
     VectorXd yVect = curInitDataSample.block(0,1,100,1);
+    VectorXd zVect = curInitDataSample.block(0,2,100,1);
+    Vector3d meanVals = curInitDataSample.colwise().mean();
+    Vector3d stdVals = //sqrt((1/99)*sum(abs(xVect-meanVals(0))))
+            //repeat stdVals calculation for all vectors
+            //then calculate freqBins from min value in xVect to max value in xVect evenly spaced, and calculate gaussian probability from pdf with mean and stddev
+            //then use memcpy to convert to QVector and then plot
+            //then repeat for yVect and zVect
     memcpy(xVals.data(),xVect.data(),sizeof(double)*100);
     memcpy(yVals.data(),yVect.data(),sizeof(double)*100);
+
     ui->figure_3->graph(0)->setData(xVals,yVals);
 }

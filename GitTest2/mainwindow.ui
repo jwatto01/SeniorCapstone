@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1046</width>
+    <width>1121</width>
     <height>744</height>
    </rect>
   </property>
@@ -105,7 +105,7 @@ p, li { white-space: pre-wrap; }
    <widget class="QCustomPlot" name="figure_1" native="true">
     <property name="geometry">
      <rect>
-      <x>40</x>
+      <x>200</x>
       <y>80</y>
       <width>361</width>
       <height>291</height>
@@ -115,7 +115,7 @@ p, li { white-space: pre-wrap; }
    <widget class="QCustomPlot" name="figure_2" native="true">
     <property name="geometry">
      <rect>
-      <x>420</x>
+      <x>590</x>
       <y>80</y>
       <width>331</width>
       <height>291</height>
@@ -236,13 +236,23 @@ p, li { white-space: pre-wrap; }
      </property>
     </item>
    </widget>
+   <widget class="QCustomPlot" name="figure_5" native="true">
+    <property name="geometry">
+     <rect>
+      <x>760</x>
+      <y>440</y>
+      <width>331</width>
+      <height>221</height>
+     </rect>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1046</width>
+     <width>1121</width>
      <height>21</height>
     </rect>
    </property>

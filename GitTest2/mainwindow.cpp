@@ -5,6 +5,7 @@
 #include <QString>
 #include <PosCalculator.h>
 #include <math.h>
+double gaussianFunction(double std, double mean, double x);
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -138,22 +139,42 @@ void MainWindow::on_comboBox_currentIndexChanged(int index)
     double xTotal = 0.00;
     double yTotal = 0.00;
     double zTotal = 0.00;
-    for(int i = 0; i < 99; i++){
+    for(int i = 0; i < 100; i++){
         xTotal += (xVect[i] - meanVals[0]) * (xVect[i] - meanVals[0]);
         yTotal += (yVect[i] - meanVals[1]) * (yVect[i] - meanVals[1]);
         xTotal += (zVect[i] - meanVals[2]) * (zVect[i] - meanVals[2]);
     }
-    double stdx = sqrt(0.01 * xTotal);
-    double stdy = sqrt(0.01 * yTotal);
-    double stdz = sqrt(0.01 * zTotal);
+    double stdx = sqrt(1.0/99.0 * xTotal);
+    double stdy = sqrt(1.0/99.0 * yTotal);
+    double stdz = sqrt(1.0/99.0 * zTotal);
     Vector3d stdVals(stdx, stdy, stdz);
     //sqrt((1/99)*sum((xVect-meanVals(0))))
             //repeat stdVals calculation for all vectors
             //then calculate freqBins from min value in xVect to max value in xVect evenly spaced, and calculate gaussian probability from pdf with mean and stddev
             //then use memcpy to convert to QVector and then plot
             //then repeat for yVect and zVect
-    //memcpy(xVals.data(),xVect.data(),sizeof(double)*100);
-    //memcpy(yVals.data(),yVect.data(),sizeof(double)*100);
 
-    //ui->figure_3->graph(0)->setData(xVals,yVals);
+    double delta = ((stdx+stdy+stdz)/3.0)/50.0;
+    freqBins[0] = (double)meanVals.rowwise().mean();
+    xVals[0] = gaussianFunction(stdx,meanVals[0],freqBins[0]);
+    yVals[0] = gaussianFunction(stdy,meanVals[1],freqBins[0]);
+    zVals[0] = gaussianFunction(stdz,meanVals[2],freqBins[0]);
+    for(int i = 1; i < 100; i++){
+        freqBins[i] = freqBins[i-1] + delta;
+        xVals[i] = gaussianFunction(stdx,meanVals[0],freqBins[i]);
+        yVals[i] = gaussianFunction(stdy,meanVals[1],freqBins[i]);
+        zVals[i] = gaussianFunction(stdz,meanVals[2],freqBins[i]);
+    }
+
+    ui->figure_3->xAxis->setRange(freqBins[0],freqBins[1]);
+    ui->figure_3->yAxis->setRange(0,1);
+    ui->figure_3->graph(0)->setData(freqBins,xVals);
+    ui->figure_3->replot();
+}
+
+double gaussianFunction(double std, double mean, double x){
+    double coeff = 1.0/sqrt(2.0*3.14159*std*std);
+    double power = -1.0*(pow((x-mean),2)/(2.0*std*std));
+    double fg = coeff*exp(power);
+    return fg;
 }

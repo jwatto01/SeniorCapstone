@@ -31,18 +31,16 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->figure_1->xAxis->setRange(-0.25,0.25);
     ui->figure_2->yAxis->setRange(-0.25,0.25);
     ui->figure_2->xAxis->setRange(-0.25,0.25);
-    ui->figure_3->yAxis->setRange(-0.25/10000,0.25/10000);
-    ui->figure_3->xAxis->setRange(-0.25/10000,0.25/10000);
-    ui->figure_4->yAxis->setRange(-0.25/10000,0.25/10000);
-    ui->figure_4->xAxis->setRange(-0.25/10000,0.25/10000);
     ui->figure_1->yAxis->setLabel("Y-axis (m)");
     ui->figure_1->xAxis->setLabel("X-axis (m)");
     ui->figure_2->yAxis->setLabel("Z-axis (m)");
     ui->figure_2->xAxis->setLabel("X-axis (m)");
-    ui->figure_3->yAxis->setLabel("Y-axis (m)");
-    ui->figure_3->xAxis->setLabel("X-axis (m)");
-    ui->figure_4->yAxis->setLabel("Z-axis (m)");
-    ui->figure_4->xAxis->setLabel("X-axis (m)");
+    ui->figure_3->yAxis->setLabel("Probability");
+    ui->figure_3->xAxis->setLabel("X-axis Mag Field (Tesla)");
+    ui->figure_4->yAxis->setLabel("Y-axis Mag Field (Tesla)");
+    ui->figure_4->xAxis->setLabel("Probability");
+    ui->figure_5->yAxis->setLabel("Z-axis Mag Field (Tesla)");
+    ui->figure_5->xAxis->setLabel("Probability");
 
 
     //depending on button presses: calibrate -> calibrateSystem
@@ -142,7 +140,7 @@ void MainWindow::on_comboBox_currentIndexChanged(int index)
     for(int i = 0; i < 100; i++){
         xTotal += (xVect[i] - meanVals[0]) * (xVect[i] - meanVals[0]);
         yTotal += (yVect[i] - meanVals[1]) * (yVect[i] - meanVals[1]);
-        xTotal += (zVect[i] - meanVals[2]) * (zVect[i] - meanVals[2]);
+        zTotal += (zVect[i] - meanVals[2]) * (zVect[i] - meanVals[2]);
     }
     double stdx = sqrt(1.0/99.0 * xTotal);
     double stdy = sqrt(1.0/99.0 * yTotal);
@@ -169,15 +167,37 @@ void MainWindow::on_comboBox_currentIndexChanged(int index)
         yVals[i] = gaussianFunction(stdy,meanVals[1],freqBinsY[i]);
         zVals[i] = gaussianFunction(stdz,meanVals[2],freqBinsZ[i]);
     }
+    double maxX = xVals[0], maxY = yVals[0], maxZ= zVals[0];
+    for(int i = 0, i<100, i++){
+        if(maxX < xVals[i])
+            maxX = xVals[i];
+        if(maxY < yVals[i])
+            maxY = yVals[i];
+        if(maxZ < zVals[i])
+            maxZ = zVals[i];
+    }
 
     ui->figure_3->xAxis->setRange(freqBinsX[0],freqBinsX[99]);
-    ui->figure_3->yAxis->setRange(0,1);
+    ui->figure_3->yAxis->setRange(0,maxX);
     ui->figure_3->graph(0)->setData(freqBinsX,xVals);
+    ui->figure_3->xAxis->setticklabelrotation(80);
     ui->figure_3->replot();
+
+    ui->figure_4->xAxis->setRange(freqBinsY[0],freqBinsY[99]);
+    ui->figure_4->yAxis->setRange(0,maxY);
+    ui->figure_4->graph(0)->setData(freqBinsY,yVals);
+    ui->figure_4->xAxis->setticklabelrotation(80);
+    ui->figure_4->replot();
+
+    ui->figure_5->xAxis->setRange(freqBinsZ[0],freqBinsZ[99]);
+    ui->figure_5->yAxis->setRange(0,maxZ);
+    ui->figure_5->graph(0)->setData(freqBinsZ,zVals);
+    ui->figure_5->xAxis->setticklabelrotation(80);
+    ui->figure_5->replot();
 }
 
 double gaussianFunction(double std, double mean, double x){
-    double coeff = 1.0/sqrt(2.0*3.14159*std*std);
+    double coeff = 1.0/(sqrt(6.28318530718)*std);
     double power = -1.0*(pow((x-mean),2)/(2.0*std*std));
     double fg = coeff*exp(power);
     return fg;

@@ -143,9 +143,9 @@ void MainWindow::on_comboBox_currentIndexChanged(int index)
         yTotal += (yVect[i] - meanVals[1]) * (yVect[i] - meanVals[1]);
         xTotal += (zVect[i] - meanVals[2]) * (zVect[i] - meanVals[2]);
     }
-    double stdx = sqrt(1/100 * xTotal);
-    double stdy = sqrt(1/100 * yTotal);
-    double stdz = sqrt(1/100 * zTotal);
+    double stdx = sqrt(0.01 * xTotal);
+    double stdy = sqrt(0.01 * yTotal);
+    double stdz = sqrt(0.01 * zTotal);
     Vector3d stdVals(stdx, stdy, stdz);
     //sqrt((1/99)*sum((xVect-meanVals(0))))
             //repeat stdVals calculation for all vectors

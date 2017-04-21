@@ -4,6 +4,7 @@
 #include <fstream>
 #include <QString>
 #include <PosCalculator.h>
+#include <math.h>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -134,13 +135,25 @@ void MainWindow::on_comboBox_currentIndexChanged(int index)
     VectorXd yVect = curInitDataSample.block(0,1,100,1);
     VectorXd zVect = curInitDataSample.block(0,2,100,1);
     Vector3d meanVals = curInitDataSample.colwise().mean();
-    Vector3d stdVals = //sqrt((1/99)*sum(abs(xVect-meanVals(0))))
+    double xTotal = 0.00;
+    double yTotal = 0.00;
+    double zTotal = 0.00;
+    for(int i = 0; i < 99; i++){
+        xTotal += (xVect[i] - meanVals[0]) * (xVect[i] - meanVals[0]);
+        yTotal += (yVect[i] - meanVals[1]) * (yVect[i] - meanVals[1]);
+        xTotal += (zVect[i] - meanVals[2]) * (zVect[i] - meanVals[2]);
+    }
+    double stdx = sqrt(1/100 * xTotal);
+    double stdy = sqrt(1/100 * yTotal);
+    double stdz = sqrt(1/100 * zTotal);
+    Vector3d stdVals(stdx, stdy, stdz);
+    //sqrt((1/99)*sum((xVect-meanVals(0))))
             //repeat stdVals calculation for all vectors
             //then calculate freqBins from min value in xVect to max value in xVect evenly spaced, and calculate gaussian probability from pdf with mean and stddev
             //then use memcpy to convert to QVector and then plot
             //then repeat for yVect and zVect
-    memcpy(xVals.data(),xVect.data(),sizeof(double)*100);
-    memcpy(yVals.data(),yVect.data(),sizeof(double)*100);
+    //memcpy(xVals.data(),xVect.data(),sizeof(double)*100);
+    //memcpy(yVals.data(),yVect.data(),sizeof(double)*100);
 
-    ui->figure_3->graph(0)->setData(xVals,yVals);
+    //ui->figure_3->graph(0)->setData(xVals,yVals);
 }

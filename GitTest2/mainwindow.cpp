@@ -131,7 +131,7 @@ void MainWindow::on_stopTrackingBtn_clicked()
 void MainWindow::on_comboBox_currentIndexChanged(int index)
 {
     MatrixXd curInitDataSample = allSensors.at(index).getInitialDataSample();
-    QVector<double> freqBins(100), xVals(100), yVals(100), zVals(100);
+    QVector<double> freqBinsX(100),freqBinsY(100),freqBinsZ(100), xVals(100), yVals(100), zVals(100);
     VectorXd xVect = curInitDataSample.block(0,0,100,1);
     VectorXd yVect = curInitDataSample.block(0,1,100,1);
     VectorXd zVect = curInitDataSample.block(0,2,100,1);
@@ -154,21 +154,25 @@ void MainWindow::on_comboBox_currentIndexChanged(int index)
             //then use memcpy to convert to QVector and then plot
             //then repeat for yVect and zVect
 
-    double delta = ((stdx+stdy+stdz)/3.0)/50.0;
-    freqBins[0] = (double)meanVals.rowwise().mean();
-    xVals[0] = gaussianFunction(stdx,meanVals[0],freqBins[0]);
-    yVals[0] = gaussianFunction(stdy,meanVals[1],freqBins[0]);
-    zVals[0] = gaussianFunction(stdz,meanVals[2],freqBins[0]);
+    double deltaX = stdx/25.0, deltaY = stdy/25.0, deltaZ = stdz/25.0;
+    freqBinsX[0] = meanVals(0) - 2.0*stdx;
+    freqBinsY[0] = meanVals(1) - 2.0*stdy;
+    freqBinsZ[0] = meanVals(2) - 2.0*stdz;
+    xVals[0] = gaussianFunction(stdx,meanVals[0],freqBinsX[0]);
+    yVals[0] = gaussianFunction(stdy,meanVals[1],freqBinsY[0]);
+    zVals[0] = gaussianFunction(stdz,meanVals[2],freqBinsZ[0]);
     for(int i = 1; i < 100; i++){
-        freqBins[i] = freqBins[i-1] + delta;
-        xVals[i] = gaussianFunction(stdx,meanVals[0],freqBins[i]);
-        yVals[i] = gaussianFunction(stdy,meanVals[1],freqBins[i]);
-        zVals[i] = gaussianFunction(stdz,meanVals[2],freqBins[i]);
+        freqBinsX[i] = freqBinsX[i-1] + deltaX;
+        freqBinsY[i] = freqBinsY[i-1] + deltaY;
+        freqBinsZ[i] = freqBinsZ[i-1] + deltaZ;
+        xVals[i] = gaussianFunction(stdx,meanVals[0],freqBinsX[i]);
+        yVals[i] = gaussianFunction(stdy,meanVals[1],freqBinsY[i]);
+        zVals[i] = gaussianFunction(stdz,meanVals[2],freqBinsZ[i]);
     }
 
-    ui->figure_3->xAxis->setRange(freqBins[0],freqBins[1]);
+    ui->figure_3->xAxis->setRange(freqBinsX[0],freqBinsX[99]);
     ui->figure_3->yAxis->setRange(0,1);
-    ui->figure_3->graph(0)->setData(freqBins,xVals);
+    ui->figure_3->graph(0)->setData(freqBinsX,xVals);
     ui->figure_3->replot();
 }
 
